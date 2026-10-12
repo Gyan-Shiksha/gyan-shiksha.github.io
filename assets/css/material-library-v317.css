@@ -8,7 +8,7 @@
 .material-type-btn.is-active,.material-type-btn[aria-pressed=true]{background:#0c63b8;border-color:#0c63b8;color:white}
 .material-type-btn:hover:not(.is-active){background:#e4f1ff}
 .material-type-btn:focus-visible,.material-clear-btn:focus-visible,.material-load-more:focus-visible{outline:3px solid #80bef8;outline-offset:2px}
-.material-filter-row{display:grid;grid-template-columns:1fr 1fr 1.6fr auto;gap:12px;margin-top:17px;align-items:end}
+.material-filter-row{display:grid;grid-template-columns:1fr 1fr .85fr 1.5fr auto;gap:12px;margin-top:17px;align-items:end}
 .material-filter-row label{display:grid;gap:6px;font-size:.88rem;font-weight:800;color:#26445e}
 .material-filter-row select,.material-filter-row input{width:100%;min-width:0;border:1px solid #c4d7e9;border-radius:10px;padding:11px 12px;font:inherit;background:white;color:#182f44}
 .material-filter-row select:focus-visible,.material-filter-row input:focus-visible{outline:3px solid #a6d6ff;outline-offset:1px}

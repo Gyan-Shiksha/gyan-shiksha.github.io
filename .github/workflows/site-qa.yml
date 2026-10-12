@@ -13,6 +13,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+      - name: Check approved public feeds and private-folder safety
+        run: python3 tools/check_public_feeds.py
       - name: Build sitemap
         run: python3 tools/build_sitemap.py
       - name: Run website validation

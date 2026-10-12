@@ -5,6 +5,8 @@
   const controls = document.getElementById("material-browse-controls");
   const grade = document.getElementById("material-standard");
   const subject = document.getElementById("material-subject");
+  const year = document.getElementById("material-year");
+  const yearLabel = document.getElementById("material-year-label");
   const search = document.getElementById("material-search");
   const reset = document.getElementById("material-reset");
   const empty = document.getElementById("material-empty");
@@ -13,7 +15,7 @@
   const error = document.getElementById("material-error");
   const more = document.getElementById("material-load-more");
   const kindButtons = [...document.querySelectorAll("[data-material-kind]")];
-  if (!results || !summary || !controls || !grade || !subject || !search || !reset) return;
+  if (!results || !summary || !controls || !grade || !subject || !year || !yearLabel || !search || !reset) return;
 
   const types = Object.freeze({
     "Notes": "📝 નોટ્સ", "Question Paper": "📋 પ્રશ્નપત્ર",
@@ -62,6 +64,8 @@
     if (!provider || !title || !standard || !subject) return null;
     return {
       title, url, provider, standard, subject, category,
+      board: clean(entry.board).slice(0, 20),
+      year: /^20\d{2}$/.test(clean(entry.year)) ? clean(entry.year) : "",
       description: clean(entry.description).slice(0, 500),
       date: /^\d{4}-\d{2}-\d{2}$/.test(clean(entry.updated_at)) ? clean(entry.updated_at) : ""
     };
@@ -83,7 +87,7 @@
     const desc = el("p", "material-resource-description", item.description ||
       "આ ફાઇલની વિગતો જોવા માટે નીચેની લિંક ખોલો.");
     const meta = el("div", "material-resource-meta",
-      [item.standard === "General" ? "સામાન્ય" : item.standard, item.subject, item.date].filter(Boolean).join(" · "));
+      [item.standard === "General" ? "સામાન્ય" : item.standard, item.board, item.subject, item.year, item.date].filter(Boolean).join(" · "));
     const open = el("a", "material-action", "ફાઇલ જુઓ ↗");
     open.href = item.url; open.target = "_blank"; open.rel = "noopener noreferrer nofollow";
     open.setAttribute("aria-label", item.title + " — " + item.provider + " પર ફાઇલ જુઓ");
@@ -118,6 +122,7 @@
       (!selectedKind || selectedKind === item.category) &&
       (!grade.value || grade.value === item.standard) &&
       (!subject.value || subject.value === item.subject) &&
+      (!year.value || year.value === item.year) &&
       (!term || norm([item.title, item.description, item.standard, item.subject,
         types[item.category]].join(" ")).includes(term)));
   }
@@ -153,9 +158,10 @@
   });
   grade.addEventListener("change", () => {updateSubjectOptions();visibleCount=12;update();});
   subject.addEventListener("change", () => {visibleCount=12;update();});
+  year.addEventListener("change", () => {visibleCount=12;update();});
   search.addEventListener("input", () => {visibleCount=12;update();});
   reset.addEventListener("click", () => {
-    grade.value = ""; search.value = ""; selectedKind = ""; visibleCount=12;
+    grade.value = ""; year.value = ""; search.value = ""; selectedKind = ""; visibleCount=12;
     updateSubjectOptions();subject.value="";
     for (const button of kindButtons) {
       const active = !button.dataset.materialKind;
@@ -188,6 +194,9 @@
       fillSelect(grade, [...new Set(all.map(x=>x.standard))].sort((a,b)=>
         /^\d+$/.test(a) && /^\d+$/.test(b) ? Number(a)-Number(b) : a.localeCompare(b,"gu")), "બધાં ધોરણ", "");
       updateSubjectOptions();
+      const years = [...new Set(all.map(item => item.year).filter(Boolean))].sort((a,b)=>b.localeCompare(a));
+      yearLabel.hidden = !years.length;
+      fillSelect(year, years, "બધાં વર્ષ", "");
       const present = new Set(all.map(item => item.category));
       for (const button of kindButtons) {
         button.hidden = !!button.dataset.materialKind && !present.has(button.dataset.materialKind);

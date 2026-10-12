@@ -1,3 +1,6 @@
+---
+layout: null
+---
 <!doctype html><html lang="gu"><head>
 
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -19,37 +22,7 @@
 <link rel="stylesheet" href="assets/css/main.css">
 <script defer src="assets/js/app.js"></script><script defer src="assets/js/feeds.js"></script>
 </head><body><a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header">
-  <div class="utility-bar">
-    <div class="container utility-inner">
-      <span>Learn • Practice • Progress</span>
-      <nav aria-label="Utility navigation">
-        <a href="updates.html">News</a>
-        <a href="jobs.html">Jobs</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-    </div>
-  </div>
-  <div class="main-header">
-    <div class="container header-inner">
-      <a class="brand" href="index.html" aria-label="Gyan Shiksha Home">
-        <img src="assets/img/logo.svg" width="46" height="46" alt="">
-        <div><strong>Gyan Shiksha</strong><small>Students' Learning Portal</small></div>
-      </a>
-      <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Open menu">
-        <span></span><span></span><span></span>
-      </button>
-      <nav id="main-nav" class="main-nav" aria-label="Primary navigation">
-        <a href="index.html">Home</a>
-        <a href="quiz.html">Quiz</a>
-        <a href="games.html">Games</a>
-        <a href="board-exam.html">Board Exam</a>
-        <a href="blog.html">Blog</a>
-        <a href="about.html">About</a>
-      </nav>
-    </div>
-  </div>
-</header><main id="main">
+{% include site-header.html %}<main id="main">
 <section class="page-hero compact-news-hero"><div class="container narrow">
  <span class="eyebrow">Education Jobs</span><h1>શાળા શિક્ષણની ભરતી</h1>
  <p>શિક્ષક, શિક્ષણ સહાયક અને શાળા-શિક્ષણ વિભાગની ભરતી માટે એક જ સ્થળે સત્તાવાર જાહેરાત, લાયકાત અને છેલ્લી તારીખની માહિતી.</p>
@@ -67,31 +40,4 @@
   <p class="feed-error" data-feed-error hidden>ભરતીની યાદી લોડ થઈ શકી નથી. થોડા સમય પછી ફરી પ્રયાસ કરો.</p>
   <div class="notice-box news-source-note"><strong>મહત્વપૂર્ણ:</strong> ફોર્મ ભરતાં પહેલાં સત્તાવાર જાહેરાતમાંથી લાયકાત, ફી અને છેલ્લી તારીખ ચકાસવી. અહીંની માહિતી માર્ગદર્શન માટે છે.</div>
 </div></section>
-</main><footer class="site-footer">
-  <div class="container footer-grid">
-    <div class="footer-about">
-      <div class="footer-brand">
-        <img src="assets/img/logo.svg" width="42" height="42" alt="">
-        <div><strong>Gyan Shiksha</strong><span>Student Learning Portal</span></div>
-      </div>
-      <p>વિદ્યાર્થીઓ માટે ક્વિઝ, શૈક્ષણિક રમતો, બોર્ડ પરીક્ષાનું માર્ગદર્શન, અભ્યાસ લેખો અને ચકાસેલી શૈક્ષણિક માહિતી.</p>
-      <a href="mailto:gyanshikshaa@gmail.com">gyanshikshaa@gmail.com</a>
-    </div>
-    <div>
-      <h2>Quick Links</h2>
-      <a href="quiz.html">Quiz</a><a href="games.html">Games</a>
-      <a href="board-exam.html">Board Exam</a><a href="updates.html">News &amp; Updates</a>
-      <a href="jobs.html">Education Jobs</a><a href="blog.html">Blog</a>
-    </div>
-    <div>
-      <h2>Important</h2>
-      <a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms &amp; Conditions</a>
-      <a href="disclaimer.html">Disclaimer</a><a href="editorial-policy.html">Editorial Policy</a>
-      <a href="contact.html">Contact Us</a>
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    <span>© <span data-year></span> Gyan Shiksha. All rights reserved.</span>
-    <span>Independent educational website</span>
-  </div>
-</footer></body></html>
+</main>{% include site-footer.html %}</body></html>

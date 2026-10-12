@@ -82,7 +82,6 @@
     const card = el("article", "material-resource-card");
     const top = el("div", "material-resource-top");
     top.append(el("span", "material-format", types[item.category]));
-    top.append(el("span", "material-provider", item.provider));
     const title = el("h3", "", item.title);
     const desc = el("p", "material-resource-description", item.description ||
       "આ ફાઇલની વિગતો જોવા માટે નીચેની લિંક ખોલો.");
@@ -90,7 +89,7 @@
       [item.standard === "General" ? "સામાન્ય" : item.standard, item.board, item.subject, item.year, item.date].filter(Boolean).join(" · "));
     const open = el("a", "material-action", "ફાઇલ જુઓ ↗");
     open.href = item.url; open.target = "_blank"; open.rel = "noopener noreferrer nofollow";
-    open.setAttribute("aria-label", item.title + " — " + item.provider + " પર ફાઇલ જુઓ");
+    open.setAttribute("aria-label", item.title + " — ફાઇલ જુઓ");
     card.append(top, title, desc, meta, open);
     return card;
   }

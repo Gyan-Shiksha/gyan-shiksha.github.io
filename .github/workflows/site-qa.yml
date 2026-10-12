@@ -36,3 +36,13 @@ jobs:
           grep -q 'https://gyanshiksha.in/' _site/sitemap.xml
           if grep -F -q '{% for post in site.posts %}' _site/blog.html; then exit 1; fi
           if grep -F -q '{{ site.url }}' _site/sitemap.xml; then exit 1; fi
+      - name: Validate fully rendered pages and shared templates
+        env:
+          GYAN_SITE_ROOT: _site
+        run: python3 tools/validate_site.py
+      - name: Confirm Jekyll includes were processed on live HTML
+        run: |
+          if grep -F -q '{% include site-header.html %}' _site/index.html; then exit 1; fi
+          if grep -F -q '{% include site-footer.html %}' _site/blog.html; then exit 1; fi
+          grep -F -q 'class="site-header"' _site/index.html
+          grep -F -q 'class="site-footer"' _site/blog.html

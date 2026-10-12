@@ -93,9 +93,13 @@ for page in html_pages:
                 errors.append(f"{page.name}: external image missing alt -> {src}")
 
     # CSP should be least-privilege for framing.
-    if page.name in {"quiz.html", "quiz-player.html", "contact.html", "study-material.html"}:
+    if page.name in {"quiz.html", "quiz-player.html"}:
         if "frame-src https://script.google.com https://script.googleusercontent.com;" not in text:
             errors.append(f"{page.name}: Google Apps Script frame permission missing")
+    elif page.name in {"contact.html", "study-material.html"}:
+        # These forms also allow the dedicated Googleusercontent subdomain.
+        if "frame-src https://script.google.com https://script.googleusercontent.com https://*.googleusercontent.com;" not in text:
+            errors.append(f"{page.name}: approved form frame permission missing")
     else:
         if "frame-src 'none';" not in text:
             errors.append(f"{page.name}: frame-src should be none")

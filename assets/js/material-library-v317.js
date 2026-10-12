@@ -133,7 +133,7 @@
       emptyMessage.textContent = "બીજો વિષય અથવા ધોરણ પસંદ કરો, અથવા ‘બધું ફરી જુઓ’ દબાવો.";
     }
     summary.textContent = filtered.length === all.length
-      ? "કુલ " + all.length + " મંજૂર ફાઇલો"
+      ? "કુલ " + all.length + " ફાઇલો"
       : filtered.length + " સામગ્રી મળી · કુલ " + all.length;
     if (more) more.hidden = filtered.length <= visibleCount;
     error.hidden = true;
@@ -177,10 +177,10 @@
         seen.add(item.url);return true;
       }).sort((a,b)=>b.date.localeCompare(a.date));
       if (!all.length) {
-        summary.textContent = "હાલ પ્રકાશિત કરવા યોગ્ય ફાઇલ ઉપલબ્ધ નથી";
+        summary.textContent = "હાલ સામગ્રી ઉપલબ્ધ નથી";
         empty.hidden = false;
-        emptyTitle.textContent = "મંજૂર ફાઇલો આવતાં અહીં દેખાશે";
-        emptyMessage.textContent = "PDF, ફોટો, Notes અને બીજા દસ્તાવેજો ચકાસણી બાદ ઉમેરવામાં આવશે. હાલ નીચેના શૈક્ષણિક માર્ગદર્શન વાંચી શકો છો અથવા સામગ્રીની વિનંતી મોકલો.";
+        emptyTitle.textContent = "નવી અભ્યાસ સામગ્રી ટૂંક સમયમાં";
+        emptyMessage.textContent = "નીચે અભ્યાસ માર્ગદર્શન વાંચો અથવા તમને જોઈએ એવી સામગ્રી જણાવો.";
         results.setAttribute("aria-busy","false");
         return;
       }

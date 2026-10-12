@@ -17,8 +17,7 @@
 .material-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
 .material-resource-card{display:flex;flex-direction:column;min-width:0;background:white;border:1px solid #dce7f2;border-radius:17px;padding:20px;box-shadow:0 6px 24px rgba(16,46,82,.07)}
 .material-resource-top{display:flex;justify-content:space-between;gap:7px;flex-wrap:wrap}
-.material-format,.material-provider{border-radius:20px;background:#e9f4ff;color:#14578d;font-size:.79rem;font-weight:800;padding:4px 9px}
-.material-provider{background:#e9f8ef;color:#167047}
+.material-format{border-radius:20px;background:#e9f4ff;color:#14578d;font-size:.79rem;font-weight:800;padding:4px 9px}
 .material-resource-card h3{line-height:1.45;font-size:1.13rem;color:#153b60;margin:13px 0 7px;overflow-wrap:anywhere}
 .material-resource-description{color:#526a80;font-size:.93rem;line-height:1.65;margin:0 0 11px}
 .material-resource-meta{font-size:.8rem;color:#516c84;margin-top:auto;padding-top:8px;overflow-wrap:anywhere}

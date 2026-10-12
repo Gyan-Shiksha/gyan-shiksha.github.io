@@ -427,3 +427,9 @@ body.nav-open{overflow:hidden}
 .contact-form-status{min-height:24px;font-size:.85rem;color:var(--muted);margin:0}
 @media(max-width:780px){.home-news-grid,.contact-layout-v315{grid-template-columns:1fr}}
 @media(max-width:550px){.feed-toolbar,.contact-fields-v315{grid-template-columns:1fr}.feed-card{padding:17px}.home-news-panel{padding:16px}.contact-message-v315 .btn{width:100%}}
+
+/* Original subject-specific SVG illustrations: no external image dependency */
+.story-card .story-thumbnail{display:block;width:100%;height:auto;aspect-ratio:900/560;object-fit:cover;background:#e9f3fb}
+.article-figure{margin:18px 0 22px;overflow:hidden;border-radius:16px;border:1px solid #d7e5f3;background:#f4f8fd}
+.article-figure img{display:block;width:100%;height:auto;aspect-ratio:900/560;object-fit:cover}
+.article-figure figcaption{padding:9px 14px;color:#49647e;font-size:.88rem}

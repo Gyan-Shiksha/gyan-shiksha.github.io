@@ -1,3 +1,6 @@
+---
+layout: null
+---
 <!doctype html>
 <html lang="gu">
 <head>
@@ -89,6 +92,19 @@
 <section class="section compact-top">
   <div class="container">
     <div class="story-grid">
+    <!-- New Markdown posts are compiled automatically by GitHub Pages/Jekyll. -->
+    {% for post in site.posts %}
+    <article class="story-card">
+      <div class="story-visual story-visual-plan" aria-hidden="true"><strong>✎</strong><span>શૈક્ષણિક લેખ</span></div>
+      <div>
+        <span class="pill">{{ post.category | default: "અભ્યાસ માર્ગદર્શન" | escape }}</span>
+        <h2>{{ post.title | escape }}</h2>
+        <p>{{ post.summary | default: post.description | escape }}</p>
+        <a class="text-link" href="{{ post.url }}">વાંચો →</a>
+      </div>
+    </article>
+    {% endfor %}
+
 <article class="story-card">
 <div class="story-visual story-visual-plan" aria-hidden="true"><strong>7</strong><span>દૈનિક અભ્યાસ</span></div>
 <div><span class="pill">અભ્યાસ યોજના</span><h2>અઠવાડિયાનો અભ્યાસ કેવી રીતે ગોઠવવો?</h2><p>શાળા અને ટ્યુશન સાથે રોજનો અભ્યાસ, વિરામ અને પુનરાવર્તન માટે સરળ યોજના.</p>

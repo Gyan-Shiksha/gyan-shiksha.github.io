@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="gu">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <title>{{ page.title | escape }} | Gyan Shiksha</title>
+  <meta name="description" content="{{ page.description | escape }}">
+  <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+  <meta property="og:locale" content="gu_IN">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Gyan Shiksha">
+  <meta property="og:title" content="{{ page.title | escape }} | Gyan Shiksha">
+  <meta property="og:description" content="{{ page.description | escape }}">
+  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+  <meta property="og:image" content="https://gyanshiksha.in/assets/img/og-cover.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Gyan Shiksha — Student Learning Portal">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ page.title | escape }} | Gyan Shiksha">
+  <meta name="twitter:description" content="{{ page.description | escape }}">
+  <meta name="twitter:image" content="https://gyanshiksha.in/assets/img/og-cover.png">
+  <meta name="theme-color" content="#0c4f8a">
+  <meta name="author" content="Gyan Shiksha Editorial">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com; style-src 'self'; script-src 'self' https://www.googletagmanager.com; font-src 'self'; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; upgrade-insecure-requests">
+<!-- Google Analytics 4: strict-CSP-compatible external scripts -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-858QBSF43P"></script>
+<script src="assets/js/analytics.js"></script>
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon-180.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <script defer src="assets/js/app.js"></script>
+<meta property="article:published_time" content="{{ page.date | date: '%Y-%m-%d' }}">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+  <div class="utility-bar">
+    <div class="container utility-inner">
+      <span>Learn • Practice • Progress</span>
+      <nav aria-label="Utility navigation">
+        <a href="updates.html">News</a>
+        <a href="jobs.html">Jobs</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </div>
+  <div class="main-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Gyan Shiksha Home">
+        <img src="assets/img/logo.svg" width="46" height="46" alt="">
+        <div><strong>Gyan Shiksha</strong><small>Students' Learning Portal</small></div>
+      </a>
+      <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="main-nav" class="main-nav" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="games.html">Games</a>
+        <a href="board-exam.html">Board Exam</a>
+        <a href="updates.html">News</a>
+        <a href="jobs.html">Jobs</a>
+        <a href="blog.html">Blog</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </div>
+</header>
+  <main id="main">
+<article class="article-wrap">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="/index.html">Home</a><span aria-hidden="true">›</span><a href="/blog.html">Blog</a>
+    <span aria-hidden="true">›</span><span>{{ page.category | default: "અભ્યાસ માર્ગદર્શન" | escape }}</span>
+  </nav>
+  <header class="article-header">
+    <span class="pill">{{ page.category | default: "અભ્યાસ માર્ગદર્શન" | escape }}</span>
+    <h1>{{ page.title | escape }}</h1>
+    <p class="article-lead">{{ page.description | escape }}</p>
+    <div class="article-meta">
+      <a href="/editorial-policy.html">Gyan Shiksha Editorial</a>
+      <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%d-%m-%Y" }}</time>
+    </div>
+  </header>
+  <div class="article-body">
+    {{ content }}
+  </div>
+  <aside class="related-guides" aria-label="Related reading">
+    <h2>વધુ અભ્યાસ માર્ગદર્શન</h2>
+    <div class="related-links"><a href="/blog.html">બીજા શૈક્ષણિક લેખો વાંચો →</a></div>
+  </aside>
+</article>
+</main>
+  <footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-about">
+      <div class="footer-brand">
+        <img src="assets/img/logo.svg" width="42" height="42" alt="">
+        <div><strong>Gyan Shiksha</strong><span>Student Learning Portal</span></div>
+      </div>
+      <p>વિદ્યાર્થીઓ માટે ક્વિઝ, શૈક્ષણિક રમતો, બોર્ડ પરીક્ષાનું માર્ગદર્શન, અભ્યાસ લેખો અને ચકાસેલી શૈક્ષણિક માહિતી.</p>
+      <a href="mailto:gyanshikshaa@gmail.com">gyanshikshaa@gmail.com</a>
+    </div>
+    <div>
+      <h2>Quick Links</h2>
+      <a href="quiz.html">Quiz</a><a href="games.html">Games</a>
+      <a href="board-exam.html">Board Exam</a><a href="updates.html">News &amp; Updates</a>
+      <a href="jobs.html">Education Jobs</a><a href="blog.html">Blog</a>
+    </div>
+    <div>
+      <h2>Important</h2>
+      <a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms &amp; Conditions</a>
+      <a href="disclaimer.html">Disclaimer</a><a href="editorial-policy.html">Editorial Policy</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© <span data-year></span> Gyan Shiksha. All rights reserved.</span>
+    <span>Independent educational website</span>
+  </div>
+</footer>
+</body>
+</html>

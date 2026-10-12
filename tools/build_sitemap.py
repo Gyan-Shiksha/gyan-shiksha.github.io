@@ -2,7 +2,7 @@ from pathlib import Path
 from xml.sax.saxutils import escape
 import re
 
-BASE_URL = "https://adhyapak-saathi.github.io/Gyanshiksha"
+BASE_URL = "https://gyanshiksha.in"
 ROOT = Path(__file__).resolve().parents[1]
 
 pages = []
@@ -15,11 +15,14 @@ for p in sorted(ROOT.glob("*.html")):
         continue
     pages.append(p.name)
 
-lines = ['<?xml version="1.0" encoding="UTF-8"?>',
+lines = ['---', 'layout: null', '---', '<?xml version="1.0" encoding="UTF-8"?>',
          '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
 for name in pages:
     url = BASE_URL + ("/" if name == "index.html" else f"/{name}")
     lines.append(f"  <url><loc>{escape(url)}</loc></url>")
+lines.append("  {% for post in site.posts %}")
+lines.append("  <url><loc>{{ site.url }}{{ post.url }}</loc></url>")
+lines.append("  {% endfor %}")
 lines.append("</urlset>")
 
 (ROOT / "sitemap.xml").write_text("\n".join(lines) + "\n", encoding="utf-8")

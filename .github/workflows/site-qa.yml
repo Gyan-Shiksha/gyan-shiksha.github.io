@@ -13,6 +13,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+      - name: Inspect HSC 2023 public MEGA filenames without downloading files
+        run: node tools/inspect_mega_links.cjs tools/pending-hsc-2023-links.txt
       - name: Test material publishing, file permissions and URL restrictions
         run: |
           python3 -m py_compile tools/add_material.py tools/check_public_feeds.py tools/test_material_publication.py

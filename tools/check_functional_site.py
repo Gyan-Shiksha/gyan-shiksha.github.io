@@ -116,11 +116,19 @@ def check():
         # Only approved file-level results may link to third-party files.
         # Public master-folder links would expose unrelated content.
         if not any(s.endswith("assets/js/material-library-v317.js") for s in material.scripts):
-            errors.append("study-material.html: filterable material library script missing")
-        for required in ("material-results", "material-search", "material-standard",
-                         "material-category", "material-provider", "material-empty", "material-reset"):
+            errors.append("study-material.html: curated material library script missing")
+        for required in ("std-10-materials", "std-12-materials"):
             if required not in material.ids:
-                errors.append(f"study-material.html: missing material library element #{required}")
+                errors.append(f"study-material.html: missing grade section #{required}")
+        for grade in ("10", "12"):
+            for subject in ("math", "science", "english"):
+                identifier = f"material-list-{grade}-{subject}"
+                if identifier not in material.ids:
+                    errors.append(f"study-material.html: missing material section #{identifier}")
+        for removed in ("material-search", "material-standard", "material-category",
+                        "material-provider", "material-reset"):
+            if removed in material.ids:
+                errors.append(f"study-material.html: obsolete search control still visible #{removed}")
         if any("drive.google.com/drive/folders/" in x or "mega.nz/folder/" in x
                for _, x in material.refs):
             errors.append("study-material.html: must not link directly to public master folders")

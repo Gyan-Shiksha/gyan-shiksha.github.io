@@ -1,24 +1,47 @@
-/* Gyan Shiksha material library: mobile first, no demo resource cards */
-.material-hero-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.material-outline-btn{background:white;color:#14578d;border:1px solid #bad3ed}
-.material-controls{display:grid;grid-template-columns:2fr 1fr 1.15fr 1fr;gap:12px;background:white;border:1px solid var(--border);border-radius:18px;padding:20px;box-shadow:var(--shadow)}
-.material-controls label{display:grid;gap:7px;font-size:.88rem;font-weight:800;color:#243c56}.material-controls input,.material-controls select{min-width:0;width:100%;padding:12px 13px;border:1px solid #cbd9e6;border-radius:11px;background:white;color:var(--text);font:inherit}.material-controls input:focus-visible,.material-controls select:focus-visible{outline:3px solid #acd7ff;outline-offset:1px}
-.material-list-summary{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:19px 1px}.material-list-summary p{margin:0;font-weight:750;color:#526880}.material-reset{border:0;background:#e9f3ff;color:#145d96;font:inherit;font-weight:800;border-radius:10px;padding:8px 14px;cursor:pointer}
-.material-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.material-item{background:white;border:1px solid var(--border);border-radius:17px;padding:22px;display:flex;flex-direction:column;box-shadow:0 6px 25px rgba(16,46,82,.07);min-width:0}.material-item h3{font-size:1.15rem;margin:12px 0 8px;line-height:1.45;overflow-wrap:anywhere}.material-item p{color:var(--muted);margin:0 0 12px;overflow-wrap:anywhere}.material-badges{display:flex;gap:7px;flex-wrap:wrap}.material-badge{display:inline-block;padding:3px 9px;border-radius:30px;background:#e9f3ff;color:#145d96;font-size:.79rem;font-weight:800}.material-badge.source{background:#ecf8f1;color:#166b46}.material-meta{font-size:.83rem;color:#526880;margin-top:auto;padding-top:5px}.material-action{margin-top:14px;text-align:center;text-decoration:none;font-weight:850;background:#145eaa;color:white;border-radius:11px;padding:11px 13px}.material-action:hover,.material-action:focus-visible{background:#0c3f77;color:white}
-.material-empty,.material-error{text-align:center;padding:28px;background:#f0f6fd;border:1px solid #dbe7f5;border-radius:16px}.material-empty h3{margin:0 0 8px}.material-empty p{color:#526880}.material-error{color:#933b39;background:#fff2f0}.material-download-help{font-size:.84rem;color:#63768c;margin-top:18px}.material-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.material-help-card{background:white;border:1px solid var(--border);border-radius:18px;padding:22px;box-shadow:var(--shadow)}.material-help-card>span{font-size:1.6rem}.material-help-card h2{font-size:1.15rem;margin:8px 0}.material-help-card p{color:#526880}.material-help-card a{color:#145eaa;font-weight:850;text-decoration:none}
-@media(max-width:1000px){.material-controls{grid-template-columns:repeat(2,minmax(0,1fr))}.material-results{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:620px){.material-controls,.material-results,.material-cards{grid-template-columns:1fr}.material-hero-links{flex-direction:column}.material-hero-links .btn{text-align:center}.material-controls{padding:15px}.material-item{padding:18px}}
-
-/* V3.17 direct public folder links */
-.material-folder-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-.material-folder-card{display:flex;flex-direction:column;align-items:flex-start;min-width:0;background:#fff;border:1px solid var(--border);border-radius:19px;padding:26px;box-shadow:var(--shadow)}
-.material-folder-icon{display:grid;place-items:center;width:52px;height:52px;background:#e8f4ff;border-radius:15px;font-size:1.55rem;margin-bottom:13px}
-.material-folder-provider{color:#145eaa;font-weight:800;font-size:.79rem;letter-spacing:.03em}
-.material-folder-card h3{font-size:1.25rem;line-height:1.5;margin:5px 0 10px}
-.material-folder-card p{margin:0 0 20px;color:var(--muted);overflow-wrap:anywhere}
-.material-folder-button{display:inline-block;text-decoration:none;text-align:center;margin-top:auto;background:#145eaa;color:#fff;font-weight:850;border-radius:11px;padding:12px 18px}
-.material-folder-button:hover,.material-folder-button:focus-visible{background:#0c3f77;color:#fff}
-.material-folder-mega .material-folder-icon{background:#fff1f1}
-.material-folder-mega .material-folder-provider{color:#aa2f32}
-.material-folder-mega .material-folder-button{background:#b83838}
-.material-folder-mega .material-folder-button:hover,.material-folder-mega .material-folder-button:focus-visible{background:#8f2424}
-@media(max-width:620px){.material-folder-grid{grid-template-columns:1fr}.material-folder-card{padding:20px}.material-folder-button{width:100%}}
+/* Gyan Shiksha — clean, grade-first Study Material layout */
+.material-hero-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.material-outline-btn{background:#fff;color:#14578d;border:1px solid #bad3ed}
+.material-intro-note{margin:0 0 24px;padding:15px 18px;border-radius:13px;border:1px solid #cbdfee;background:#f0f7fc;color:#23425c}
+.material-grade-section{scroll-margin-top:120px;margin:0 0 34px}
+.material-grade-section+.material-grade-section{padding-top:32px;border-top:1px solid #dbe5ee}
+.material-grade-heading{display:flex;align-items:center;gap:16px;margin-bottom:21px}
+.material-grade-number{display:grid;place-items:center;flex:none;width:66px;height:66px;background:#0c63b8;color:#fff;font-size:1.7rem;font-weight:900;border-radius:18px}
+.material-grade-heading h2{margin:0 0 3px;font-size:1.48rem;line-height:1.35;color:#17385b}
+.material-grade-heading p{margin:0;color:#526880}
+.material-simple-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.material-simple-card{display:flex;flex-direction:column;min-width:0;border:1px solid #dce6f0;border-radius:17px;padding:20px;background:white;box-shadow:0 7px 28px rgba(12,46,78,.065)}
+.material-simple-card-heading{display:flex;gap:12px;align-items:flex-start}
+.material-simple-icon{display:grid;place-items:center;flex:none;width:46px;height:46px;border-radius:13px;background:#e8f3fc;font-size:1.45rem}
+.material-simple-card h3{margin:1px 0 2px;line-height:1.35;color:#143b60;font-size:1.13rem}
+.material-simple-card-heading p{margin:0;color:#5b7187;font-size:.88rem}
+.material-file-list{display:grid;gap:10px;align-content:start;margin:15px 0;min-height:86px}
+.material-loading,.material-inline-notice{margin:0;color:#5d6f81;font-size:.91rem;line-height:1.7;border-radius:11px;padding:12px;background:#f4f8fc}
+.material-study-link{margin-top:auto;display:inline-flex;align-items:center;gap:5px;padding-top:10px;font-weight:800;color:#0c5a9e;text-decoration:none}
+.material-study-link:hover,.material-study-link:focus-visible{text-decoration:underline}
+.material-compact-item{padding:14px;border-radius:11px;box-shadow:none;background:#fafdff}
+.material-compact-item h4{font-size:1.03rem;line-height:1.5;margin:8px 0 4px;overflow-wrap:anywhere}
+.material-item p{color:var(--muted);margin:0 0 10px;overflow-wrap:anywhere}
+.material-badges{display:flex;flex-wrap:wrap;gap:6px}
+.material-badge{display:inline-block;padding:3px 8px;border-radius:22px;background:#eaf4ff;color:#145d96;font-size:.75rem;font-weight:800}
+.material-badge.source{background:#e6f7ed;color:#166b46}
+.material-meta{font-size:.8rem;color:#526880}
+.material-action{display:block;margin-top:10px;border-radius:10px;background:#145eaa;color:#fff;padding:9px 12px;text-align:center;font-weight:850;text-decoration:none}
+.material-action:hover,.material-action:focus-visible{background:#0c3f77;color:#fff}
+.material-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.material-help-card{min-width:0;background:#fff;border:1px solid var(--border);border-radius:18px;padding:22px;box-shadow:var(--shadow)}
+.material-help-card>span{font-size:1.6rem}
+.material-help-card h2,.material-help-card h3{font-size:1.15rem;margin:8px 0}
+.material-help-card p{color:#526880}
+.material-help-card a{color:#145eaa;font-weight:850;text-decoration:none}
+#subject-guidance{scroll-margin-top:105px}
+@media(max-width:1050px){.material-simple-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){
+  .material-simple-grid,.material-cards{grid-template-columns:1fr}
+  .material-grade-heading{align-items:flex-start}
+  .material-grade-number{width:56px;height:56px;font-size:1.5rem}
+  .material-grade-heading h2{font-size:1.22rem}
+  .material-hero-links{flex-direction:column}
+  .material-hero-links .btn{text-align:center}
+  .material-simple-card{padding:18px}
+  .material-grade-section{scroll-margin-top:100px}
+}

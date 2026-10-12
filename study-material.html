@@ -26,50 +26,105 @@ layout: null
 {% include site-header.html %}
 <main id="main">
 <section class="page-hero compact-news-hero">
-  <div class="container narrow">
-    <span class="eyebrow">Gyan Shiksha · Std. 10 &amp; 12</span>
-    <h1>ધોરણ 10 અને 12 અભ્યાસ સામગ્રી</h1>
-    <p>અંગ્રેજી, ગણિત અને વિજ્ઞાન જેવા વિષયો માટે પસંદગીની નોટ્સ, વર્કશીટ, પ્રેક્ટિસ પ્રશ્નો અને પ્રશ્નપત્રોની યાદી. દરેક પ્રકાશિત ફાઇલનું શીર્ષક, ધોરણ, વિષય અને મૂળ સ્રોત અહીં સ્પષ્ટ દેખાશે.</p>
-    <div class="material-hero-links"><a class="btn btn-primary" href="#materials-library">સામગ્રી શોધો ↓</a><a class="btn material-outline-btn" href="#subject-guidance">વિષયવાર અભ્યાસ માર્ગદર્શન ↓</a></div>
+ <div class="container narrow">
+  <span class="eyebrow">ધોરણ 10 અને 12 · અભ્યાસ સામગ્રી</span>
+  <h1>તમારા ધોરણ અને વિષય પ્રમાણે સામગ્રી જુઓ</h1>
+  <p>અહીં નામ લખીને શોધવાની જરૂર નથી. પહેલાં ધોરણ પસંદ કરો, પછી ગણિત, વિજ્ઞાન કે અંગ્રેજી વિભાગ જુઓ. ચકાસેલી PDF અને Notes ઉપલબ્ધ હશે તો સીધી ફાઇલની લિંક દેખાશે.</p>
+  <div class="material-hero-links">
+   <a class="btn btn-primary" href="#std-10-materials">ધોરણ 10 ↓</a>
+   <a class="btn material-outline-btn" href="#std-12-materials">ધોરણ 12 ↓</a>
   </div>
+ </div>
 </section>
-<section class="section compact-top" id="materials-library" aria-labelledby="materials-title">
+<section class="section compact-top" id="materials-library" aria-label="ધોરણવાર અભ્યાસ સામગ્રી">
  <div class="container">
-  <div class="section-heading">
-   <div><span class="eyebrow">Verified resources only</span><h2 id="materials-title">ફાઇલ પ્રમાણે શોધો અને ખોલો</h2></div>
-   <p>અહીં વ્યક્તિગત, મંજૂર કરેલી ફાઇલો જ દેખાડવામાં આવે છે. ખાનગી Google Drive અથવા MEGAનું મુખ્ય ફોલ્ડર જાહેર નથી કરાતું.</p>
+  <p class="material-intro-note"><strong>નોંધ:</strong> દરેક વિષયમાં માત્ર પરવાનગીવાળી અને ચકાસેલી વ્યક્તિગત ફાઇલો જ દેખાડવામાં આવે છે. કોઈ ખાનગી Google Drive કે MEGAનું મુખ્ય ફોલ્ડર અહીં ખુલશે નહીં.</p>
+  <section class="material-grade-section" id="std-10-materials" aria-labelledby="std-10-heading">
+ <div class="material-grade-heading"><span class="material-grade-number" aria-hidden="true">10</span>
+  <div><h2 id="std-10-heading">ધોરણ 10 ની અભ્યાસ સામગ્રી</h2><p>ગણિત, વિજ્ઞાન અને અંગ્રેજી માટે સીધી વિષયવાર ફાઇલ સૂચિ અને અભ્યાસ માર્ગદર્શન.</p></div>
+ </div>
+ <div class="material-simple-grid">
+ <article class="material-simple-card" aria-labelledby="material-heading-10-math">
+  <div class="material-simple-card-heading"><span class="material-simple-icon" aria-hidden="true">➗</span>
+    <div><h3 id="material-heading-10-math">ગણિત</h3><p>દાખલા, સૂત્રો અને પ્રેક્ટિસ</p></div>
   </div>
-  <div class="material-controls">
-    <label for="material-search">વિષય / ફાઇલ શોધો<input type="search" id="material-search" placeholder="ઉદાહરણ: ગણિત, Grammar, વિજ્ઞાન"></label>
-    <label for="material-standard">ધોરણ<select id="material-standard"><option value="">બધાં ધોરણ</option><option value="10">ધોરણ 10</option><option value="12">ધોરણ 12</option></select></label>
-    <label for="material-category">સામગ્રીનો પ્રકાર<select id="material-category"><option value="">બધાં પ્રકાર</option><option value="Notes">નોટ્સ</option><option value="Worksheet">વર્કશીટ</option><option value="Question Paper">પ્રશ્નપત્ર</option><option value="Model Paper">મોડેલ પેપર</option><option value="Textbook">પાઠ્યપુસ્તક</option><option value="Other">અન્ય</option></select></label>
-    <label for="material-provider">ફાઇલ સ્રોત<select id="material-provider"><option value="">બધા સ્રોત</option><option value="Google Drive">Google Drive</option><option value="MEGA">MEGA</option></select></label>
+  <div class="material-file-list" id="material-list-10-math" data-material-slot="10-math" aria-live="polite">
+    <p class="material-loading">ચકાસેલી ફાઇલોની યાદી અહીં દેખાશે.</p>
   </div>
-  <div class="material-list-summary"><p id="material-result-count" aria-live="polite">સામગ્રી લોડ થઈ રહી છે...</p><button class="material-reset" id="material-reset" type="button">ફિલ્ટર દૂર કરો</button></div>
-  <div id="material-results" class="material-results" aria-live="polite" aria-busy="true"></div>
-  <div id="material-empty" class="material-empty" hidden>
-   <h3>આ પસંદગીમાં પ્રકાશિત ફાઇલ ઉપલબ્ધ નથી</h3>
-   <p>ઉપયોગી ફાઇલની ખોટી અથવા અચકાસેલી લિંક આપવાને બદલે, અમે ચકાસેલી ફાઇલ જ પ્રકાશિત કરીએ છીએ. નીચેનો અભ્યાસ માર્ગદર્શિકા વિભાગ અથવા <a href="#material-request">સામગ્રી વિનંતી ફોર્મ</a> જુઓ.</p>
+  <a class="material-study-link" href="blog-math-practice.html">ગણિતની પ્રેક્ટિસ શીખો <span aria-hidden="true">→</span></a>
+</article>
+ <article class="material-simple-card" aria-labelledby="material-heading-10-science">
+  <div class="material-simple-card-heading"><span class="material-simple-icon" aria-hidden="true">🔬</span>
+    <div><h3 id="material-heading-10-science">વિજ્ઞાન</h3><p>ખ્યાલો, આકૃતિઓ અને પ્રશ્નોત્તરી</p></div>
   </div>
-  <p id="material-error" class="material-error" hidden>સામગ્રીની સૂચિ હાલમાં લોડ થઈ શકી નથી. કૃપા કરીને થોડીવાર પછી ફરી પ્રયાસ કરો.</p>
-  <p class="material-download-help">માત્ર કૉપિરાઇટની મંજૂરીવાળી ફાઇલોના Viewer Links ઉમેરવામાં આવે છે. કોઈ ફાઇલ ઉપલબ્ધ હોય તો તેની Share Permission Google Drive અથવા MEGA પર લાગુ પડશે.</p>
+  <div class="material-file-list" id="material-list-10-science" data-material-slot="10-science" aria-live="polite">
+    <p class="material-loading">ચકાસેલી ફાઇલોની યાદી અહીં દેખાશે.</p>
+  </div>
+  <a class="material-study-link" href="blog-smart-revision.html">વિજ્ઞાન યાદ રાખવાની રીત <span aria-hidden="true">→</span></a>
+</article>
+ <article class="material-simple-card" aria-labelledby="material-heading-10-english">
+  <div class="material-simple-card-heading"><span class="material-simple-icon" aria-hidden="true">📘</span>
+    <div><h3 id="material-heading-10-english">અંગ્રેજી</h3><p>Grammar, Reading અને Writing</p></div>
+  </div>
+  <div class="material-file-list" id="material-list-10-english" data-material-slot="10-english" aria-live="polite">
+    <p class="material-loading">ચકાસેલી ફાઇલોની યાદી અહીં દેખાશે.</p>
+  </div>
+  <a class="material-study-link" href="blog-answer-writing.html">જવાબ લખવાની રીત <span aria-hidden="true">→</span></a>
+</article>
+ </div>
+</section>
+  <section class="material-grade-section" id="std-12-materials" aria-labelledby="std-12-heading">
+ <div class="material-grade-heading"><span class="material-grade-number" aria-hidden="true">12</span>
+  <div><h2 id="std-12-heading">ધોરણ 12 ની અભ્યાસ સામગ્રી</h2><p>તમારા પ્રવાહ અને અભ્યાસક્રમને અનુરૂપ ઉપલબ્ધ ગણિત, વિજ્ઞાન અને અંગ્રેજીની સામગ્રી ચકાસીને પસંદ કરો.</p></div>
+ </div>
+ <div class="material-simple-grid">
+ <article class="material-simple-card" aria-labelledby="material-heading-12-math">
+  <div class="material-simple-card-heading"><span class="material-simple-icon" aria-hidden="true">➗</span>
+    <div><h3 id="material-heading-12-math">ગણિત</h3><p>દાખલા, સૂત્રો અને પ્રેક્ટિસ</p></div>
+  </div>
+  <div class="material-file-list" id="material-list-12-math" data-material-slot="12-math" aria-live="polite">
+    <p class="material-loading">ચકાસેલી ફાઇલોની યાદી અહીં દેખાશે.</p>
+  </div>
+  <a class="material-study-link" href="blog-math-practice.html">ગણિતની પ્રેક્ટિસ શીખો <span aria-hidden="true">→</span></a>
+</article>
+ <article class="material-simple-card" aria-labelledby="material-heading-12-science">
+  <div class="material-simple-card-heading"><span class="material-simple-icon" aria-hidden="true">🔬</span>
+    <div><h3 id="material-heading-12-science">વિજ્ઞાન</h3><p>ખ્યાલો, આકૃતિઓ અને પ્રશ્નોત્તરી</p></div>
+  </div>
+  <div class="material-file-list" id="material-list-12-science" data-material-slot="12-science" aria-live="polite">
+    <p class="material-loading">ચકાસેલી ફાઇલોની યાદી અહીં દેખાશે.</p>
+  </div>
+  <a class="material-study-link" href="blog-smart-revision.html">વિજ્ઞાન યાદ રાખવાની રીત <span aria-hidden="true">→</span></a>
+</article>
+ <article class="material-simple-card" aria-labelledby="material-heading-12-english">
+  <div class="material-simple-card-heading"><span class="material-simple-icon" aria-hidden="true">📘</span>
+    <div><h3 id="material-heading-12-english">અંગ્રેજી</h3><p>Grammar, Reading અને Writing</p></div>
+  </div>
+  <div class="material-file-list" id="material-list-12-english" data-material-slot="12-english" aria-live="polite">
+    <p class="material-loading">ચકાસેલી ફાઇલોની યાદી અહીં દેખાશે.</p>
+  </div>
+  <a class="material-study-link" href="blog-answer-writing.html">જવાબ લખવાની રીત <span aria-hidden="true">→</span></a>
+</article>
+ </div>
+</section>
+  <noscript><p class="material-inline-notice">PDF ફાઇલોની યાદી જોવા માટે Browserમાં JavaScript ચાલુ હોવું જરૂરી છે. નીચેનું અભ્યાસ માર્ગદર્શન JavaScript વિના પણ વાંચી શકશો.</p></noscript>
  </div>
 </section>
 <section class="section section-soft" id="subject-guidance">
  <div class="container">
   <div class="section-heading"><div><span class="eyebrow">Std. 10 &amp; 12 · Study strategy</span><h2>અઘરા વિષયોને સરળ બનાવવા માટે વિષયવાર અભ્યાસ રીત</h2></div><p>આ સામાન્ય અભ્યાસ માર્ગદર્શન છે; પાઠ અને પરીક્ષાનો અંતિમ અભ્યાસક્રમ સંબંધિત બોર્ડની સત્તાવાર માહિતીથી ચકાસો.</p></div>
   <div class="material-cards">
-   <article class="material-help-card">
+   <article class="material-help-card" id="guide-math">
     <span aria-hidden="true">➗</span><h3>ગણિત: દાખલાને પગલાંમાં ઉકેલો</h3>
     <p>પ્રથમ સૂત્ર પાછળનો અર્થ સમજો. પછી પુસ્તકમાં ઉકેલેલું ઉદાહરણ બંધ કરીને જાતે ઉકેલો. ભૂલ માટે અલગ નોટ બનાવો—સૂત્ર, ગણતરી, ચિહ્ન કે પ્રશ્ન વાંચવામાં કયાં ચૂકાયું તે લખો. અઠવાડિયાના અંતે એ જ પ્રકારના બે નવા દાખલા ફરી કરો.</p>
     <p><a href="blog-math-practice.html">ગણિત પ્રેક્ટિસની રીત →</a> · <a href="games.html">Mental Maths Games →</a></p>
    </article>
-   <article class="material-help-card">
+   <article class="material-help-card" id="guide-science">
     <span aria-hidden="true">🔬</span><h3>વિજ્ઞાન: આકૃતિ, કારણ અને ઉદાહરણ</h3>
     <p>દરેક મહત્વના ખ્યાલ માટે તમારી ભાષામાં બે–ત્રણ વાક્યો લખો. જરૂરી આકૃતિ પર ભાગોનાં નામ જાતે નોંધો. પ્રયોગમાં શું થયું, કેમ થયું અને તે કયા નિયમ સાથે જોડાય છે તેનો સંબંધ સમજો. છેલ્લે લખાણ જોયા વગર ટૂંકો જવાબ તૈયાર કરો.</p>
     <p><a href="blog-smart-revision.html">યાદ રાખવાની અસરકારક રીત →</a></p>
    </article>
-   <article class="material-help-card">
+   <article class="material-help-card" id="guide-english">
     <span aria-hidden="true">📘</span><h3>અંગ્રેજી: Reading, Grammar અને Writing</h3>
     <p>રોજ નાનો અંગ્રેજી પરિચ્છેદ વાંચીને મુખ્ય વિચાર લખો. Grammar માટે એક નિયમ અને તેના પોતાના ત્રણ ઉદાહરણ બનાવો. પત્ર, પરિચ્છેદ અથવા અન્ય Writing Tasksમાં શરૂઆત, મુખ્ય મુદ્દા અને અંતિમ વાક્યને વ્યવસ્થિત ગોઠવો. લખ્યા પછી Spelling અને Tense તપાસો.</p>
     <p><a href="blog-answer-writing.html">જવાબ લેખનની રીત →</a></p>

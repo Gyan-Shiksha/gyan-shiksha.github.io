@@ -65,8 +65,11 @@ for page in html_pages:
         if href.startswith(("http://", "https://")):
             continue
         clean = href.split("#", 1)[0].split("?", 1)[0]
-        if clean.endswith(".html") and not (ROOT / clean).exists():
-            errors.append(f"{page.name}: broken internal link -> {href}")
+        if clean.endswith(".html"):
+            # Static root-relative links are valid in Jekyll-generated posts.
+            target = (ROOT / clean.lstrip("/") if clean.startswith("/") else page.parent / clean).resolve()
+            if not target.is_relative_to(ROOT) or not target.is_file():
+                errors.append(f"{page.name}: broken internal link -> {href}")
 
     # Production indexable pages must not expose development placeholders or ads.
     if is_indexable(text):

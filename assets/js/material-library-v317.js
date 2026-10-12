@@ -16,7 +16,12 @@
     try {
       const u = new URL(url);
       const h = u.hostname.toLowerCase().replace(/^www\./, "");
-      return u.protocol === "https:" && hosts[h] && u.username === "" && u.password === "" ? hosts[h] : "";
+      // Only direct, approved individual files—not shared master folders.
+      const driveFile = h === "drive.google.com" && /^\/file\/d\/[A-Za-z0-9_-]+(?:\/|$)/.test(u.pathname);
+      const docsFile = h === "docs.google.com" && /^\/(?:document|spreadsheets|presentation)\/d\/[A-Za-z0-9_-]+(?:\/|$)/.test(u.pathname);
+      const megaFile = ["mega.nz", "mega.io"].includes(h) && /^\/file\/[A-Za-z0-9_-]+(?:\/|$)/.test(u.pathname);
+      return u.protocol === "https:" && hosts[h] && !u.username && !u.password &&
+        (driveFile || docsFile || megaFile) ? hosts[h] : "";
     } catch { return ""; }
   }
   function normalize(row) {

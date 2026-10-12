@@ -1,8 +1,9 @@
 from pathlib import Path
+import os
 import re
 from urllib.parse import urlparse
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(os.environ.get("GYAN_SITE_ROOT", Path(__file__).resolve().parents[1])).resolve()
 errors = []
 SITE_ORIGIN = "https://gyanshiksha.in"
 OLD_SITE_ORIGIN = "https://adhyapak-saathi.github.io/Gyanshiksha"
@@ -40,6 +41,11 @@ for page in html_pages:
             errors.append(f"{page.name}: og:url is not on the primary domain")
     (noindex if "noindex" in robots else indexable).add(page.name)
 
+    if os.environ.get("GYAN_SITE_ROOT") and page.name not in {"quiz-player.html", "study-plan.html"}:
+        if text.count('<header class="site-header">') != 1:
+            errors.append(f"{page.name}: expected a single rendered shared header")
+        if text.count('<footer class="site-footer">') != 1:
+            errors.append(f"{page.name}: expected a single rendered shared footer")
     if "<title>" not in text:
         errors.append(f"{page.name}: missing title")
     if page.name != "404.html" and not get_meta(text, "description"):

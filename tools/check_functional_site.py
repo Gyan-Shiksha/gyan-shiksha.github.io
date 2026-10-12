@@ -120,6 +120,7 @@ def check():
         # Universal catalogue: visible by default, optionally searchable by any grade, subject, type.
         for identifier in ("materials-library", "material-results", "material-summary",
                            "material-browse-controls", "material-standard", "material-subject",
+                           "material-year", "material-year-label",
                            "material-search", "material-reset", "material-load-more", "material-empty"):
             if identifier not in material.ids:
                 errors.append(f"study-material.html: missing universal library #{identifier}")

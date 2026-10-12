@@ -92,6 +92,10 @@ for feed in ("news", "jobs", "materials"):
                               "Image", "Presentation", "Video", "Audio", "Other"}
             if entry.get("category") not in material_types:
                 errors.append(f"{ctx}: unsupported material type; use {', '.join(sorted(material_types))}")
+            if entry.get("year") and not re.fullmatch(r"20\d{2}", str(entry["year"])):
+                errors.append(f"{ctx}: year must be 20XX")
+            if entry.get("board") and entry["board"] not in {"SSC", "HSC", "GSEB", "GSBSTB", "GSET", "Other"}:
+                errors.append(f"{ctx}: unknown board")
             valid_date(entry.get("updated_at"), ctx)
             direct_resource(entry.get("url"), ctx)
         else:

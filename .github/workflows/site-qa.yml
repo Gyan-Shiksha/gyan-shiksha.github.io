@@ -20,6 +20,11 @@ jobs:
           python3 tools/test_bulk_material_import.py
           python3 -m py_compile tools/import_materials_csv.py tools/test_bulk_material_import.py
           node --check assets/js/material-library-v317.js
+      - name: Test private Google Sheet editorial import and validate subject lessons
+        run: |
+          python3 -m py_compile tools/import_editorial_csv.py tools/test_editorial_import.py tools/check_posts.py
+          python3 tools/test_editorial_import.py
+          python3 tools/check_posts.py
       - name: Check approved public feeds and private-folder safety
         run: python3 tools/check_public_feeds.py
       - name: Build sitemap

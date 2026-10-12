@@ -53,7 +53,7 @@ layout: null
   <div class="container narrow">
     <span class="eyebrow">અભ્યાસ માર્ગદર્શન</span>
     <h1>અભ્યાસ માર્ગદર્શન</h1>
-    <p>અભ્યાસ ગોઠવવો, પુનરાવર્તન કરવું, જવાબ લખવાની રીત સુધારવી, ગણિતની પ્રેક્ટિસ કરવી અને પરીક્ષાની તૈયારી કરવી—આ બધું સરળ રીતે સમજાવતી ગુજરાતી માર્ગદર્શિકાઓ.</p>
+    <p>ધોરણ 10 અને 12 માટે અંગ્રેજી, ગણિત, વિજ્ઞાનના પગલાંવાર ઉદાહરણો, જાતે કરવાની પ્રેક્ટિસ અને ચકાસેલા જવાબો. સાથે બોર્ડ પરીક્ષા આયોજન અને અસરકારક પુનરાવર્તન માટે મૂળ ગુજરાતી માર્ગદર્શિકા.</p>
   </div>
 </section>
 
@@ -63,7 +63,7 @@ layout: null
     <!-- New Markdown posts are compiled automatically by GitHub Pages/Jekyll. -->
     {% for post in site.posts %}
     <article class="story-card">
-      <img class="story-thumbnail" src="assets/img/blog-study-plan.svg" alt="અઠવાડિયાની અભ્યાસ યોજના" loading="lazy" width="900" height="560">
+      <img class="story-thumbnail" src="{{ post.image | default: '/assets/img/blog-study-plan.svg' | relative_url | escape }}" alt="{{ post.title | escape }}" loading="lazy" width="900" height="560">
       <div>
         <span class="pill">{{ post.category | default: "અભ્યાસ માર્ગદર્શન" | escape }}</span>
         <h2>{{ post.title | escape }}</h2>

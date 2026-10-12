@@ -13,6 +13,11 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+      - name: Test material publishing, file permissions and URL restrictions
+        run: |
+          python3 -m py_compile tools/add_material.py tools/check_public_feeds.py tools/test_material_publication.py
+          python3 tools/test_material_publication.py
+          node --check assets/js/material-library-v317.js
       - name: Check approved public feeds and private-folder safety
         run: python3 tools/check_public_feeds.py
       - name: Build sitemap

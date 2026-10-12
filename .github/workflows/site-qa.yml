@@ -1,0 +1,26 @@
+name: Gyan Shiksha Website QA
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build sitemap
+        run: python3 tools/build_sitemap.py
+      - name: Run website validation
+        run: python3 tools/validate_site.py
+      - name: Verify generated sitemap is committed
+        run: git diff --exit-code -- sitemap.xml
+      - name: Check Markdown blog layout
+        run: |
+          test -f _config.yml
+          test -f _layouts/post.html
+          test ! -e .nojekyll

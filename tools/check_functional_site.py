@@ -113,9 +113,17 @@ def check():
         errors.append("quiz.html: missing external live Quiz link")
     material = parsed.get((ROOT / "study-material.html").resolve())
     if material:
-        for host in ("drive.google.com", "mega.nz"):
-            if not any(urlsplit(x).hostname == host for _, x in material.refs):
-                errors.append(f"study-material.html: missing {host} folder link")
+        # Only approved file-level results may link to third-party files.
+        # Public master-folder links would expose unrelated content.
+        if not any(s.endswith("assets/js/material-library-v317.js") for s in material.scripts):
+            errors.append("study-material.html: filterable material library script missing")
+        for required in ("material-results", "material-search", "material-standard",
+                         "material-category", "material-provider", "material-empty", "material-reset"):
+            if required not in material.ids:
+                errors.append(f"study-material.html: missing material library element #{required}")
+        if any("drive.google.com/drive/folders/" in x or "mega.nz/folder/" in x
+               for _, x in material.refs):
+            errors.append("study-material.html: must not link directly to public master folders")
 
     # Material should be discoverable even with JavaScript disabled.
     for name in ("index.html", "blog.html", "quiz.html", "games.html", "contact.html"):

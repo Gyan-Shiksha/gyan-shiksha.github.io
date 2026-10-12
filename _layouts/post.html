@@ -56,7 +56,8 @@
       <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%d-%m-%Y" }}</time>
     </div>
   </header>
-  <div class="article-body">
+  <figure class="article-figure"><img src="{{ page.image | default: '/assets/img/blog-study-plan.svg' | relative_url | escape }}" alt="{{ page.title | escape }}" width="900" height="560" loading="eager"><figcaption>Gyan Shiksha · અભ્યાસ માર્ગદર્શન</figcaption></figure>
+<div class="article-body">
     {{ content }}
   </div>
   <aside class="related-guides" aria-label="Related reading">

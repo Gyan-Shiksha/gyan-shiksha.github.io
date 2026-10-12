@@ -16,7 +16,7 @@ Website source:
 - `data/materials.json` → `study-material.html` filtered file-level Library.
 - `assets/js/feeds.js` અને `assets/js/material-library-v317.js` Approved entries જ બતાવે છે.
 
-**હાલ ત્રણેય JSON ફાઇલ ખાલી છે.** ફ્રન્ટએન્ડ તૈયાર છે, LIVE News પબ્લિશિંગ/Pull From Sheet હજી લાગુ નથી. News/Jobs પેજમાં `noindex` છે; ખરેખર original verified entries પ્રકાશિત થયા પછી તેનું Indexing અને Navbar visibility ફરી ચકાસવું.
+**હાલ News અને Jobsના JSON ફીડ ખાલી છે; Materialsમાં ચકાસણીથી પ્રકાશિત વ્યક્તિગત ફાઇલ નોંધો છે.** ફ્રન્ટએન્ડ તૈયાર છે, LIVE News પબ્લિશિંગ/Pull From Sheet હજી લાગુ નથી. News/Jobs પેજમાં `noindex` છે; ખરેખર original verified entries પ્રકાશિત થયા પછી તેનું Indexing અને Navbar visibility ફરી ચકાસવું.
 
 Editorial Sheet (restricted; not published to web):
 https://docs.google.com/spreadsheets/d/1oxTXnrTCqbSQTtyO-428jhq-mk-LhhweWcSYAyHjmq8/edit
@@ -43,7 +43,7 @@ Workflow: Draft → Review → Approved → (manual/publishing job) website JSON
 3. User's own or permitted/copyright-safe resource only. Never upload copyrighted textbook scans without permission.
 4. Each data entry: title, standard (10/12), subject, category, unique direct file URL, updated_at, status=Approved.
 5. Use browser Incognito to verify each individual file opens; changing the HTML or adding iframe doesn't change Google Drive permissions.
-6. If not approved, material stays unpublished. Current JSON [] is intentional—do not add fake file links.
+6. If not approved, material stays unpublished. Only curated, authorised file records should be publicly listed; do not add fake file links.
 
 Example `data/materials.json` row (**template, NOT actual data**):
 ```json
@@ -70,7 +70,7 @@ Do not commit this example to the feed, as it is not a real verified file.
 
 ## 4. Remaining configuration
 - Sheet created for editorial use and shared with official Gyan Shiksha email. Confirm editing access and eventual ownership in the official Google account.
-- Implement/authorize a secure Sheet-to-JSON publish pipeline (restricted Google Sheets access; do NOT expose Google OAuth tokens in the public repository).
+- Private CSV-to-JSON publishing tool `tools/import_editorial_csv.py` and tests are available. Automatic sheet polling is not yet enabled; see `EDITORIAL-CSV-PUBLISHING.md`. Do not expose Google tokens in the public repository.
 - Add real vetted News/Jobs/Material rows; then publish and verify both responsive HTML and official source links.
 - Confirm master Drive folder General Access is Restricted; independently review MEGA public folder share setting.
 - Quiz existing backend remains unchanged; maths questions already present per site owner. Verify by actually running the quiz, including answer accuracy.

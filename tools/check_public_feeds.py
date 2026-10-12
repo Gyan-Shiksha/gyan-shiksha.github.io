@@ -42,7 +42,11 @@ def direct_resource(url, context):
         return
     host = u.hostname.lower().removeprefix("www.")
     path = u.path
-    drive = host == "drive.google.com" and re.fullmatch(r"/file/d/[A-Za-z0-9_-]+(?:/.*)?", path)
+    from urllib.parse import parse_qs
+    drive = host == "drive.google.com" and (
+        re.fullmatch(r"/file/d/[A-Za-z0-9_-]+(?:/.*)?", path) or
+        (path == "/open" and re.fullmatch(r"[A-Za-z0-9_-]+", parse_qs(u.query).get("id", [""])[0]))
+    )
     docs = host == "docs.google.com" and re.fullmatch(
         r"/(?:document|spreadsheets|presentation)/d/[A-Za-z0-9_-]+(?:/.*)?", path
     )
@@ -75,10 +79,19 @@ for feed in ("news", "jobs", "materials"):
         if not entry.get("category"):
             errors.append(f"{ctx}: category required")
         if feed == "materials":
-            if str(entry.get("standard")) not in ("10", "12"):
-                errors.append(f"{ctx}: this curated library currently prioritises standards 10 and 12")
-            if not entry.get("subject"):
+            # Universal catalogue: any grade, board, college, teacher or other category.
+            if not str(entry.get("standard") or "").strip():
+                errors.append(f"{ctx}: standard/category required")
+            if not str(entry.get("subject") or "").strip():
                 errors.append(f"{ctx}: subject required")
+            if not 20 <= len(str(entry.get("description") or "").strip()) <= 500:
+                errors.append(f"{ctx}: add a real 20–500 character description for students")
+            if entry.get("rights_verified") is not True:
+                errors.append(f"{ctx}: rights_verified must be true (owner/copyright reviewed)")
+            material_types = {"Textbook", "Notes", "Question Paper", "Worksheet", "PDF",
+                              "Image", "Presentation", "Video", "Audio", "Other"}
+            if entry.get("category") not in material_types:
+                errors.append(f"{ctx}: unsupported material type; use {', '.join(sorted(material_types))}")
             valid_date(entry.get("updated_at"), ctx)
             direct_resource(entry.get("url"), ctx)
         else:

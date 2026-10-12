@@ -117,18 +117,19 @@ def check():
         # Public master-folder links would expose unrelated content.
         if not any(s.endswith("assets/js/material-library-v317.js") for s in material.scripts):
             errors.append("study-material.html: curated material library script missing")
-        for required in ("std-10-materials", "std-12-materials"):
-            if required not in material.ids:
-                errors.append(f"study-material.html: missing grade section #{required}")
-        for grade in ("10", "12"):
-            for subject in ("math", "science", "english"):
-                identifier = f"material-list-{grade}-{subject}"
-                if identifier not in material.ids:
-                    errors.append(f"study-material.html: missing material section #{identifier}")
-        for removed in ("material-search", "material-standard", "material-category",
-                        "material-provider", "material-reset"):
-            if removed in material.ids:
-                errors.append(f"study-material.html: obsolete search control still visible #{removed}")
+        # Universal catalogue: visible by default, optionally searchable by any grade, subject, type.
+        for identifier in ("materials-library", "material-results", "material-summary",
+                           "material-browse-controls", "material-standard", "material-subject",
+                           "material-search", "material-reset", "material-load-more", "material-empty"):
+            if identifier not in material.ids:
+                errors.append(f"study-material.html: missing universal library #{identifier}")
+        buttons = [attrs for tag, attrs in material.attrs
+                   if tag == "button" and "data-material-kind" in attrs]
+        for kind in ("", "PDF", "Image", "Notes", "Presentation", "Video", "Audio", "Other"):
+            if not any(b["data-material-kind"] == kind for b in buttons):
+                errors.append(f"study-material.html: missing category button {kind or 'All'}")
+        if any("data-material-slot" in attrs for _, attrs in material.attrs):
+            errors.append("study-material.html: grade-specific slots must not restrict universal library")
         if any("drive.google.com/drive/folders/" in x or "mega.nz/folder/" in x
                for _, x in material.refs):
             errors.append("study-material.html: must not link directly to public master folders")

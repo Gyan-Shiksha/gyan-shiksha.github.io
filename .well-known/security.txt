@@ -1,0 +1,5 @@
+Contact: https://gyanshiksha.in/contact.html
+Policy: https://gyanshiksha.in/security.html
+Preferred-Languages: gu, en
+Canonical: https://gyanshiksha.in/.well-known/security.txt
+Expires: 2027-10-07T23:59:59Z

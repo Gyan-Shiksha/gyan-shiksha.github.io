@@ -1,22 +1,29 @@
+---
+layout: null
+---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://adhyapak-saathi.github.io/Gyanshiksha/about.html</loc></url>
-  <url><loc>https://adhyapak-saathi.github.io/Gyanshiksha/blog-answer-writing.html</loc></url>
-  <url><loc>https://adhyapak-saathi.github.io/Gyanshiksha/blog-board-study-plan.html</loc></url>
-  <url><loc>https://adhyapak-saathi.github.io/Gyanshiksha/blog-exam-week.html</loc></url>
-  <url><loc>https://adhyapak-saathi.github.io/Gyanshiksha/blog-math-practice.html</loc></url>
-  <url><loc>https://adhyapak-saathi.github.io/Gyanshiksha/blog-self-test.html</loc></url>
-  <url><loc>https://adhyapak-saathi.github.io/Gyanshiksha/blog-smart-revision.html</loc></url>
-  <url><loc>https://adhyapak-saathi.github.io/Gyanshiksha/blog.html</loc></url>
-  <url><loc>https://adhyapak-saathi.github.io/Gyanshiksha/board-exam.html</loc></url>
-  <url><loc>https://adhyapak-saathi.github.io/Gyanshiksha/contact.html</loc></url>
-  <url><loc>https://adhyapak-saathi.github.io/Gyanshiksha/disclaimer.html</loc></url>
-  <url><loc>https://adhyapak-saathi.github.io/Gyanshiksha/editorial-policy.html</loc></url>
-  <url><loc>https://adhyapak-saathi.github.io/Gyanshiksha/faq.html</loc></url>
-  <url><loc>https://adhyapak-saathi.github.io/Gyanshiksha/games.html</loc></url>
-  <url><loc>https://adhyapak-saathi.github.io/Gyanshiksha/</loc></url>
-  <url><loc>https://adhyapak-saathi.github.io/Gyanshiksha/privacy.html</loc></url>
-  <url><loc>https://adhyapak-saathi.github.io/Gyanshiksha/quiz.html</loc></url>
-  <url><loc>https://adhyapak-saathi.github.io/Gyanshiksha/blog-study-plan.html</loc></url>
-  <url><loc>https://adhyapak-saathi.github.io/Gyanshiksha/terms.html</loc></url>
+  <url><loc>https://gyanshiksha.in/about.html</loc></url>
+  <url><loc>https://gyanshiksha.in/blog-answer-writing.html</loc></url>
+  <url><loc>https://gyanshiksha.in/blog-board-study-plan.html</loc></url>
+  <url><loc>https://gyanshiksha.in/blog-exam-week.html</loc></url>
+  <url><loc>https://gyanshiksha.in/blog-math-practice.html</loc></url>
+  <url><loc>https://gyanshiksha.in/blog-self-test.html</loc></url>
+  <url><loc>https://gyanshiksha.in/blog-smart-revision.html</loc></url>
+  <url><loc>https://gyanshiksha.in/blog-study-plan.html</loc></url>
+  <url><loc>https://gyanshiksha.in/blog.html</loc></url>
+  <url><loc>https://gyanshiksha.in/board-exam.html</loc></url>
+  <url><loc>https://gyanshiksha.in/contact.html</loc></url>
+  <url><loc>https://gyanshiksha.in/disclaimer.html</loc></url>
+  <url><loc>https://gyanshiksha.in/editorial-policy.html</loc></url>
+  <url><loc>https://gyanshiksha.in/faq.html</loc></url>
+  <url><loc>https://gyanshiksha.in/games.html</loc></url>
+  <url><loc>https://gyanshiksha.in/</loc></url>
+  <url><loc>https://gyanshiksha.in/privacy.html</loc></url>
+  <url><loc>https://gyanshiksha.in/quiz.html</loc></url>
+  <url><loc>https://gyanshiksha.in/study-material.html</loc></url>
+  <url><loc>https://gyanshiksha.in/terms.html</loc></url>
+  {% for post in site.posts %}
+  <url><loc>{{ site.url }}{{ post.url }}</loc></url>
+  {% endfor %}
 </urlset>

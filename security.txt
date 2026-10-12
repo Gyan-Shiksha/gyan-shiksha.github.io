@@ -1,5 +1,5 @@
-Contact: https://adhyapak-saathi.github.io/Gyanshiksha/contact.html
-Policy: https://adhyapak-saathi.github.io/Gyanshiksha/security.html
+Contact: https://gyanshiksha.in/contact.html
+Policy: https://gyanshiksha.in/security.html
 Preferred-Languages: gu, en
-Canonical: https://adhyapak-saathi.github.io/Gyanshiksha/.well-known/security.txt
+Canonical: https://gyanshiksha.in/.well-known/security.txt
 Expires: 2027-10-07T23:59:59Z

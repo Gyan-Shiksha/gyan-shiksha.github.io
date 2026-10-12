@@ -4,7 +4,9 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 errors = []
-html_pages = list(ROOT.glob("*.html"))
+SITE_ORIGIN = "https://gyanshiksha.in"
+OLD_SITE_ORIGIN = "https://adhyapak-saathi.github.io/Gyanshiksha"
+html_pages = [p for p in ROOT.glob("*.html") if not re.fullmatch(r"google[0-9a-f]{16}\.html", p.name)]
 
 def get_meta(text, name):
     m = re.search(rf'<meta\s+name="{re.escape(name)}"\s+content="([^"]*)"', text, re.I)
@@ -21,7 +23,21 @@ noindex = set()
 
 for page in html_pages:
     text = page.read_text(encoding="utf-8")
+    if page.name == "study-plan.html":
+        # Intentional noindex redirect stub; full page metadata is unnecessary.
+        if OLD_SITE_ORIGIN in text:
+            errors.append(f"{page.name}: stale old-domain URL")
+        continue
     robots = robots_for(text)
+    if OLD_SITE_ORIGIN in text:
+        errors.append(f"{page.name}: stale old-domain URL")
+    if "noindex" not in robots:
+        canonical = re.search(r'<link\s+rel="canonical"\s+href="([^"]+)"', text, re.I)
+        if canonical and not canonical.group(1).startswith(SITE_ORIGIN + "/"):
+            errors.append(f"{page.name}: canonical is not on the primary domain")
+        og_url = re.search(r'<meta\s+property="og:url"\s+content="([^"]+)"', text, re.I)
+        if og_url and not og_url.group(1).startswith(SITE_ORIGIN + "/"):
+            errors.append(f"{page.name}: og:url is not on the primary domain")
     (noindex if "noindex" in robots else indexable).add(page.name)
 
     if "<title>" not in text:
@@ -80,13 +96,17 @@ for page in html_pages:
     if page.name in {"quiz.html", "quiz-player.html"}:
         if "frame-src https://script.google.com https://script.googleusercontent.com;" not in text:
             errors.append(f"{page.name}: Google Apps Script frame permission missing")
+    elif page.name in {"contact.html", "study-material.html"}:
+        # These forms also allow the dedicated Googleusercontent subdomain.
+        if "frame-src https://script.google.com https://script.googleusercontent.com https://*.googleusercontent.com;" not in text:
+            errors.append(f"{page.name}: approved form frame permission missing")
     else:
         if "frame-src 'none';" not in text:
             errors.append(f"{page.name}: frame-src should be none")
 
     # Unsplash preconnect should exist only where rendered assets use it.
     has_preconnect = 'rel="preconnect" href="https://images.unsplash.com"' in text
-    if page.name in {"index.html", "blog.html"}:
+    if page.name in {"index.html"}:
         if not has_preconnect:
             errors.append(f"{page.name}: Unsplash preconnect missing")
     elif has_preconnect:
@@ -94,7 +114,7 @@ for page in html_pages:
 
 # Specific content-integrity checks.
 index_text = (ROOT / "index.html").read_text(encoding="utf-8")
-for stale in ["Model Papers", "Latest Updates", "study-material.html"]:
+for stale in ["Model Papers", "Latest Updates"]:
     if stale in index_text:
         errors.append(f"index.html: stale/unavailable feature claim -> {stale}")
 
@@ -138,6 +158,17 @@ if sitemap_path.exists():
             errors.append(f"sitemap missing indexable page -> {name}")
 else:
     errors.append("sitemap.xml missing")
+
+# Verify the custom domain and sitemap sources.
+if (ROOT / "CNAME").read_text(encoding="utf-8").strip() != "gyanshiksha.in":
+    errors.append("CNAME must be gyanshiksha.in")
+if sitemap_path.exists():
+    sitemap_source = sitemap_path.read_text(encoding="utf-8")
+    if OLD_SITE_ORIGIN in sitemap_source:
+        errors.append("sitemap: stale old-domain URL")
+    for link in re.findall(r"<loc>([^{}<>]+)</loc>", sitemap_source):
+        if not link.startswith(SITE_ORIGIN + "/"):
+            errors.append(f"sitemap: external canonical URL -> {link}")
 
 # Main navigation must not promote noindex/development pages.
 for page in html_pages:

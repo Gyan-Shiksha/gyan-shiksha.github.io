@@ -1,3 +1,6 @@
+---
+layout: null
+---
 <!doctype html>
 <html lang="gu">
 <head>
@@ -7,14 +10,14 @@
   <meta name="robots" content="index,follow,max-image-preview:large">
   <title>Study Guidance Blog | Gyan Shiksha</title>
   <meta name="description" content="Gujarati Mediumના વિદ્યાર્થીઓ માટે original study guidance, board preparation, revision અને self-test articles.">
-  <link rel="canonical" href="https://adhyapak-saathi.github.io/Gyanshiksha/blog.html">
+  <link rel="canonical" href="https://gyanshiksha.in/blog.html">
   <meta property="og:locale" content="gu_IN">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Gyan Shiksha">
   <meta property="og:title" content="Study Guidance Blog | Gyan Shiksha">
   <meta property="og:description" content="Gujarati Mediumના વિદ્યાર્થીઓ માટે original study guidance, board preparation, revision અને self-test articles.">
-  <meta property="og:url" content="https://adhyapak-saathi.github.io/Gyanshiksha/blog.html">
-  <meta property="og:image" content="https://adhyapak-saathi.github.io/Gyanshiksha/assets/img/og-cover.png">
+  <meta property="og:url" content="https://gyanshiksha.in/blog.html">
+  <meta property="og:image" content="https://gyanshiksha.in/assets/img/og-cover.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -22,7 +25,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Study Guidance Blog | Gyan Shiksha">
   <meta name="twitter:description" content="Gujarati Mediumના વિદ્યાર્થીઓ માટે original study guidance, board preparation, revision અને self-test articles.">
-  <meta name="twitter:image" content="https://adhyapak-saathi.github.io/Gyanshiksha/assets/img/og-cover.png">
+  <meta name="twitter:image" content="https://gyanshiksha.in/assets/img/og-cover.png">
   <meta name="theme-color" content="#0c4f8a">
 
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com; style-src 'self'; script-src 'self' https://www.googletagmanager.com; font-src 'self'; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; upgrade-insecure-requests">
@@ -67,8 +70,6 @@
         <a href="quiz.html">Quiz</a>
         <a href="games.html">Games</a>
         <a href="board-exam.html">Board Exam</a>
-        <a href="updates.html">News</a>
-        <a href="jobs.html">Jobs</a>
         <a href="blog.html">Blog</a>
         <a href="about.html">About</a>
       </nav>
@@ -89,6 +90,19 @@
 <section class="section compact-top">
   <div class="container">
     <div class="story-grid">
+    <!-- New Markdown posts are compiled automatically by GitHub Pages/Jekyll. -->
+    {% for post in site.posts %}
+    <article class="story-card">
+      <div class="story-visual story-visual-plan" aria-hidden="true"><strong>✎</strong><span>શૈક્ષણિક લેખ</span></div>
+      <div>
+        <span class="pill">{{ post.category | default: "અભ્યાસ માર્ગદર્શન" | escape }}</span>
+        <h2>{{ post.title | escape }}</h2>
+        <p>{{ post.summary | default: post.description | escape }}</p>
+        <a class="text-link" href="{{ post.url }}">વાંચો →</a>
+      </div>
+    </article>
+    {% endfor %}
+
 <article class="story-card">
 <div class="story-visual story-visual-plan" aria-hidden="true"><strong>7</strong><span>દૈનિક અભ્યાસ</span></div>
 <div><span class="pill">અભ્યાસ યોજના</span><h2>અઠવાડિયાનો અભ્યાસ કેવી રીતે ગોઠવવો?</h2><p>શાળા અને ટ્યુશન સાથે રોજનો અભ્યાસ, વિરામ અને પુનરાવર્તન માટે સરળ યોજના.</p>

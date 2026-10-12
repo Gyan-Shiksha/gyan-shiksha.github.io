@@ -1,0 +1,16 @@
+# GitHub Pages/Jekyll compiles _posts Markdown into SEO-friendly static pages.
+url: "https://gyanshiksha.in"
+baseurl: ""
+timezone: "Asia/Kolkata"
+markdown: kramdown
+permalink: /blog-:title.html
+include:
+  - .well-known
+exclude:
+  - tools
+  - README.md
+  - BLOG-PUBLISHING.md
+  - QA-REPORT.md
+  - LAUNCH-CHECKLIST.md
+  - MATERIAL-LIBRARY-SETUP-GUJARATI.md
+  - SECURITY.md

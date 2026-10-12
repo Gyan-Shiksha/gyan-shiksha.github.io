@@ -46,3 +46,7 @@ jobs:
           if grep -F -q '{% include site-footer.html %}' _site/blog.html; then exit 1; fi
           grep -F -q 'class="site-header"' _site/index.html
           grep -F -q 'class="site-footer"' _site/blog.html
+      - name: Check all rendered internal links and functional HTML hooks
+        env:
+          GYAN_SITE_ROOT: _site
+        run: python3 tools/check_functional_site.py

@@ -24,3 +24,15 @@ jobs:
           test -f _config.yml
           test -f _layouts/post.html
           test ! -e .nojekyll
+      - name: Render with the GitHub Pages Jekyll builder
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+      - name: Check rendered blog listing and sitemap
+        run: |
+          test -f _site/blog.html
+          test -f _site/sitemap.xml
+          grep -q 'https://gyanshiksha.in/' _site/sitemap.xml
+          if grep -F -q '{% for post in site.posts %}' _site/blog.html; then exit 1; fi
+          if grep -F -q '{{ site.url }}' _site/sitemap.xml; then exit 1; fi

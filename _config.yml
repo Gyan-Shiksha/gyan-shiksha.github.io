@@ -8,6 +8,7 @@ include:
   - .well-known
 exclude:
   - EDITORIAL-PUBLISHING-PLAN.md
+  - EDITORIAL-CSV-PUBLISHING.md
   - tools
   - README.md
   - BLOG-PUBLISHING.md

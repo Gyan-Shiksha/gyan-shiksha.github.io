@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 pages = []
 for p in sorted(ROOT.glob("*.html")):
-    if p.name == "404.html":
+    if p.name == "404.html" or re.fullmatch(r"google[0-9a-f]{16}\.html", p.name):
         continue
     text = p.read_text(encoding="utf-8")
     robots = re.search(r'<meta\s+name="robots"\s+content="([^"]+)"', text, re.I)

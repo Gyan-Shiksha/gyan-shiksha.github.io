@@ -6,7 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 errors = []
 SITE_ORIGIN = "https://gyanshiksha.in"
 OLD_SITE_ORIGIN = "https://adhyapak-saathi.github.io/Gyanshiksha"
-html_pages = list(ROOT.glob("*.html"))
+html_pages = [p for p in ROOT.glob("*.html") if not re.fullmatch(r"google[0-9a-f]{16}\.html", p.name)]
 
 def get_meta(text, name):
     m = re.search(rf'<meta\s+name="{re.escape(name)}"\s+content="([^"]*)"', text, re.I)
@@ -23,6 +23,11 @@ noindex = set()
 
 for page in html_pages:
     text = page.read_text(encoding="utf-8")
+    if page.name == "study-plan.html":
+        # Intentional noindex redirect stub; full page metadata is unnecessary.
+        if OLD_SITE_ORIGIN in text:
+            errors.append(f"{page.name}: stale old-domain URL")
+        continue
     robots = robots_for(text)
     if OLD_SITE_ORIGIN in text:
         errors.append(f"{page.name}: stale old-domain URL")
@@ -88,7 +93,7 @@ for page in html_pages:
                 errors.append(f"{page.name}: external image missing alt -> {src}")
 
     # CSP should be least-privilege for framing.
-    if page.name in {"quiz.html", "quiz-player.html"}:
+    if page.name in {"quiz.html", "quiz-player.html", "contact.html", "study-material.html"}:
         if "frame-src https://script.google.com https://script.googleusercontent.com;" not in text:
             errors.append(f"{page.name}: Google Apps Script frame permission missing")
     else:
@@ -97,7 +102,7 @@ for page in html_pages:
 
     # Unsplash preconnect should exist only where rendered assets use it.
     has_preconnect = 'rel="preconnect" href="https://images.unsplash.com"' in text
-    if page.name in {"index.html", "blog.html"}:
+    if page.name in {"index.html"}:
         if not has_preconnect:
             errors.append(f"{page.name}: Unsplash preconnect missing")
     elif has_preconnect:
@@ -105,7 +110,7 @@ for page in html_pages:
 
 # Specific content-integrity checks.
 index_text = (ROOT / "index.html").read_text(encoding="utf-8")
-for stale in ["Model Papers", "Latest Updates", "study-material.html"]:
+for stale in ["Model Papers", "Latest Updates"]:
     if stale in index_text:
         errors.append(f"index.html: stale/unavailable feature claim -> {stale}")
 

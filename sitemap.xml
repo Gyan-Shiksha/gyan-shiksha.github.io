@@ -10,6 +10,7 @@ layout: null
   <url><loc>https://gyanshiksha.in/blog-math-practice.html</loc></url>
   <url><loc>https://gyanshiksha.in/blog-self-test.html</loc></url>
   <url><loc>https://gyanshiksha.in/blog-smart-revision.html</loc></url>
+  <url><loc>https://gyanshiksha.in/blog-study-plan.html</loc></url>
   <url><loc>https://gyanshiksha.in/blog.html</loc></url>
   <url><loc>https://gyanshiksha.in/board-exam.html</loc></url>
   <url><loc>https://gyanshiksha.in/contact.html</loc></url>
@@ -20,7 +21,7 @@ layout: null
   <url><loc>https://gyanshiksha.in/</loc></url>
   <url><loc>https://gyanshiksha.in/privacy.html</loc></url>
   <url><loc>https://gyanshiksha.in/quiz.html</loc></url>
-  <url><loc>https://gyanshiksha.in/blog-study-plan.html</loc></url>
+  <url><loc>https://gyanshiksha.in/study-material.html</loc></url>
   <url><loc>https://gyanshiksha.in/terms.html</loc></url>
   {% for post in site.posts %}
   <url><loc>{{ site.url }}{{ post.url }}</loc></url>

@@ -4,16 +4,6 @@
   const navToggle = document.querySelector(".nav-toggle");
   const nav = document.querySelector(".main-nav");
 
-  // Keep the Material link consistent across existing page headers.
-  if (nav && !nav.querySelector('a[href="study-material.html"]')) {
-    const materialLink = document.createElement("a");
-    materialLink.href = "study-material.html";
-    materialLink.textContent = "Material";
-    const before = nav.querySelector('a[href="updates.html"]');
-    if (before) before.before(materialLink);
-    else nav.append(materialLink);
-  }
-
   function setNavState(open) {
     if (!nav || !navToggle) return;
     nav.classList.toggle("is-open", open);

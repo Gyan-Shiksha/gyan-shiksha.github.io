@@ -1,0 +1,32 @@
+<header class="site-header">
+  <div class="utility-bar">
+    <div class="container utility-inner">
+      <span>Learn • Practice • Progress</span>
+      <nav aria-label="Utility navigation">
+        <a href="updates.html">News</a>
+        <a href="jobs.html">Jobs</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </div>
+  <div class="main-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Gyan Shiksha Home">
+        <img src="assets/img/logo.svg" width="46" height="46" alt="">
+        <div><strong>Gyan Shiksha</strong><small>Students' Learning Portal</small></div>
+      </a>
+      <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="main-nav" class="main-nav" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="games.html">Games</a>
+        <a href="board-exam.html">Board Exam</a>
+        {% if page.url == "/study-material.html" %}<a href="study-material.html">Material</a>{% endif %}
+        <a href="blog.html">Blog</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </div>
+</header>

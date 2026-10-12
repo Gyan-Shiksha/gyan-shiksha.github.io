@@ -68,3 +68,35 @@ Materials tabમાં લખો:
 - `tools/check_public_feeds.py`: Universal standard, subject, file type, HTTPS safe provider, copyright approval.
 - `tools/test_material_publication.py`: અલગ sandboxમાં Good/Bad/Folder/URL/Permission ટેસ્ટ.
 - `tools/check_functional_site.py`: Rendered HTML, Browse/Filters અને Internal Navigation ચકાસે છે.
+
+
+## SSC/HSC જૂના પ્રશ્નપત્રો અને GSEB પુસ્તકો: Bulk Import
+
+સ્ક્રીનશોટમાં BOARD'S OLD PAPERS → SSC / HSC → 2023, 2024, 2025, 2026; અને GSEB TEXTBOOKS → ધોરણ 1–12 દેખાય છે. આ ગોઠવણી મુજબ વ્યક્તિગત PDF લિંક્સ ઉમેરો. ધોરણ 11 અને 12નાં Textbook ફોલ્ડર Screenshotમાં ખાલી (0 B) છે.
+
+**મુખ્ય નિયમ:** માત્ર ફોલ્ડરનું નામ દેખાવાથી દરેક PDFનું નામ અથવા વ્યક્તિગત શેર લિંક મળી જતી નથી. મુખ્ય MEGA Folder Share Link આખા સંગ્રહને જાહેર કરે છે, તેથી તેને વેબસાઇટમાં મૂકવું નહીં.
+
+### પોતાની ખાનગી CSV તૈયાર કરો
+
+CSVની પહેલી Row (Header):
+
+    title,standard,subject,category,description,url,rights_confirmed,viewer_checked,rights_basis,board,year
+
+એક PDF માટે એક Row: title = સાચું શીર્ષક; standard = SSC/HSC/1–12 વગેરે; subject = ગણિત/વિજ્ઞાન વગેરે; category = Textbook, Question Paper, Notes, PDF, Image, Worksheet, Presentation, Video, Audio અથવા Other; description = મૂળ 20–500 અક્ષરની માહિતી; url = MEGA અથવા Google Driveની **વ્યક્તિગત file link**; rights_confirmed = yes માત્ર કાયદેસરની મંજૂરી હોય તો; viewer_checked = yes ફાઇલ Incognitoમાં ખુલે તો; rights_basis = original, written_permission, open_license, public_domain અથવા authorized_link; board = SSC/HSC/GSEB/GSBSTB/GSET/Other (વૈકલ્પિક); year = 2023, 2024 વગેરે (વૈકલ્પિક).
+
+**Internet પર છે એટલે કૉપિરાઇટ નથી એવું નથી.** Publisherની ફરી વહેંચવાની મંજૂરી / લાઇસન્સનો સાચો આધાર રાખો. GSEBનાં કેટલાક Textbooksમાં લેખિત પરવાનગીની જરૂર હોય છે. સત્તાવાર PDFના મૂળ પ્રકાશકની લિંક આપવી ઘણી વાર વધુ સલામત છે.
+
+MEGA વેબસાઇટમાં પોતાની દરેક ફાઇલ → ⋯ → Get Link કરીને individual link લો. મોટા સંગ્રહ માટે MEGAની સત્તાવાર MEGAcmd UserGuideમાં mega-find અને mega-exportની પદ્ધતિ છે: https://github.com/meganz/MEGAcmd/blob/master/UserGuide.md
+
+### ખાનગી CSVમાંથી સામગ્રી પ્રકાશિત કરવી
+
+CSVને GitHub Public Repoમાં Upload ન કરો. Computer પર approved_materials.csv Save કરો. Repo Cloneની અંદર Python 3થી ચલાવો:
+
+    python3 tools/import_materials_csv.py /path/to/approved_materials.csv
+    python3 tools/check_public_feeds.py
+
+Importer આખી Batch પહેલાં Validate કરે છે: Folder Links, ખોટા Domain, અધૂરી મંજૂરી અથવા ફાઇલ ન ખૂલવાની વિગતો હોય તો કંઈ પ્રકાશિત કરતું નથી. Duplicate URLs ફરીથી ઉમેરાતાં નથી. તૈયાર JSONને અલગ Branch/PRમાં QA પાસ કર્યા પછી જ Merge કરવો.
+
+કોઈ MEGA Password, Recovery Key અથવા Login Token ChatGPT/CSV/GitHubમાં મૂકશો નહીં. CSVમાં વિદ્યાર્થીની વ્યક્તિગત માહિતી ન રાખવી.
+
+વેબસાઇટમાં જ Year Filter ફક્ત સાચી Published Entriesમાં year હોય ત્યારે જ દેખાશે. સંગ્રહમાં PDF હાજર નથી ત્યાં ખોટા Download બટન નહીં દેખાય.

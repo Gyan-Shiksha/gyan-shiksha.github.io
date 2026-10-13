@@ -1,0 +1,57 @@
+{
+  "note_gu": "અહીંની લિંક્સ હજુ Live Study Materialમાં પ્રકાશિત નથી. વપરાશકર્તાએ ધોરણ 3ની હોવાની પુષ્ટિ કરી છે. MEGAની અંદરના પુસ્તકનાં નામ/વિષય ઉપલબ્ધ સત્રમાં તપાસી શકાયાં નથી. મૂળ કવર/PDF અથવા વિશ્વસનીય મેટાડેટા વાંચીને જ data/materials.jsonમાં Approved એન્ટ્રી પ્રકાશિત કરવી. વિષય કે શીર્ષકનો અંદાજ લગાવવો નહીં.",
+  "grade": "3",
+  "publication_status": "pending_file_metadata",
+  "files": [
+    {
+      "item": 1,
+      "url": "https://mega.nz/file/ei4l2JBD#wdpf6ES_lTu1860AbPYbxuRjMP93ez62jSSxBxHt4Fo",
+      "grade": "3",
+      "original_title": null,
+      "subject": null,
+      "description": null,
+      "verified_from_file": false,
+      "notes": "Check original PDF/book cover; do not publish placeholder listing."
+    },
+    {
+      "item": 2,
+      "url": "https://mega.nz/file/DqxGHSpb#6BZdyv3QqaM9elHyIHOXN-vDhr2Ii5pyBAKy2lYsdhU",
+      "grade": "3",
+      "original_title": null,
+      "subject": null,
+      "description": null,
+      "verified_from_file": false,
+      "notes": "Check original PDF/book cover; do not publish placeholder listing."
+    },
+    {
+      "item": 3,
+      "url": "https://mega.nz/file/Kmoi1CgQ#bRTMW5b5EWTKLbx5d1P_pdHDWZamRLL43dD1Vhq7c5U",
+      "grade": "3",
+      "original_title": null,
+      "subject": null,
+      "description": null,
+      "verified_from_file": false,
+      "notes": "Check original PDF/book cover; do not publish placeholder listing."
+    },
+    {
+      "item": 4,
+      "url": "https://mega.nz/file/jr5RwBhA#5DC-4iJwcWBBnnzjBu6N79DsugJnpt_X6u-_Xzf6urI",
+      "grade": "3",
+      "original_title": null,
+      "subject": null,
+      "description": null,
+      "verified_from_file": false,
+      "notes": "Check original PDF/book cover; do not publish placeholder listing."
+    },
+    {
+      "item": 5,
+      "url": "https://mega.nz/file/ezRxDY5K#v4i17V0VihZeabUCSAhWj_bBhOyZ7a5lB6vUNV4W-Cw",
+      "grade": "3",
+      "original_title": null,
+      "subject": null,
+      "description": null,
+      "verified_from_file": false,
+      "notes": "Check original PDF/book cover; do not publish placeholder listing."
+    }
+  ]
+}

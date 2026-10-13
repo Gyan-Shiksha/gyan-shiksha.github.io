@@ -1,7 +1,7 @@
 {
-  "note_gu": "અહીંની લિંક્સ હજુ Live Study Materialમાં પ્રકાશિત નથી. વપરાશકર્તાએ ધોરણ 3ની હોવાની પુષ્ટિ કરી છે. MEGAની અંદરના પુસ્તકનાં નામ/વિષય ઉપલબ્ધ સત્રમાં તપાસી શકાયાં નથી. મૂળ કવર/PDF અથવા વિશ્વસનીય મેટાડેટા વાંચીને જ data/materials.jsonમાં Approved એન્ટ્રી પ્રકાશિત કરવી. વિષય કે શીર્ષકનો અંદાજ લગાવવો નહીં.",
+  "note_gu": "વપરાશકર્તાએ MEGA ફોલ્ડરનો સ્ક્રીનશોટ આપ્યો જેમાં ધોરણ 3નાં 5 અલગ અલગ પુસ્તકોનાં નામ અને કવર સ્પષ્ટ દેખાય છે. પાંચ MEGA લિંક્સ અલગથી આપવામાં આવી હતી. સ્ક્રીનશોટમાં Link ID દેખાતા ન હોવાથી કયું પુસ્તક કઈ લિંક સાથે જોડાય છે તેની પુષ્ટિ બાકી છે. અંધાધૂંધીમાં ડાબેથી જમણે ક્રમને Link order માનીને Live publish કરશો નહીં.",
   "grade": "3",
-  "publication_status": "pending_file_metadata",
+  "publication_status": "pending_confirmed_url_to_book_mapping",
   "files": [
     {
       "item": 1,
@@ -11,7 +11,8 @@
       "subject": null,
       "description": null,
       "verified_from_file": false,
-      "notes": "Check original PDF/book cover; do not publish placeholder listing."
+      "notes": "Link valid format; no accessible MEGA file metadata. Confirm which screenshot book this exact URL corresponds to before publishing.",
+      "mapping_verified": false
     },
     {
       "item": 2,
@@ -21,7 +22,8 @@
       "subject": null,
       "description": null,
       "verified_from_file": false,
-      "notes": "Check original PDF/book cover; do not publish placeholder listing."
+      "notes": "Link valid format; no accessible MEGA file metadata. Confirm which screenshot book this exact URL corresponds to before publishing.",
+      "mapping_verified": false
     },
     {
       "item": 3,
@@ -31,7 +33,8 @@
       "subject": null,
       "description": null,
       "verified_from_file": false,
-      "notes": "Check original PDF/book cover; do not publish placeholder listing."
+      "notes": "Link valid format; no accessible MEGA file metadata. Confirm which screenshot book this exact URL corresponds to before publishing.",
+      "mapping_verified": false
     },
     {
       "item": 4,
@@ -41,7 +44,8 @@
       "subject": null,
       "description": null,
       "verified_from_file": false,
-      "notes": "Check original PDF/book cover; do not publish placeholder listing."
+      "notes": "Link valid format; no accessible MEGA file metadata. Confirm which screenshot book this exact URL corresponds to before publishing.",
+      "mapping_verified": false
     },
     {
       "item": 5,
@@ -51,7 +55,37 @@
       "subject": null,
       "description": null,
       "verified_from_file": false,
-      "notes": "Check original PDF/book cover; do not publish placeholder listing."
+      "notes": "Link valid format; no accessible MEGA file metadata. Confirm which screenshot book this exact URL corresponds to before publishing.",
+      "mapping_verified": false
     }
-  ]
+  ],
+  "screenshot_book_list_left_to_right": [
+    {
+      "filename": "અંગ્રેજી.pdf",
+      "subject": "અંગ્રેજી (દ્વિતીય ભાષા)",
+      "title": "ધોરણ 3 — અંગ્રેજી (દ્વિતીય ભાષા) પાઠ્યપુસ્તક"
+    },
+    {
+      "filename": "ગણિત.pdf",
+      "subject": "ગણિત",
+      "title": "ધોરણ 3 — ગણિત પાઠ્યપુસ્તક"
+    },
+    {
+      "filename": "ગુજરાતી.pdf",
+      "subject": "ગુજરાતી",
+      "title": "ધોરણ 3 — ગુજરાતી પાઠ્યપુસ્તક"
+    },
+    {
+      "filename": "પર્યાવરણ.pdf",
+      "subject": "પર્યાવરણ",
+      "title": "ધોરણ 3 — પર્યાવરણ પાઠ્યપુસ્તક"
+    },
+    {
+      "filename": "પ્રોજેક્ટ બુક.pdf",
+      "subject": "પ્રોજેક્ટ કાર્ય",
+      "title": "ધોરણ 3 — પ્રોજેક્ટ બુક"
+    }
+  ],
+  "url_order_corresponds_to_screenshot_order": null,
+  "next_action": "Ask owner if the five MEGA links were pasted in exactly the same order as the five screenshot book tiles left to right; if confirmed, map items 1..5 to screenshot_book_list_left_to_right 1..5 and publish properly titled materials.json items."
 }

@@ -1,0 +1,9 @@
+{
+  "source_grade": "12",
+  "source_filename": "book-147.pdf",
+  "source_screenshot_position": 1,
+  "user_supplied_file_url": "https://mega.nz/file/bnhkTBKY#MjJqEZCl0a7CMUb9guUxYDZ3CtBSbK2WKkwGWrk-hjc",
+  "publication_status": "pending_exact_book_title_and_subject_verification",
+  "reason_gu": "MEGA ફોલ્ડર સ્ક્રીનશોટમાં ફાઇલનું નામ ફક્ત book-147.pdf દેખાય છે. અંદરનું PDF કવર અથવા વિષય અહીં ઉપલબ્ધ નથી. ખોટું પુસ્તકનામ કે વિષય પ્રકાશિત ન થાય તે માટે આ લિંક હાલ સાઇટનાં જાહેર મટિરિયલમાં મૂકવી નહીં.",
+  "next_action_gu": "વપરાશકર્તાને book-147.pdf ના કવરનો ફોટો અથવા ચોક્કસ વિષય/મૂળ નામ પૂછો. ત્યાર પછી એન્ટ્રી data/materials.json માં ઉમેરો અને QA તથા Deployment ચકાસો."
+}

@@ -91,16 +91,16 @@ async function main() {
   assert.equal(status.textContent, "પેજ 1 / " + totalPages);
   assert.equal(prev.disabled, true);
   assert.equal(next.disabled, false);
-  assert.match(field("material-summary").textContent, /144/);
+  assert.ok(field("material-summary").textContent.includes("કુલ " + rows.length + " સામગ્રી"), "Summary must reflect dynamic record total");
   assert.equal(results.children[0].children.length, 5, "Card title, description, compact metadata and open link");
   assert.equal(results.children[0].children[4].target, "_blank");
   assert.equal(results.children[0].children[4].rel, "noopener noreferrer nofollow");
 
   next.click();
-  assert.equal(status.textContent, "પેજ 2 / 24", "Next works");
+  assert.equal(status.textContent, "પેજ 2 / " + totalPages, "Next works");
   assert.equal(prev.disabled, false);
   prev.click();
-  assert.equal(status.textContent, "પેજ 1 / 24", "Previous works");
+  assert.equal(status.textContent, "પેજ 1 / " + totalPages, "Previous works");
   const last = pageBtns.children.find(x => x.textContent === String(totalPages));
   assert.ok(last, "Direct final-page number should exist");
   last.click();

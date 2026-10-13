@@ -43,6 +43,31 @@ with tempfile.TemporaryDirectory(prefix="gyan-materials-test-") as name:
     assert len(records) == 1 and records[0]["standard"] == "7"
     assert records[0]["category"] == "Image" and records[0]["rights_verified"] is True
 
+    year_meta = run(
+        root,
+        INPUT_TITLE="ધોરણ 10 ગણિત પાઠ્યપુસ્તક 2026",
+        INPUT_STANDARD="10",
+        INPUT_CATEGORY="Textbook",
+        INPUT_URL="https://mega.nz/file/TestYearSpecific#TestPublicDecryptionKey",
+        INPUT_BOARD="GSEB",
+        INPUT_YEAR="2026",
+    )
+    assert year_meta.returncode == 0, year_meta.stderr
+    records = json.loads(data.read_text(encoding="utf-8"))
+    assert records[0]["board"] == "GSEB" and records[0]["year"] == "2026"
+
+    assert run(
+        root, INPUT_TITLE="ખોટું વર્ષ ધરાવતી ફાઇલ",
+        INPUT_URL="https://mega.nz/file/WrongYear#ViewerKey",
+        INPUT_YEAR="20x6",
+    ).returncode != 0, "invalid edition year must fail"
+    assert run(
+        root, INPUT_TITLE="ખોટું બોર્ડ ધરાવતી ફાઇલ",
+        INPUT_URL="https://mega.nz/file/WrongBoard#ViewerKey",
+        INPUT_BOARD="NotARealBoard",
+    ).returncode != 0, "invalid board must fail"
+    assert len(json.loads(data.read_text(encoding="utf-8"))) == 2, "invalid metadata must not publish"
+
     assert run(root).returncode != 0, "duplicate file must fail"
     assert run(root, INPUT_URL="https://drive.google.com/drive/folders/PrivateFolder_A",
                INPUT_TITLE="Private Folder Link").returncode != 0, "Drive folder must fail"

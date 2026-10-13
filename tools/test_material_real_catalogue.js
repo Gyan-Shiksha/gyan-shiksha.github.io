@@ -208,40 +208,67 @@ async function main() {
   // Std 10 now has SSC 2023 Question Papers as well as Grade 10 textbooks.
   standard.value = "10"; standard.change();
   assert.equal(year.value, "", "Changing grade clears irrelevant old year");
-  assert.deepEqual(Array.from(year.children, x => x.value).filter(Boolean), ["2024", "2023"],
-    "SSC Question Paper year dropdown includes only years with SSC papers");
-  const ssc2023 = rows.filter(x => x.category === "Question Paper" &&
-    x.standard === "10" && x.year === "2023" && x.board === "SSC");
-  const ssc2024 = rows.filter(x => x.category === "Question Paper" &&
-    x.standard === "10" && x.year === "2024" && x.board === "SSC");
-  assert.equal(ssc2023.length, 7, "Keep exactly seven SSC 2023 question papers");
-  assert.equal(ssc2024.length, 8, "Expect exactly eight SSC 2024 question papers");
-  assert.equal(new Set(ssc2024.map(x => x.subject)).size, 8, "Basic and Standard Maths remain separate subjects");
-  assert.equal(status.textContent, "પેજ 1 / 3", "15 SSC papers produce 3 pages before year selection");
+  const sscPapers = rows.filter(x => x.category === "Question Paper" && x.standard === "10" && x.board === "SSC");
+  const ssc2023 = sscPapers.filter(x => x.year === "2023");
+  const ssc2024 = sscPapers.filter(x => x.year === "2024");
+  const ssc2025 = sscPapers.filter(x => x.year === "2025");
+  assert.equal(ssc2023.length, 7, "Keep all seven SSC 2023 papers");
+  assert.equal(ssc2024.length, 8, "Retain all eight SSC 2024 question papers");
+  assert.equal(new Set(ssc2024.map(x => x.subject)).size, 8, "SSC 2024 Basic and Standard Maths stay separate");
+  assert.equal(ssc2025.length, 13, "Expect all thirteen SSC 2025 papers");
+  assert.deepEqual(Array.from(year.children, x => x.value).filter(Boolean),
+    [...new Set(sscPapers.map(x => x.year))].sort((a,b)=>b.localeCompare(a)),
+    "SSC year dropdown shows only years with actual SSC papers");
+  assert.equal(status.textContent, "પેજ 1 / " + Math.ceil(sscPapers.length / 6),
+    "All SSC papers get correct combined pagination");
+  const availableSubjects = new Set(sscPapers.map(x => x.subject));
+  assert.deepEqual(new Set(Array.from(subject.children, x => x.value).filter(Boolean)), availableSubjects,
+    "SSC subject dropdown only displays actual SSC subjects");
   year.value = "2023"; year.change();
-  assert.equal(status.textContent, "પેજ 1 / 2", "Seven SSC 2023 papers produce 2 pages");
-  assert.equal(results.children.length, 6, "SSC 2023 page one shows six papers");
-  next.click();
-  assert.equal(results.children.length, 1, "SSC 2023 last page shows one paper");
-  assert.equal(next.disabled, true, "SSC next disabled on final page");
-  prev.click();
-  assert.equal(status.textContent, "પેજ 1 / 2", "SSC 2023 previous button works");
-  const paperSubjects = new Set(ssc2023.map(x => x.subject));
-  assert.deepEqual(new Set(Array.from(subject.children, x => x.value).filter(Boolean)),
-    new Set([...paperSubjects,...ssc2024.map(x => x.subject)]),
-    "SSC subject menu includes subjects from both available years");
+  assert.equal(status.textContent, "પેજ 1 / 2", "Seven SSC 2023 papers produce two pages");
+  assert.equal(results.children.length, 6);
+  next.click(); assert.equal(results.children.length, 1, "SSC 2023 last page has one paper");
+  assert.equal(next.disabled, true);
+  prev.click(); assert.equal(status.textContent, "પેજ 1 / 2");
+
   year.value = "2024"; year.change();
-  assert.equal(status.textContent, "પેજ 1 / 2", "Eight SSC 2024 papers produce 2 pages");
-  assert.equal(results.children.length, 6, "SSC 2024 page one shows six papers");
+  assert.equal(status.textContent, "પેજ 1 / 2", "Eight SSC 2024 papers produce two pages");
+  assert.equal(results.children.length, 6);
   next.click();
-  assert.equal(results.children.length, 2, "SSC 2024 final page shows two papers");
-  assert.equal(next.disabled, true, "SSC 2024 next disabled on final page");
+  assert.equal(results.children.length, 2, "SSC 2024 last page shows two");
+  assert.equal(next.disabled, true);
   prev.click();
   assert.equal(status.textContent, "પેજ 1 / 2", "SSC 2024 previous works");
-  subject.value = "ગણિત (Standard)"; subject.change();
-  assert.equal(results.children.length, 1, "Standard Maths filter isolates its paper");
   subject.value = "ગણિત (Basic)"; subject.change();
-  assert.equal(results.children.length, 1, "Basic Maths filter isolates its paper");
+  assert.equal(results.children.length, 1, "2024 Basic Mathematics isolated");
+  subject.value = "ગણિત (Standard)"; subject.change();
+  assert.equal(results.children.length, 1, "2024 Standard Mathematics isolated");
+  subject.value = ""; subject.change();
+  year.value = "2025"; year.change();
+  assert.equal(status.textContent, "પેજ 1 / 3", "Thirteen SSC 2025 papers produce three pages");
+  assert.equal(results.children.length, 6);
+  next.click(); assert.equal(status.textContent, "પેજ 2 / 3");
+  assert.equal(results.children.length, 6);
+  next.click(); assert.equal(status.textContent, "પેજ 3 / 3");
+  assert.equal(results.children.length, 1, "SSC 2025 last page has exactly one paper");
+  assert.equal(next.disabled, true);
+  prev.click(); assert.equal(status.textContent, "પેજ 2 / 3", "SSC 2025 back button works");
+  year.value = "2023"; year.change();
+  assert.equal(status.textContent, "પેજ 1 / 2", "Changing year resets pagination");
+  year.value = "2025"; year.change();
+  const months = [["જુલાઈ —", 5], ["જૂન —", 1], ["માર્ચ —", 1]];
+  for (const [name, amount] of months) {
+    field("material-search").value = name;
+    field("material-search").input();
+    assert.equal(results.children.length, amount, "SSC 2025 month search: " + name);
+    assert.equal(nav.hidden, true, "A single-session search fits one page");
+  }
+  field("material-search").value = "";
+  field("material-search").input();
+  subject.value = "ગણિત (Basic)"; subject.change();
+  assert.equal(results.children.length, 2, "June and July Basic Maths remain separate papers");
+  subject.value = "ગણિત (Standard)"; subject.change();
+  assert.equal(results.children.length, 2, "July and unspecified-month Standard Maths remain separate");
   subject.value = ""; subject.change();
   standard.value = ""; standard.change();
 

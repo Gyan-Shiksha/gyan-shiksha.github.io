@@ -34,6 +34,14 @@ on:
         description: "ફાઇલમાં શું છે? વિદ્યાર્થીઓને ઉપયોગી 20+ અક્ષરની માહિતી"
         required: true
         type: string
+      board:
+        description: "બોર્ડ (વૈકલ્પિક) - GSEB, GSBSTB, HSC, SSC, GSET, Other"
+        required: false
+        type: string
+      year:
+        description: "પુસ્તકની આવૃત્તિનું વર્ષ (વૈકલ્પિક), જેમ કે 2026; અપલોડની તારીખ નહીં"
+        required: false
+        type: string
       url:
         description: "માત્ર વ્યક્તિગત Google Drive / Google Docs / MEGA ફાઇલની Viewer link"
         required: true
@@ -68,6 +76,8 @@ jobs:
           INPUT_SUBJECT: ${{ inputs.subject }}
           INPUT_CATEGORY: ${{ inputs.category }}
           INPUT_DESCRIPTION: ${{ inputs.description }}
+          INPUT_BOARD: ${{ inputs.board }}
+          INPUT_YEAR: ${{ inputs.year }}
           INPUT_URL: ${{ inputs.url }}
           INPUT_RIGHTS_CONFIRMED: ${{ inputs.rights_confirmed }}
         run: python3 tools/add_material.py

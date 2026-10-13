@@ -9,7 +9,7 @@
 **https://github.com/Gyan-Shiksha/gyan-shiksha.github.io/actions/workflows/publish-material.yml**
 
 1. પોતાની GitHub એકાઉન્ટથી Login કરો. Repository માં Workflow ચલાવવાની પરવાનગી હોવી જોઈએ.
-2. ઉપરની લિંક → **Run workflow** → Branch **main** → **Run workflow** ક્લિક કરવાથી ફોર્મ ખુલશે.
+2. ઉપરની લિંક ખોલો → જમણે **Run workflow** દબાવો → Branch **main** પસંદ કરો; પછી વિગતો ભરવાનું ફોર્મ દેખાશે.
 3. નીચેના ખાના ભરો:
    - **title:** ગુજરાતી શીર્ષક (દા.ત. `ધોરણ 8 — ગુજરાતી પાઠ્યપુસ્તક`).
    - **standard:** `1` થી `12`, અથવા ચોક્કસ અભ્યાસક્રમ (દા.ત. `Teacher`, `GSET / સ્પર્ધાત્મક પરીક્ષા`). એકસરખું નામ રાખવું.

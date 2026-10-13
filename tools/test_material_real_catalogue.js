@@ -117,7 +117,10 @@ async function main() {
   assert.equal(results.children.length, grade12Total % 6 || 6, "Last Grade 12 page remains bounded");
   assert.equal(next.disabled, true);
   assert.ok(year.children.some(x => x.value === "2024"), "Grade 12 should offer 2024");
-  assert.ok(!year.children.some(x => x.value === "2026"), "Do not offer unrelated years for selected grade");
+  const grade12Years = new Set(rows.filter(x => x.standard === "12" && x.status === "Approved")
+    .map(x => x.year).filter(Boolean));
+  assert.deepEqual(new Set(Array.from(year.children, x => x.value).filter(Boolean)), grade12Years,
+    "Grade 12 year selector lists only available years, including new 2026 papers");
 
   standard.value = "10";
   standard.change();

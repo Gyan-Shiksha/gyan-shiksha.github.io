@@ -208,23 +208,41 @@ async function main() {
   // Std 10 now has SSC 2023 Question Papers as well as Grade 10 textbooks.
   standard.value = "10"; standard.change();
   assert.equal(year.value, "", "Changing grade clears irrelevant old year");
-  assert.deepEqual(Array.from(year.children, x => x.value).filter(Boolean), ["2023"],
-    "SSC Question Paper year dropdown includes only 2023");
+  assert.deepEqual(Array.from(year.children, x => x.value).filter(Boolean), ["2024", "2023"],
+    "SSC Question Paper year dropdown includes only years with SSC papers");
   const ssc2023 = rows.filter(x => x.category === "Question Paper" &&
     x.standard === "10" && x.year === "2023" && x.board === "SSC");
-  assert.equal(ssc2023.length, 7, "Exactly seven SSC 2023 question papers");
+  const ssc2024 = rows.filter(x => x.category === "Question Paper" &&
+    x.standard === "10" && x.year === "2024" && x.board === "SSC");
+  assert.equal(ssc2023.length, 7, "Keep exactly seven SSC 2023 question papers");
+  assert.equal(ssc2024.length, 8, "Expect exactly eight SSC 2024 question papers");
+  assert.equal(new Set(ssc2024.map(x => x.subject)).size, 8, "Basic and Standard Maths remain separate subjects");
+  assert.equal(status.textContent, "પેજ 1 / 3", "15 SSC papers produce 3 pages before year selection");
+  year.value = "2023"; year.change();
   assert.equal(status.textContent, "પેજ 1 / 2", "Seven SSC 2023 papers produce 2 pages");
-  assert.equal(results.children.length, 6, "SSC page one shows six papers");
+  assert.equal(results.children.length, 6, "SSC 2023 page one shows six papers");
   next.click();
-  assert.equal(results.children.length, 1, "SSC last page shows one paper");
+  assert.equal(results.children.length, 1, "SSC 2023 last page shows one paper");
   assert.equal(next.disabled, true, "SSC next disabled on final page");
   prev.click();
-  assert.equal(status.textContent, "પેજ 1 / 2", "SSC previous button works");
-  year.value = "2023"; year.change();
-  assert.equal(results.children.length, 6, "SSC selected 2023 still shows six per page");
+  assert.equal(status.textContent, "પેજ 1 / 2", "SSC 2023 previous button works");
   const paperSubjects = new Set(ssc2023.map(x => x.subject));
   assert.deepEqual(new Set(Array.from(subject.children, x => x.value).filter(Boolean)),
-    paperSubjects, "SSC dropdown includes only relevant paper subjects");
+    new Set([...paperSubjects,...ssc2024.map(x => x.subject)]),
+    "SSC subject menu includes subjects from both available years");
+  year.value = "2024"; year.change();
+  assert.equal(status.textContent, "પેજ 1 / 2", "Eight SSC 2024 papers produce 2 pages");
+  assert.equal(results.children.length, 6, "SSC 2024 page one shows six papers");
+  next.click();
+  assert.equal(results.children.length, 2, "SSC 2024 final page shows two papers");
+  assert.equal(next.disabled, true, "SSC 2024 next disabled on final page");
+  prev.click();
+  assert.equal(status.textContent, "પેજ 1 / 2", "SSC 2024 previous works");
+  subject.value = "ગણિત (Standard)"; subject.change();
+  assert.equal(results.children.length, 1, "Standard Maths filter isolates its paper");
+  subject.value = "ગણિત (Basic)"; subject.change();
+  assert.equal(results.children.length, 1, "Basic Maths filter isolates its paper");
+  subject.value = ""; subject.change();
   standard.value = ""; standard.change();
 
   categories.find(x => x.dataset.materialKind === "PDF").click();

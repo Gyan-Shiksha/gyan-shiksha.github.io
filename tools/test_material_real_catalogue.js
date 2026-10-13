@@ -91,16 +91,16 @@ async function main() {
   assert.equal(status.textContent, "પેજ 1 / " + totalPages);
   assert.equal(prev.disabled, true);
   assert.equal(next.disabled, false);
-  assert.match(field("material-summary").textContent, /144/);
+  assert.ok(field("material-summary").textContent.includes("કુલ " + rows.length + " સામગ્રી"), "Summary must reflect dynamic record total");
   assert.equal(results.children[0].children.length, 5, "Card title, description, compact metadata and open link");
   assert.equal(results.children[0].children[4].target, "_blank");
   assert.equal(results.children[0].children[4].rel, "noopener noreferrer nofollow");
 
   next.click();
-  assert.equal(status.textContent, "પેજ 2 / 24", "Next works");
+  assert.equal(status.textContent, "પેજ 2 / " + totalPages, "Next works");
   assert.equal(prev.disabled, false);
   prev.click();
-  assert.equal(status.textContent, "પેજ 1 / 24", "Previous works");
+  assert.equal(status.textContent, "પેજ 1 / " + totalPages, "Previous works");
   const last = pageBtns.children.find(x => x.textContent === String(totalPages));
   assert.ok(last, "Direct final-page number should exist");
   last.click();
@@ -137,18 +137,43 @@ async function main() {
 
   standard.value = "12";
   standard.change();
+  // Restrict to textbooks first: adding HSC Geography papers should not
+  // make a textbook-only Geography search include those question papers.
+  categories.find(x => x.dataset.materialKind === "Textbook").click();
   subject.value = "ભૂગોળ";
   subject.change();
-  assert.equal(results.children.length, 1);
-  assert.equal(yearLabel.hidden, true, "Hide year filter when subject has no dated records");
+  const geographyTextbooks = rows.filter(x =>
+    x.category === "Textbook" && x.standard === "12" && x.subject === "ભૂગોળ");
+  assert.equal(results.children.length, geographyTextbooks.length);
+  assert.equal(yearLabel.hidden,
+    !geographyTextbooks.some(x => /^20\d{2}$/.test(x.year || "")),
+    "Year filter visibility follows matching textbook editions");
 
   categories.find(x => x.dataset.materialKind === "Question Paper").click();
   assert.deepEqual(Array.from(standard.children, x => x.value), ["", "12"],
     "Question Paper grade selector must show only Std 12, not GSET or Teacher");
   assert.equal(standard.value, "12", "Preserve a grade if it has relevant material");
-  assert.equal(subject.value, "", "Category change clears incompatible subject");
+  assert.equal(subject.value, "ભૂગોળ", "Category change preserves a subject when papers in that subject exist");
+  assert.ok(subject.children.some(x => x.value === "ભૂગોળ"), "Geography must appear among HSC 2024 paper subjects");
+  subject.value = ""; subject.change();
   assert.equal(status.textContent, "પેજ 1 / " + Math.ceil(grade12QuestionPapers / 6), "Question paper page count");
-  assert.ok(!subject.children.some(x => x.value === "ભૂગોળ"), "Subject list is category-aware");
+
+  // HSC old papers must be browseable by year without mixing years.
+  const hsc2024 = rows.filter(x => x.category === "Question Paper" && x.standard === "12" && x.year === "2024");
+  const hsc2023 = rows.filter(x => x.category === "Question Paper" && x.standard === "12" && x.year === "2023");
+  assert.ok(hsc2024.length >= 17, "At least 17 HSC 2024 papers expected");
+  assert.ok(hsc2023.length >= 12, "Keep all pre-existing HSC 2023 papers");
+  assert.ok(year.children.some(x => x.value === "2023"), "2023 remains available");
+  assert.ok(year.children.some(x => x.value === "2024"), "2024 is offered for the new HSC papers");
+  year.value = "2024"; year.change();
+  assert.equal(status.textContent, "પેજ 1 / " + Math.ceil(hsc2024.length / 6), "HSC 2024 paper page count");
+  assert.equal(results.children.length, 6, "First HSC 2024 page bounded to 6");
+  for (let page = 1; page < Math.ceil(hsc2024.length / 6); page++) next.click();
+  assert.equal(results.children.length, hsc2024.length % 6 || 6, "Last HSC 2024 paper page");
+  year.value = "2023"; year.change();
+  assert.equal(status.textContent, "પેજ 1 / " + Math.ceil(hsc2023.length / 6), "2023 year remains independently filterable");
+  year.value = ""; year.change();
+
   // Changing a category from an incompatible grade must reset the grade
   // rather than silently return zero results.
   standard.value = "2";

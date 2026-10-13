@@ -59,7 +59,14 @@ def main():
     subject = clean("INPUT_SUBJECT", 80)
     category = clean("INPUT_CATEGORY", 30)
     description = clean("INPUT_DESCRIPTION", 500, 20)
+    board = clean("INPUT_BOARD", 8, 0)
+    year = clean("INPUT_YEAR", 4, 0)
     url = clean("INPUT_URL", 900, 20)
+
+    if board not in {"", "GSEB", "GSBSTB", "HSC", "SSC", "GSET", "Other"}:
+        raise SystemExit("INPUT_BOARD: choose GSEB, GSBSTB, HSC, SSC, GSET, Other or leave blank")
+    if year and not re.fullmatch(r"20\d{2}", year):
+        raise SystemExit("INPUT_YEAR: use an edition year from 2000–2099 or leave blank")
 
     if category not in KINDS:
         raise SystemExit("Unsupported material category")
@@ -81,6 +88,8 @@ def main():
         "category": category,
         "description": description,
         "url": url,
+        **({"board": board} if board else {}),
+        **({"year": year} if year else {}),
         "updated_at": date.today().isoformat(),
         "status": "Approved",
         "rights_verified": True

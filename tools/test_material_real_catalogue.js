@@ -137,10 +137,17 @@ async function main() {
 
   standard.value = "12";
   standard.change();
+  // Restrict to textbooks first: adding HSC Geography papers should not
+  // make a textbook-only Geography search include those question papers.
+  categories.find(x => x.dataset.materialKind === "Textbook").click();
   subject.value = "ભૂગોળ";
   subject.change();
-  assert.equal(results.children.length, 1);
-  assert.equal(yearLabel.hidden, true, "Hide year filter when subject has no dated records");
+  const geographyTextbooks = rows.filter(x =>
+    x.category === "Textbook" && x.standard === "12" && x.subject === "ભૂગોળ");
+  assert.equal(results.children.length, geographyTextbooks.length);
+  assert.equal(yearLabel.hidden,
+    !geographyTextbooks.some(x => /^20\d{2}$/.test(x.year || "")),
+    "Year filter visibility follows matching textbook editions");
 
   categories.find(x => x.dataset.materialKind === "Question Paper").click();
   assert.deepEqual(Array.from(standard.children, x => x.value), ["", "12"],

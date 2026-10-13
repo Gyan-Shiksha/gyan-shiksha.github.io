@@ -115,13 +115,14 @@ def check():
     if material:
         # Only approved file-level results may link to third-party files.
         # Public master-folder links would expose unrelated content.
-        if not any(s.endswith("assets/js/material-library-v317.js") for s in material.scripts):
+        if not any(s.split("?", 1)[0].endswith("assets/js/material-library-v317.js") for s in material.scripts):
             errors.append("study-material.html: curated material library script missing")
         # Universal catalogue: visible by default, optionally searchable by any grade, subject, type.
         for identifier in ("materials-library", "material-results", "material-summary",
                            "material-browse-controls", "material-standard", "material-subject",
                            "material-year", "material-year-label",
-                           "material-search", "material-reset", "material-load-more", "material-empty"):
+                           "material-search", "material-reset", "material-pagination", "material-page-numbers",
+                           "material-prev-page", "material-next-page", "material-page-status", "material-empty"):
             if identifier not in material.ids:
                 errors.append(f"study-material.html: missing universal library #{identifier}")
         buttons = [attrs for tag, attrs in material.attrs

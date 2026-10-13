@@ -20,8 +20,8 @@ layout: null
 <script src="assets/js/analytics.js"></script>
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="icon" type="image/svg+xml" href="assets/img/logo.svg"><link rel="manifest" href="site.webmanifest"><link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon-180.png">
-<link rel="stylesheet" href="assets/css/main.css"><link rel="stylesheet" href="assets/css/forms-v316.css"><link rel="stylesheet" href="assets/css/material-library-v317.css">
-<script defer src="assets/js/app.js"></script><script defer src="assets/js/forms-v316.js"></script><script defer src="assets/js/material-library-v317.js"></script>
+<link rel="stylesheet" href="assets/css/main.css"><link rel="stylesheet" href="assets/css/forms-v316.css"><link rel="stylesheet" href="assets/css/material-library-v317.css?v=318">
+<script defer src="assets/js/app.js"></script><script defer src="assets/js/forms-v316.js"></script><script defer src="assets/js/material-library-v317.js?v=318"></script>
 </head><body><a class="skip-link" href="#main">Skip to content</a>
 {% include site-header.html %}
 <main id="main">
@@ -80,8 +80,13 @@ layout: null
       </div>
     </div>
 
-    <div id="material-results" class="material-results" aria-live="polite" aria-busy="true"></div>
-    <button type="button" id="material-load-more" class="material-load-more" hidden>વધુ ફાઇલો જુઓ ↓</button>
+    <div id="material-results" class="material-results" role="region" tabindex="-1" aria-label="અભ્યાસ સામગ્રીનાં પરિણામો" aria-busy="true"></div>
+    <nav id="material-pagination" class="material-pagination" aria-label="અભ્યાસ સામગ્રીનાં પેજ" hidden>
+      <button id="material-prev-page" class="material-nav-btn" type="button" aria-label="અગાઉનું પેજ">← પાછળ</button>
+      <div id="material-page-numbers" class="material-page-numbers" aria-label="પેજ પસંદ કરો"></div>
+      <button id="material-next-page" class="material-nav-btn" type="button" aria-label="આગળનું પેજ">આગળ →</button>
+      <span id="material-page-status" class="material-page-status"></span>
+    </nav>
 
     <div id="material-empty" class="material-empty" hidden>
       <h3 id="material-empty-title">હાલ સામગ્રી ઉપલબ્ધ નથી</h3>

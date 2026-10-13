@@ -24,7 +24,7 @@
   const types = Object.freeze({
     "Notes": "📝 નોટ્સ", "Question Paper": "📋 પ્રશ્નપત્ર",
     "Worksheet": "✏️ વર્કશીટ", "Textbook": "📘 પુસ્તક",
-    "PDF": "📄 PDF", "Image": "🖼️ ફોટો / ચાર્ટ",
+    "PDF": "📄 અન્ય PDF", "Image": "🖼️ ફોટો / ચાર્ટ",
     "Presentation": "📊 પ્રેઝન્ટેશન", "Video": "🎬 વિડિયો",
     "Audio": "🎧 ઑડિયો", "Other": "📂 અન્ય"
   });
@@ -89,8 +89,12 @@
     const title = el("h3", "", item.title);
     const desc = el("p", "material-resource-description", item.description ||
       "આ ફાઇલની વિગતો જોવા માટે નીચેની લિંક ખોલો.");
+    const gradeLabel = /^\d+$/.test(item.standard) ? "ધોરણ " + item.standard :
+      (item.standard === "General" ? "સામાન્ય" : item.standard);
+    // Upload date is not an edition date: it added noise to every card.
+    // All GSEB items already appear in the same curated educational catalogue.
     const meta = el("div", "material-resource-meta",
-      [item.standard === "General" ? "સામાન્ય" : item.standard, item.board, item.subject, item.year, item.date].filter(Boolean).join(" · "));
+      [gradeLabel, item.board && item.board !== "GSEB" ? item.board : "", item.subject, item.year].filter(Boolean).join(" · "));
     const open = el("a", "material-action", "ફાઇલ જુઓ ↗");
     open.href = item.url; open.target = "_blank"; open.rel = "noopener noreferrer nofollow";
     open.setAttribute("aria-label", item.title + " — ફાઇલ જુઓ");
@@ -116,8 +120,21 @@
 
   function updateSubjectOptions() {
     const previous = subject.value;
-    const subset = all.filter(item => !grade.value || item.standard === grade.value);
+    const subset = all.filter(item =>
+      (!grade.value || item.standard === grade.value) &&
+      (!selectedKind || item.category === selectedKind));
     fillSelect(subject, [...new Set(subset.map(x => x.subject))].sort((a,b)=>a.localeCompare(b,"gu")), "બધા વિષય", previous);
+  }
+
+  function updateYearOptions() {
+    const previous = year.value;
+    const subset = all.filter(item =>
+      (!grade.value || item.standard === grade.value) &&
+      (!selectedKind || item.category === selectedKind) &&
+      (!subject.value || item.subject === subject.value));
+    const years = [...new Set(subset.map(x => x.year).filter(Boolean))].sort((a,b)=>b.localeCompare(a));
+    fillSelect(year, years, "બધાં વર્ષ", previous);
+    yearLabel.hidden = !years.length;
   }
 
   function filteredItems() {
@@ -210,17 +227,20 @@
         b.classList.toggle("is-active", active);
         b.setAttribute("aria-pressed", String(active));
       }
+      updateSubjectOptions();
+      updateYearOptions();
       currentPage = 1;
       update();
     });
   });
-  grade.addEventListener("change", () => {updateSubjectOptions();currentPage=1;update();});
-  subject.addEventListener("change", () => {currentPage=1;update();});
+  grade.addEventListener("change", () => {updateSubjectOptions();updateYearOptions();currentPage=1;update();});
+  subject.addEventListener("change", () => {updateYearOptions();currentPage=1;update();});
   year.addEventListener("change", () => {currentPage=1;update();});
   search.addEventListener("input", () => {currentPage=1;update();});
   reset.addEventListener("click", () => {
     grade.value = ""; year.value = ""; search.value = ""; selectedKind = ""; currentPage=1;
     updateSubjectOptions();subject.value="";
+    updateYearOptions();
     for (const button of kindButtons) {
       const active = !button.dataset.materialKind;
       button.classList.toggle("is-active", active);
@@ -254,9 +274,7 @@
       fillSelect(grade, [...new Set(all.map(x=>x.standard))].sort((a,b)=>
         /^\d+$/.test(a) && /^\d+$/.test(b) ? Number(a)-Number(b) : a.localeCompare(b,"gu")), "બધાં ધોરણ", "");
       updateSubjectOptions();
-      const years = [...new Set(all.map(item => item.year).filter(Boolean))].sort((a,b)=>b.localeCompare(a));
-      yearLabel.hidden = !years.length;
-      fillSelect(year, years, "બધાં વર્ષ", "");
+      updateYearOptions();
       const present = new Set(all.map(item => item.category));
       for (const button of kindButtons) {
         button.hidden = !!button.dataset.materialKind && !present.has(button.dataset.materialKind);

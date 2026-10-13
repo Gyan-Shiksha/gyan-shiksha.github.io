@@ -1,5 +1,71 @@
 [
   {
+    "title": "ધોરણ 4 — અંગ્રેજી પાઠ્યપુસ્તક",
+    "standard": "4",
+    "subject": "અંગ્રેજી",
+    "category": "Textbook",
+    "description": "ધોરણ 4ના અંગ્રેજી વિષયનું પાઠ્યપુસ્તક (અંગ્રેજી.pdf). વાંચન, શબ્દભંડોળ અને પાઠ આધારિત અભ્યાસ માટે મૂળ પુસ્તકની PDF જુઓ.",
+    "url": "https://mega.nz/file/m6YSkI7Q#hoTCtjkTlxMRt4SYqRgQ11qGo2fjuNpF2UL1gGH1dEc",
+    "updated_at": "2026-10-13",
+    "status": "Approved",
+    "rights_verified": true
+  },
+  {
+    "title": "ધોરણ 4 — ગણિત પાઠ્યપુસ્તક",
+    "standard": "4",
+    "subject": "ગણિત",
+    "category": "Textbook",
+    "description": "ધોરણ 4ના ગણિત વિષયનું પાઠ્યપુસ્તક (ગણિત.pdf). દાખલાઓ, ગણિતીય સંકલ્પનાઓ અને વર્ગકાર્ય માટે મૂળ PDFનો ઉપયોગ કરો.",
+    "url": "https://mega.nz/file/irhBWJqT#Yh8GiRcXxKtjoD9CLV7sYqR6CHxEq4WWVmymCEeA4ys",
+    "updated_at": "2026-10-13",
+    "status": "Approved",
+    "rights_verified": true
+  },
+  {
+    "title": "ધોરણ 4 — ગુજરાતી પાઠ્યપુસ્તક",
+    "standard": "4",
+    "subject": "ગુજરાતી",
+    "category": "Textbook",
+    "description": "ધોરણ 4ના ગુજરાતી વિષયનું પાઠ્યપુસ્તક (ગુજરાતી.pdf). પાઠવાંચન, ભાષા અભ્યાસ અને સ્વઅભ્યાસ માટે મૂળ PDF જુઓ.",
+    "url": "https://mega.nz/file/unh1CZgB#wf7AhVCX5zv97bcPqeAUlsWsbdEfhagqJSfZCqELzf0",
+    "updated_at": "2026-10-13",
+    "status": "Approved",
+    "rights_verified": true
+  },
+  {
+    "title": "ધોરણ 4 — પર્યાવરણ પાઠ્યપુસ્તક",
+    "standard": "4",
+    "subject": "પર્યાવરણ",
+    "category": "Textbook",
+    "description": "ધોરણ 4ના પર્યાવરણ વિષયનું પાઠ્યપુસ્તક (પર્યાવરણ.pdf). આસપાસના પર્યાવરણ વિશેના પાઠ વાંચવા અને શૈક્ષણિક પ્રવૃત્તિઓ માટે PDF જુઓ.",
+    "url": "https://mega.nz/file/DuogwaBD#Zxp2wG-dhETmnARJYoLdUUUVuzbUDwBTXrO0DQATkJA",
+    "updated_at": "2026-10-13",
+    "status": "Approved",
+    "rights_verified": true
+  },
+  {
+    "title": "ધોરણ 4 — પ્રોજેક્ટ બુક",
+    "standard": "4",
+    "subject": "પ્રોજેક્ટ કાર્ય",
+    "category": "Textbook",
+    "description": "ધોરણ 4ની પ્રોજેક્ટ બુક (પ્રોજેક્ટ બુક.pdf). શાળાના પ્રોજેક્ટ અને પ્રવૃત્તિ આધારિત અભ્યાસ માટે આ PDFનો સંદર્ભ લો.",
+    "url": "https://mega.nz/file/vmpB3LRD#nwzmRbLZqoS8EDkGiTde3tCUj-rA_i5yYPLoKX8YyAc",
+    "updated_at": "2026-10-13",
+    "status": "Approved",
+    "rights_verified": true
+  },
+  {
+    "title": "ધોરણ 4 — હિન્દી પાઠ્યપુસ્તક",
+    "standard": "4",
+    "subject": "હિન્દી",
+    "category": "Textbook",
+    "description": "ધોરણ 4ના હિન્દી વિષયનું પાઠ્યપુસ્તક (હિન્દી.pdf). ભાષા વાંચન, શબ્દભંડોળ અને પાઠની તૈયારી માટે મૂળ PDF જુઓ.",
+    "url": "https://mega.nz/file/u25CjaxI#7BIS0szzdgUu9DWUj8Be-B71r9eBzaFFCDO7HFEK4JA",
+    "updated_at": "2026-10-13",
+    "status": "Approved",
+    "rights_verified": true
+  },
+  {
     "title": "ધોરણ 2 — પાઠ્યપુસ્તક (પુસ્તક 1)",
     "standard": "2",
     "subject": "વિષયની પુષ્ટિ બાકી",

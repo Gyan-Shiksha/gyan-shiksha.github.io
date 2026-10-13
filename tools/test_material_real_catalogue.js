@@ -128,8 +128,18 @@ async function main() {
   assert.ok(year.children.some(x => x.value === "2026"));
   year.value = "2026";
   year.change();
-  assert.equal(results.children.length, grade10Year2026, "Grade 10 year filter matches actual records");
-  assert.equal(nav.hidden, true, "No pager when <= 6 results");
+  assert.equal(status.textContent, "પેજ 1 / " + Math.ceil(grade10Year2026 / 6),
+    "Grade 10 year 2026 page count matches real books plus papers");
+  assert.equal(results.children.length, Math.min(6, grade10Year2026),
+    "Never show more than six results on a Grade 10 year page");
+  assert.equal(nav.hidden, grade10Year2026 <= 6, "Pager appears only when results exceed six");
+  if (grade10Year2026 > 6) {
+    next.click();
+    assert.equal(results.children.length, Math.min(6, grade10Year2026 - 6),
+      "Grade 10 year 2026 next page renders remaining material");
+    prev.click();
+    assert.equal(status.textContent, "પેજ 1 / " + Math.ceil(grade10Year2026 / 6));
+  }
 
   standard.value = "2";
   standard.change();

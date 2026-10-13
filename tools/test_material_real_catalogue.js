@@ -149,6 +149,23 @@ async function main() {
   assert.equal(subject.value, "", "Category change clears incompatible subject");
   assert.equal(status.textContent, "પેજ 1 / " + Math.ceil(grade12QuestionPapers / 6), "Question paper page count");
   assert.ok(!subject.children.some(x => x.value === "ભૂગોળ"), "Subject list is category-aware");
+
+  // HSC old papers must be browseable by year without mixing years.
+  const hsc2024 = rows.filter(x => x.category === "Question Paper" && x.standard === "12" && x.year === "2024");
+  const hsc2023 = rows.filter(x => x.category === "Question Paper" && x.standard === "12" && x.year === "2023");
+  assert.ok(hsc2024.length >= 17, "At least 17 HSC 2024 papers expected");
+  assert.ok(hsc2023.length >= 12, "Keep all pre-existing HSC 2023 papers");
+  assert.ok(year.children.some(x => x.value === "2023"), "2023 remains available");
+  assert.ok(year.children.some(x => x.value === "2024"), "2024 is offered for the new HSC papers");
+  year.value = "2024"; year.change();
+  assert.equal(status.textContent, "પેજ 1 / " + Math.ceil(hsc2024.length / 6), "HSC 2024 paper page count");
+  assert.equal(results.children.length, 6, "First HSC 2024 page bounded to 6");
+  for (let page = 1; page < Math.ceil(hsc2024.length / 6); page++) next.click();
+  assert.equal(results.children.length, hsc2024.length % 6 || 6, "Last HSC 2024 paper page");
+  year.value = "2023"; year.change();
+  assert.equal(status.textContent, "પેજ 1 / " + Math.ceil(hsc2023.length / 6), "2023 year remains independently filterable");
+  year.value = ""; year.change();
+
   // Changing a category from an incompatible grade must reset the grade
   // rather than silently return zero results.
   standard.value = "2";

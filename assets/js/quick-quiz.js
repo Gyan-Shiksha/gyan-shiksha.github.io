@@ -31,6 +31,7 @@ const QUESTIONS = {
 ]
 };
 if (typeof module !== "undefined" && module.exports) module.exports = QUESTIONS;
+if (typeof document === "undefined") return;
 const root=document.getElementById("quick-quiz-app");
 if(!root)return;
 const grade=document.getElementById("quick-grade");

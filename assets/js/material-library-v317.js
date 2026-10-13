@@ -13,9 +13,13 @@
   const emptyTitle = document.getElementById("material-empty-title");
   const emptyMessage = document.getElementById("material-empty-message");
   const error = document.getElementById("material-error");
-  const more = document.getElementById("material-load-more");
+  const pagination = document.getElementById("material-pagination");
+  const pageNumbers = document.getElementById("material-page-numbers");
+  const prevPage = document.getElementById("material-prev-page");
+  const nextPage = document.getElementById("material-next-page");
+  const pageStatus = document.getElementById("material-page-status");
   const kindButtons = [...document.querySelectorAll("[data-material-kind]")];
-  if (!results || !summary || !controls || !grade || !subject || !year || !yearLabel || !search || !reset) return;
+  if (!results || !summary || !controls || !grade || !subject || !year || !yearLabel || !search || !reset || !pagination || !pageNumbers || !prevPage || !nextPage || !pageStatus || !empty || !error) return;
 
   const types = Object.freeze({
     "Notes": "📝 નોટ્સ", "Question Paper": "📋 પ્રશ્નપત્ર",
@@ -94,7 +98,8 @@
     return card;
   }
 
-  let all = [], selectedKind = "", visibleCount = 12;
+  const PAGE_SIZE = 6; // Maximum two rows on desktop; bounded on every device.
+  let all = [], selectedKind = "", currentPage = 1;
   const norm = str => clean(str).toLocaleLowerCase("gu-IN");
 
   function fillSelect(select, values, firstLabel, preferred) {
@@ -126,9 +131,60 @@
         types[item.category]].join(" ")).includes(term)));
   }
 
+  function openPage(page) {
+    const pages = Math.ceil(filteredItems().length / PAGE_SIZE);
+    if (page < 1 || page > pages || page === currentPage) return;
+    currentPage = page;
+    update();
+    // On page change, move the visitor to the newly shown cards.
+    results.focus({ preventScroll: true });
+    results.scrollIntoView({ block: "start", behavior: "auto" });
+  }
+
+  function updatePagination(pages) {
+    pagination.hidden = pages <= 1;
+    if (pages <= 1) {
+      pageNumbers.replaceChildren();
+      pageStatus.textContent = "";
+      return;
+    }
+    prevPage.disabled = currentPage === 1;
+    nextPage.disabled = currentPage === pages;
+    pageStatus.textContent = "પેજ " + currentPage + " / " + pages;
+
+    const visiblePages = pages <= 7
+      ? Array.from({ length: pages }, (_, i) => i + 1)
+      : [...new Set([1, pages, currentPage - 1, currentPage, currentPage + 1]
+        .filter(n => n >= 1 && n <= pages))].sort((a, b) => a - b);
+    const nodes = [];
+    let last = 0;
+    for (const number of visiblePages) {
+      if (last && number - last > 1) {
+        const dots = el("span", "material-page-gap", "…");
+        dots.setAttribute("aria-hidden", "true");
+        nodes.push(dots);
+      }
+      const button = el("button", "material-page-btn", String(number));
+      button.type = "button";
+      button.setAttribute("aria-label", "પેજ " + number + " જુઓ");
+      if (number === currentPage) {
+        button.classList.add("is-active");
+        button.setAttribute("aria-current", "page");
+      }
+      button.addEventListener("click", () => openPage(number));
+      nodes.push(button);
+      last = number;
+    }
+    pageNumbers.replaceChildren(...nodes);
+  }
+
   function update() {
     const filtered = filteredItems();
-    results.replaceChildren(...filtered.slice(0,visibleCount).map(fileCard));
+    const pages = Math.ceil(filtered.length / PAGE_SIZE);
+    currentPage = Math.min(currentPage, Math.max(1, pages));
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const shown = filtered.slice(start, start + PAGE_SIZE);
+    results.replaceChildren(...shown.map(fileCard));
     results.setAttribute("aria-busy", "false");
     const noMatch = all.length && !filtered.length;
     empty.hidden = !noMatch;
@@ -136,10 +192,13 @@
       emptyTitle.textContent = "આ પસંદગીમાં સામગ્રી નથી";
       emptyMessage.textContent = "બીજો વિષય અથવા ધોરણ પસંદ કરો, અથવા ‘બધું ફરી જુઓ’ દબાવો.";
     }
-    summary.textContent = filtered.length === all.length
-      ? "કુલ " + all.length + " ફાઇલો"
+    const countText = filtered.length === all.length
+      ? "કુલ " + all.length + " સામગ્રી"
       : filtered.length + " સામગ્રી મળી · કુલ " + all.length;
-    if (more) more.hidden = filtered.length <= visibleCount;
+    summary.textContent = shown.length
+      ? countText + " · " + (start + 1) + "–" + (start + shown.length) + " બતાવેલ"
+      : countText;
+    updatePagination(pages);
     error.hidden = true;
   }
 
@@ -151,16 +210,16 @@
         b.classList.toggle("is-active", active);
         b.setAttribute("aria-pressed", String(active));
       }
-      visibleCount = 12;
+      currentPage = 1;
       update();
     });
   });
-  grade.addEventListener("change", () => {updateSubjectOptions();visibleCount=12;update();});
-  subject.addEventListener("change", () => {visibleCount=12;update();});
-  year.addEventListener("change", () => {visibleCount=12;update();});
-  search.addEventListener("input", () => {visibleCount=12;update();});
+  grade.addEventListener("change", () => {updateSubjectOptions();currentPage=1;update();});
+  subject.addEventListener("change", () => {currentPage=1;update();});
+  year.addEventListener("change", () => {currentPage=1;update();});
+  search.addEventListener("input", () => {currentPage=1;update();});
   reset.addEventListener("click", () => {
-    grade.value = ""; year.value = ""; search.value = ""; selectedKind = ""; visibleCount=12;
+    grade.value = ""; year.value = ""; search.value = ""; selectedKind = ""; currentPage=1;
     updateSubjectOptions();subject.value="";
     for (const button of kindButtons) {
       const active = !button.dataset.materialKind;
@@ -169,7 +228,8 @@
     }
     update();
   });
-  if (more) more.addEventListener("click", () => { visibleCount+=12;update(); });
+  prevPage.addEventListener("click", () => openPage(currentPage - 1));
+  nextPage.addEventListener("click", () => openPage(currentPage + 1));
 
   results.setAttribute("aria-busy", "true");
   fetch("data/materials.json", {cache:"no-store"})
@@ -182,6 +242,7 @@
         seen.add(item.url);return true;
       }).sort((a,b)=>b.date.localeCompare(a.date));
       if (!all.length) {
+        pagination.hidden = true;
         summary.textContent = "હાલ સામગ્રી ઉપલબ્ધ નથી";
         empty.hidden = false;
         emptyTitle.textContent = "નવી અભ્યાસ સામગ્રી ટૂંક સમયમાં";
@@ -205,6 +266,7 @@
     .catch(() => {
       results.setAttribute("aria-busy","false");
       summary.textContent = "સામગ્રીની સૂચિ ઉપલબ્ધ નથી";
+      pagination.hidden = true;
       error.hidden = false;empty.hidden=true;
     });
 })();

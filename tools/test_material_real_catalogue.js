@@ -210,8 +210,11 @@ async function main() {
   assert.equal(year.value, "", "Changing grade clears irrelevant old year");
   const sscPapers = rows.filter(x => x.category === "Question Paper" && x.standard === "10" && x.board === "SSC");
   const ssc2023 = sscPapers.filter(x => x.year === "2023");
+  const ssc2024 = sscPapers.filter(x => x.year === "2024");
   const ssc2025 = sscPapers.filter(x => x.year === "2025");
   assert.equal(ssc2023.length, 7, "Keep all seven SSC 2023 papers");
+  assert.equal(ssc2024.length, 8, "Retain all eight SSC 2024 question papers");
+  assert.equal(new Set(ssc2024.map(x => x.subject)).size, 8, "SSC 2024 Basic and Standard Maths stay separate");
   assert.equal(ssc2025.length, 13, "Expect all thirteen SSC 2025 papers");
   assert.deepEqual(Array.from(year.children, x => x.value).filter(Boolean),
     [...new Set(sscPapers.map(x => x.year))].sort((a,b)=>b.localeCompare(a)),
@@ -228,6 +231,19 @@ async function main() {
   assert.equal(next.disabled, true);
   prev.click(); assert.equal(status.textContent, "પેજ 1 / 2");
 
+  year.value = "2024"; year.change();
+  assert.equal(status.textContent, "પેજ 1 / 2", "Eight SSC 2024 papers produce two pages");
+  assert.equal(results.children.length, 6);
+  next.click();
+  assert.equal(results.children.length, 2, "SSC 2024 last page shows two");
+  assert.equal(next.disabled, true);
+  prev.click();
+  assert.equal(status.textContent, "પેજ 1 / 2", "SSC 2024 previous works");
+  subject.value = "ગણિત (Basic)"; subject.change();
+  assert.equal(results.children.length, 1, "2024 Basic Mathematics isolated");
+  subject.value = "ગણિત (Standard)"; subject.change();
+  assert.equal(results.children.length, 1, "2024 Standard Mathematics isolated");
+  subject.value = ""; subject.change();
   year.value = "2025"; year.change();
   assert.equal(status.textContent, "પેજ 1 / 3", "Thirteen SSC 2025 papers produce three pages");
   assert.equal(results.children.length, 6);

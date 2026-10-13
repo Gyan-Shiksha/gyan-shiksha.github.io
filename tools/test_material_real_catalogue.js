@@ -117,7 +117,10 @@ async function main() {
   assert.equal(results.children.length, grade12Total % 6 || 6, "Last Grade 12 page remains bounded");
   assert.equal(next.disabled, true);
   assert.ok(year.children.some(x => x.value === "2024"), "Grade 12 should offer 2024");
-  assert.ok(!year.children.some(x => x.value === "2026"), "Do not offer unrelated years for selected grade");
+  const grade12Years = new Set(rows.filter(x => x.standard === "12" && x.status === "Approved")
+    .map(x => x.year).filter(Boolean));
+  assert.deepEqual(new Set(Array.from(year.children, x => x.value).filter(Boolean)), grade12Years,
+    "Grade 12 year selector lists only available years, including new 2026 papers");
 
   standard.value = "10";
   standard.change();
@@ -159,15 +162,27 @@ async function main() {
   assert.equal(status.textContent, "પેજ 1 / " + Math.ceil(grade12QuestionPapers / 6), "Question paper page count");
 
   // HSC old papers must be browseable by year without mixing years.
+  const hsc2026 = rows.filter(x => x.category === "Question Paper" && x.standard === "12" && x.year === "2026");
   const hsc2025 = rows.filter(x => x.category === "Question Paper" && x.standard === "12" && x.year === "2025");
   const hsc2024 = rows.filter(x => x.category === "Question Paper" && x.standard === "12" && x.year === "2024");
   const hsc2023 = rows.filter(x => x.category === "Question Paper" && x.standard === "12" && x.year === "2023");
+  assert.equal(hsc2026.length, 9, "Expect nine HSC 2026 board papers");
   assert.equal(hsc2025.length, 16, "Expect exactly 16 new HSC 2025 papers");
   assert.ok(hsc2024.length >= 17, "At least 17 HSC 2024 papers expected");
   assert.ok(hsc2023.length >= 12, "Keep all pre-existing HSC 2023 papers");
   assert.ok(year.children.some(x => x.value === "2023"), "2023 remains available");
   assert.ok(year.children.some(x => x.value === "2024"), "2024 is offered for the HSC papers");
-  assert.ok(year.children.some(x => x.value === "2025"), "2025 is offered for the new HSC papers");
+  assert.ok(year.children.some(x => x.value === "2025"), "2025 is offered for the HSC papers");
+  assert.ok(year.children.some(x => x.value === "2026"), "2026 is offered for the new HSC papers");
+  year.value = "2026"; year.change();
+  assert.equal(status.textContent, "પેજ 1 / " + Math.ceil(hsc2026.length / 6), "HSC 2026 paper page count");
+  assert.equal(results.children.length, 6, "First 2026 paper page renders only six");
+  next.click();
+  assert.equal(status.textContent, "પેજ 2 / 2", "HSC 2026 next page works");
+  assert.equal(results.children.length, 3, "HSC 2026 has three results on its last page");
+  assert.equal(next.disabled, true, "2026 next disabled on last page");
+  prev.click();
+  assert.equal(status.textContent, "પેજ 1 / 2", "HSC 2026 back button works");
   year.value = "2025"; year.change();
   assert.equal(status.textContent, "પેજ 1 / " + Math.ceil(hsc2025.length / 6), "HSC 2025 year count");
   assert.equal(results.children.length, 6, "First HSC 2025 page bounded to six cards");
@@ -223,7 +238,7 @@ async function main() {
   assert.equal(subject.value, "");
   assert.equal(year.value, "");
 
-  console.log("HSC 2025 has three pages; 2023 and 2024 remain independently filterable.");
+  console.log("HSC 2026 nine papers across two pages; 2023, 2024 and 2025 remain independently filterable.");
   console.log("PASS: " + rows.length + " real records, no URL duplicates, " + totalPages + " numbered pages, forward/back, last-page bounds, grade 12 (" + grade12Total + "), grade 10 years, grade 2, cascading subject/year/category, search/reset and safe external links.");
 }
 main().catch(e => { console.error(e); process.exitCode = 1; });

@@ -153,9 +153,10 @@ async function main() {
   assert.deepEqual(Array.from(standard.children, x => x.value), ["", "12"],
     "Question Paper grade selector must show only Std 12, not GSET or Teacher");
   assert.equal(standard.value, "12", "Preserve a grade if it has relevant material");
-  assert.equal(subject.value, "", "Category change clears incompatible subject");
+  assert.equal(subject.value, "ભૂગોળ", "Category change preserves a subject when papers in that subject exist");
+  assert.ok(subject.children.some(x => x.value === "ભૂગોળ"), "Geography must appear among HSC 2024 paper subjects");
+  subject.value = ""; subject.change();
   assert.equal(status.textContent, "પેજ 1 / " + Math.ceil(grade12QuestionPapers / 6), "Question paper page count");
-  assert.ok(!subject.children.some(x => x.value === "ભૂગોળ"), "Subject list is category-aware");
 
   // HSC old papers must be browseable by year without mixing years.
   const hsc2024 = rows.filter(x => x.category === "Question Paper" && x.standard === "12" && x.year === "2024");

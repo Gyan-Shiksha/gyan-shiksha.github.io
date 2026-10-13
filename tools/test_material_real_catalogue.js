@@ -132,15 +132,15 @@ async function main() {
 
   standard.value = "12";
   standard.change();
-  subject.value = "આંકડાશાસ્ત્ર";
+  subject.value = "ભૂગોળ";
   subject.change();
-  assert.equal(results.children.length, 2);
+  assert.equal(results.children.length, 1);
   assert.equal(yearLabel.hidden, true, "Hide year filter when subject has no dated records");
 
   categories.find(x => x.dataset.materialKind === "Question Paper").click();
   assert.equal(subject.value, "", "Category change clears incompatible subject");
   assert.equal(status.textContent, "પેજ 1 / 2", "Grade 12 question papers = 12 entries");
-  assert.ok(!subject.children.some(x => x.value === "આંકડાશાસ્ત્ર"), "Subject list is category-aware");
+  assert.ok(!subject.children.some(x => x.value === "ભૂગોળ"), "Subject list is category-aware");
   categories.find(x => x.dataset.materialKind === "").click();
 
   field("material-search").value = "not-a-match-0000";

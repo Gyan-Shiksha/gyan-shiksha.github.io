@@ -1,5 +1,71 @@
 [
   {
+    "title": "ધોરણ 5 — અંગ્રેજી પાઠ્યપુસ્તક",
+    "standard": "5",
+    "subject": "અંગ્રેજી",
+    "category": "Textbook",
+    "description": "ધોરણ 5ના અંગ્રેજી વિષયનું પાઠ્યપુસ્તક (અંગ્રેજી.pdf). વાંચન, ભાષા અભ્યાસ, શબ્દભંડોળ અને સ્વઅભ્યાસ માટે PDF જુઓ.",
+    "url": "https://mega.nz/file/u7B0lLDK#UH7pJx0oJB54M3USEiVg9KhDuuYQjsbwkTNF4Dkg5co",
+    "updated_at": "2026-10-13",
+    "status": "Approved",
+    "rights_verified": true
+  },
+  {
+    "title": "ધોરણ 5 — ગણિત પાઠ્યપુસ્તક",
+    "standard": "5",
+    "subject": "ગણિત",
+    "category": "Textbook",
+    "description": "ધોરણ 5ના ગણિત વિષયનું પાઠ્યપુસ્તક (ગણિત.pdf). ગણિતીય સંકલ્પનાઓ, દાખલાઓ અને અભ્યાસકાર્ય માટે PDF જુઓ.",
+    "url": "https://mega.nz/file/L74gGaJa#dnT67MhRHZuTSAuk-Gfku9QbaUj4daxjhX5kZu_lgRI",
+    "updated_at": "2026-10-13",
+    "status": "Approved",
+    "rights_verified": true
+  },
+  {
+    "title": "ધોરણ 5 — ગુજરાતી પાઠ્યપુસ્તક",
+    "standard": "5",
+    "subject": "ગુજરાતી",
+    "category": "Textbook",
+    "description": "ધોરણ 5ના ગુજરાતી વિષયનું પાઠ્યપુસ્તક (ગુજરાતી.pdf). પાઠવાંચન, ભાષા અભ્યાસ અને શાળાના અભ્યાસ માટે PDF જુઓ.",
+    "url": "https://mega.nz/file/Ky5TUaLT#GgZF3CqyM12pdgwFs7S0idYX_Oj9rqZedJxUX0Saav4",
+    "updated_at": "2026-10-13",
+    "status": "Approved",
+    "rights_verified": true
+  },
+  {
+    "title": "ધોરણ 5 — પર્યાવરણ પાઠ્યપુસ્તક",
+    "standard": "5",
+    "subject": "પર્યાવરણ",
+    "category": "Textbook",
+    "description": "ધોરણ 5ના પર્યાવરણ વિષયનું પાઠ્યપુસ્તક (પર્યાવરણ.pdf). પર્યાવરણ વિષયના પાઠ અને પ્રવૃત્તિઓના અભ્યાસ માટે PDF જુઓ.",
+    "url": "https://mega.nz/file/m65GFJLA#im84B4JAw0oTU832SYhF4B_l4Awf16Dt3O_7VqwGXfg",
+    "updated_at": "2026-10-13",
+    "status": "Approved",
+    "rights_verified": true
+  },
+  {
+    "title": "ધોરણ 5 — પ્રોજેક્ટ બુક",
+    "standard": "5",
+    "subject": "પ્રોજેક્ટ કાર્ય",
+    "category": "Textbook",
+    "description": "ધોરણ 5ની પ્રોજેક્ટ બુક (પ્રોજેક્ટ બુક.pdf). શાળાના પ્રોજેક્ટ, પ્રવૃત્તિઓ અને સર્જનાત્મક અભ્યાસ માટે આ PDF જુઓ.",
+    "url": "https://mega.nz/file/XyJmSZTT#kZ4bhd9pvR1Gc7szj19OqXUCOA9af4NTZX8MTgKxDsA",
+    "updated_at": "2026-10-13",
+    "status": "Approved",
+    "rights_verified": true
+  },
+  {
+    "title": "ધોરણ 5 — હિન્દી પાઠ્યપુસ્તક",
+    "standard": "5",
+    "subject": "હિન્દી",
+    "category": "Textbook",
+    "description": "ધોરણ 5ના હિન્દી વિષયનું પાઠ્યપુસ્તક (હિન્દી.pdf). પાઠવાંચન, ભાષા અભ્યાસ અને શબ્દભંડોળ માટે PDF જુઓ.",
+    "url": "https://mega.nz/file/q6BwVLQb#JW7qGS7kECRFCN0N8de0dmqRU8n0eEC5fYp-fN4mNlo",
+    "updated_at": "2026-10-13",
+    "status": "Approved",
+    "rights_verified": true
+  },
+  {
     "title": "ધોરણ 4 — અંગ્રેજી પાઠ્યપુસ્તક",
     "standard": "4",
     "subject": "અંગ્રેજી",

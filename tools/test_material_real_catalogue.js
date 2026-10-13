@@ -240,7 +240,7 @@ async function main() {
   year.value = "2023"; year.change();
   assert.equal(status.textContent, "પેજ 1 / 2", "Changing year resets pagination");
   year.value = "2025"; year.change();
-  const months = [["જુલાઈ", 5], ["જૂન", 1], ["માર્ચ", 1]];
+  const months = [["જુલાઈ —", 5], ["જૂન —", 1], ["માર્ચ —", 1]];
   for (const [name, amount] of months) {
     field("material-search").value = name;
     field("material-search").input();

@@ -159,12 +159,20 @@ async function main() {
   assert.equal(status.textContent, "પેજ 1 / " + Math.ceil(grade12QuestionPapers / 6), "Question paper page count");
 
   // HSC old papers must be browseable by year without mixing years.
+  const hsc2025 = rows.filter(x => x.category === "Question Paper" && x.standard === "12" && x.year === "2025");
   const hsc2024 = rows.filter(x => x.category === "Question Paper" && x.standard === "12" && x.year === "2024");
   const hsc2023 = rows.filter(x => x.category === "Question Paper" && x.standard === "12" && x.year === "2023");
+  assert.equal(hsc2025.length, 16, "Expect exactly 16 new HSC 2025 papers");
   assert.ok(hsc2024.length >= 17, "At least 17 HSC 2024 papers expected");
   assert.ok(hsc2023.length >= 12, "Keep all pre-existing HSC 2023 papers");
   assert.ok(year.children.some(x => x.value === "2023"), "2023 remains available");
-  assert.ok(year.children.some(x => x.value === "2024"), "2024 is offered for the new HSC papers");
+  assert.ok(year.children.some(x => x.value === "2024"), "2024 is offered for the HSC papers");
+  assert.ok(year.children.some(x => x.value === "2025"), "2025 is offered for the new HSC papers");
+  year.value = "2025"; year.change();
+  assert.equal(status.textContent, "પેજ 1 / " + Math.ceil(hsc2025.length / 6), "HSC 2025 year count");
+  assert.equal(results.children.length, 6, "First HSC 2025 page bounded to six cards");
+  for (let page = 1; page < Math.ceil(hsc2025.length / 6); page++) next.click();
+  assert.equal(results.children.length, hsc2025.length % 6 || 6, "Last HSC 2025 page bounded correctly");
   year.value = "2024"; year.change();
   assert.equal(status.textContent, "પેજ 1 / " + Math.ceil(hsc2024.length / 6), "HSC 2024 paper page count");
   assert.equal(results.children.length, 6, "First HSC 2024 page bounded to 6");
@@ -215,6 +223,7 @@ async function main() {
   assert.equal(subject.value, "");
   assert.equal(year.value, "");
 
+  console.log("HSC 2025 has three pages; 2023 and 2024 remain independently filterable.");
   console.log("PASS: " + rows.length + " real records, no URL duplicates, " + totalPages + " numbered pages, forward/back, last-page bounds, grade 12 (" + grade12Total + "), grade 10 years, grade 2, cascading subject/year/category, search/reset and safe external links.");
 }
 main().catch(e => { console.error(e); process.exitCode = 1; });

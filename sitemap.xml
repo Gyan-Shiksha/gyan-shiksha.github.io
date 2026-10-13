@@ -23,6 +23,7 @@ layout: null
   <url><loc>https://gyanshiksha.in/quiz.html</loc></url>
   <url><loc>https://gyanshiksha.in/study-material.html</loc></url>
   <url><loc>https://gyanshiksha.in/terms.html</loc></url>
+  <url><loc>https://gyanshiksha.in/updates.html</loc></url>
   {% for post in site.posts %}
   <url><loc>{{ site.url }}{{ post.url }}</loc></url>
   {% endfor %}

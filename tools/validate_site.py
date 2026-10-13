@@ -8,6 +8,10 @@ errors = []
 SITE_ORIGIN = "https://gyanshiksha.in"
 OLD_SITE_ORIGIN = "https://adhyapak-saathi.github.io/Gyanshiksha"
 html_pages = [p for p in ROOT.glob("*.html") if not re.fullmatch(r"google[0-9a-f]{16}\.html", p.name)]
+# Jekyll posts have no HTML file in the source tree, only after the build.
+# Validate those source links against _posts here; the rendered pass checks real files.
+post_urls = { "blog-" + m.group(1) + ".html" for p in (ROOT / "_posts").glob("*.md") if (m := re.fullmatch(r"\d{4}-\d{2}-\d{2}-(.+)\.md", p.name)) }
+rendered_root = bool(os.environ.get("GYAN_SITE_ROOT"))
 
 def get_meta(text, name):
     m = re.search(rf'<meta\s+name="{re.escape(name)}"\s+content="([^"]*)"', text, re.I)
@@ -68,7 +72,8 @@ for page in html_pages:
         if clean.endswith(".html"):
             # Static root-relative links are valid in Jekyll-generated posts.
             target = (ROOT / clean.lstrip("/") if clean.startswith("/") else page.parent / clean).resolve()
-            if not target.is_relative_to(ROOT) or not target.is_file():
+            jekyll_post_will_build = (not rendered_root and clean.lstrip("/") in post_urls)
+            if not target.is_relative_to(ROOT) or (not target.is_file() and not jekyll_post_will_build):
                 errors.append(f"{page.name}: broken internal link -> {href}")
 
     # Production indexable pages must not expose development placeholders or ads.

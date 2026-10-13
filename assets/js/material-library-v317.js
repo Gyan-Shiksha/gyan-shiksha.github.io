@@ -118,6 +118,19 @@
     select.value = values.includes(preferred) ? preferred : "";
   }
 
+  function updateGradeOptions() {
+    const previous = grade.value;
+    // A category button must also constrain the grade selector. For example,
+    // Question Paper currently has Std 12 only; Teacher/GSET are unrelated.
+    const subset = all.filter(item =>
+      !selectedKind || item.category === selectedKind);
+    const values = [...new Set(subset.map(item => item.standard))].sort((a,b) =>
+      /^\d+$/.test(a) && /^\d+$/.test(b)
+        ? Number(a) - Number(b)
+        : a.localeCompare(b, "gu"));
+    fillSelect(grade, values, "બધાં ધોરણ", previous);
+  }
+
   function updateSubjectOptions() {
     const previous = subject.value;
     const subset = all.filter(item =>
@@ -227,6 +240,7 @@
         b.classList.toggle("is-active", active);
         b.setAttribute("aria-pressed", String(active));
       }
+      updateGradeOptions();
       updateSubjectOptions();
       updateYearOptions();
       currentPage = 1;
@@ -239,6 +253,7 @@
   search.addEventListener("input", () => {currentPage=1;update();});
   reset.addEventListener("click", () => {
     grade.value = ""; year.value = ""; search.value = ""; selectedKind = ""; currentPage=1;
+    updateGradeOptions();
     updateSubjectOptions();subject.value="";
     updateYearOptions();
     for (const button of kindButtons) {
@@ -271,8 +286,7 @@
         return;
       }
       controls.hidden = false;
-      fillSelect(grade, [...new Set(all.map(x=>x.standard))].sort((a,b)=>
-        /^\d+$/.test(a) && /^\d+$/.test(b) ? Number(a)-Number(b) : a.localeCompare(b,"gu")), "બધાં ધોરણ", "");
+      updateGradeOptions();
       updateSubjectOptions();
       updateYearOptions();
       const present = new Set(all.map(item => item.category));

@@ -143,10 +143,39 @@ async function main() {
   assert.equal(yearLabel.hidden, true, "Hide year filter when subject has no dated records");
 
   categories.find(x => x.dataset.materialKind === "Question Paper").click();
+  assert.deepEqual(Array.from(standard.children, x => x.value), ["", "12"],
+    "Question Paper grade selector must show only Std 12, not GSET or Teacher");
+  assert.equal(standard.value, "12", "Preserve a grade if it has relevant material");
   assert.equal(subject.value, "", "Category change clears incompatible subject");
   assert.equal(status.textContent, "પેજ 1 / " + Math.ceil(grade12QuestionPapers / 6), "Question paper page count");
   assert.ok(!subject.children.some(x => x.value === "ભૂગોળ"), "Subject list is category-aware");
+  // Changing a category from an incompatible grade must reset the grade
+  // rather than silently return zero results.
+  standard.value = "2";
+  standard.change();
+  categories.find(x => x.dataset.materialKind === "Question Paper").click();
+  assert.equal(standard.value, "", "Switching Std 2 -> Question Paper resets grade");
+  assert.deepEqual(Array.from(standard.children, x => x.value), ["", "12"]);
+
+  categories.find(x => x.dataset.materialKind === "PDF").click();
+  const pdfStandards = [...new Set(rows.filter(x => x.category === "PDF").map(x => x.standard))];
+  assert.deepEqual(Array.from(standard.children, x => x.value).slice(1), pdfStandards,
+    "Other PDF offers only its real study programme(s)");
+  assert.equal(standard.value, "", "Switch to PDF clears unrelated grade");
+  assert.ok(!standard.children.some(x => x.value === "12"));
+
+  categories.find(x => x.dataset.materialKind === "Textbook").click();
+  const textbookStandards = new Set(rows.filter(x => x.category === "Textbook").map(x => x.standard));
+  assert.deepEqual(new Set(Array.from(standard.children, x => x.value).filter(Boolean)),
+    textbookStandards, "Textbook offers only grades/programmes with textbooks");
+  assert.ok(!standard.children.some(x => x.value === "GSET / સ્પર્ધાત્મક પરીક્ષા"),
+    "No GSET option under Textbook");
+
   categories.find(x => x.dataset.materialKind === "").click();
+  assert.ok(standard.children.some(x => x.value === "GSET / સ્પર્ધાત્મક પરીક્ષા"),
+    "All restores every grade/programme");
+  standard.value = "";
+  standard.change();
 
   field("material-search").value = "not-a-match-0000";
   field("material-search").input();

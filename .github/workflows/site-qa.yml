@@ -25,6 +25,10 @@ jobs:
           python3 -m py_compile tools/import_editorial_csv.py tools/test_editorial_import.py tools/check_posts.py
           python3 tools/test_editorial_import.py
           python3 tools/check_posts.py
+      - name: Test independent browser maths quiz and preserve Quiz Saathi link
+        run: |
+          node --check assets/js/quick-quiz.js
+          node tools/test_quick_quiz.cjs
       - name: Check approved public feeds and private-folder safety
         run: python3 tools/check_public_feeds.py
       - name: Build sitemap
@@ -60,6 +64,12 @@ jobs:
           if grep -F -q '{% include site-footer.html %}' _site/blog.html; then exit 1; fi
           grep -F -q 'class="site-header"' _site/index.html
           grep -F -q 'class="site-footer"' _site/blog.html
+      - name: Ensure offline maths quiz page is rendered
+        run: |
+          test -f _site/quick-quiz.html
+          test -f _site/assets/js/quick-quiz.js
+          test -f _site/assets/css/quick-quiz.css
+          grep -q 'href="quick-quiz.html"' _site/quiz.html
       - name: Check all rendered internal links and functional HTML hooks
         env:
           GYAN_SITE_ROOT: _site

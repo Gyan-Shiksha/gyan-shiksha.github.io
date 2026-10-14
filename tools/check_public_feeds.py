@@ -104,9 +104,23 @@ for feed in ("news", "jobs", "materials"):
             # Keep a substantive minimum without requiring editors to pad notices.
             if len(str(entry.get("summary") or "").strip()) < 30:
                 errors.append(f"{ctx}: add original, meaningful Gujarati summary (30+ characters)")
-            https_url(entry.get("source_url"), ctx)
-            if entry.get("pdf_url"):
-                https_url(entry["pdf_url"], ctx)
+            source = entry.get("source_url")
+            photo = entry.get("image_url")
+            pdf = entry.get("pdf_url")
+            if feed == "news":
+                if not (source or pdf or photo):
+                    errors.append(f"{ctx}: news requires a source, PDF or verified photo link")
+                if source:
+                    https_url(source, f"{ctx} source_url")
+                if photo:
+                    u = https_url(photo, f"{ctx} image_url")
+                    if u and not (u.hostname == "drive.google.com" and
+                                  re.fullmatch(r"/file/d/[A-Za-z0-9_-]{15,}/view", u.path)):
+                        errors.append(f"{ctx}: photo must be an individual Google Drive file/view link")
+            else:
+                https_url(source, f"{ctx} source_url")
+            if pdf:
+                https_url(pdf, f"{ctx} pdf_url")
             if feed == "jobs" and entry.get("deadline"):
                 valid_date(entry["deadline"], ctx)
 

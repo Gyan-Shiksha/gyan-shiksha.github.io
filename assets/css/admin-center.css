@@ -1,0 +1,45 @@
+/* Gyan Shiksha Admin Center — public navigation only; protected services enforce auth. */
+.gsadmin-shell{--ac-ink:#14253d;--ac-soft:#557089;--ac-blue:#1255aa;--ac-line:#dbe6f1;--ac-bg:#f4f8fd;background:var(--ac-bg);color:var(--ac-ink);padding:32px 0 64px}
+.gsadmin-wrap{width:min(1240px,calc(100% - 40px));margin:auto}
+.gsadmin-top{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:26px}
+.gsadmin-brand{display:flex;align-items:center;gap:13px;font-size:.92rem;font-weight:800}
+.gsadmin-brand img{width:50px;height:50px}
+.gsadmin-tag{font-size:.74rem;font-weight:850;letter-spacing:.055em;text-transform:uppercase;color:var(--ac-blue)}
+.gsadmin-pill{border:1px solid #c7dced;background:white;border-radius:40px;padding:9px 14px;font-size:.78rem;color:var(--ac-soft);font-weight:800}
+.gsadmin-columns{display:grid;grid-template-columns:225px minmax(0,1fr);gap:24px;align-items:start}
+.gsadmin-nav{position:sticky;top:18px;background:#fff;border:1px solid var(--ac-line);border-radius:19px;padding:18px;box-shadow:0 8px 28px rgba(20,52,95,.04)}
+.gsadmin-nav strong{display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ac-soft);margin:2px 10px 12px}
+.gsadmin-nav a{display:block;color:var(--ac-ink);font-size:.9rem;font-weight:750;text-decoration:none;padding:11px 12px;border-radius:10px;line-height:1.45}
+.gsadmin-nav a:hover,.gsadmin-nav a:focus-visible{background:#eaf3ff;color:var(--ac-blue)}
+.gsadmin-main{min-width:0}
+.gsadmin-hero{background:linear-gradient(120deg,#102c54,#155699);border-radius:22px;padding:32px 34px;color:#fff;overflow:hidden}
+.gsadmin-hero .gsadmin-tag{color:#b5e0ff}
+.gsadmin-hero h1{font-size:clamp(1.5rem,3.3vw,2.25rem);line-height:1.3;color:#fff;margin:8px 0 9px}
+.gsadmin-hero p{color:#e4effe;font-size:.96rem;line-height:1.7;margin:0;max-width:640px}
+.gsadmin-alert{display:flex;gap:12px;align-items:flex-start;padding:16px 18px;margin:18px 0;border:1px solid #c8ddec;background:#eff8ff;border-radius:14px;font-size:.88rem;line-height:1.65}
+.gsadmin-alert strong{display:block;color:#174b79}
+.gsadmin-alert svg{flex-shrink:0;margin-top:3px}
+.gsadmin-area{margin-top:28px;scroll-margin-top:24px}
+.gsadmin-area-head{display:flex;justify-content:space-between;gap:12px;align-items:baseline;margin-bottom:14px}
+.gsadmin-area h2{font-size:1.35rem;margin:0;color:var(--ac-ink)}
+.gsadmin-sub{font-size:.84rem;color:var(--ac-soft);margin:4px 0 0}
+.gsadmin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.gsadmin-card{background:#fff;border:1px solid var(--ac-line);border-radius:17px;padding:20px 20px 17px;box-shadow:0 5px 15px rgba(14,50,91,.035);display:flex;flex-direction:column;gap:10px;min-width:0}
+.gsadmin-cardhead{display:flex;gap:10px;align-items:center}
+.gsadmin-icon{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:42px;height:42px;background:#eaf3ff;border-radius:12px;font-size:1.24rem}
+.gsadmin-card h3{margin:0;font-size:1.02rem;line-height:1.35;color:var(--ac-ink)}
+.gsadmin-card p{font-size:.86rem;line-height:1.6;margin:0;color:var(--ac-soft);flex:1}
+.gsadmin-card .gsadmin-note{font-size:.74rem;font-weight:750;color:#42647e}
+.gsadmin-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:auto}
+.gsadmin-action{display:inline-flex;align-items:center;gap:7px;min-height:39px;border-radius:10px;background:var(--ac-blue);padding:9px 14px;font-size:.82rem;font-weight:850;color:#fff!important;text-decoration:none;transition:background .16s}
+.gsadmin-action:hover{background:#0c3975}
+.gsadmin-action:focus-visible,.gsadmin-textlink:focus-visible{outline:3px solid #80b9ff;outline-offset:2px}
+.gsadmin-textlink{font-size:.81rem;color:var(--ac-blue);font-weight:750;text-underline-offset:3px}
+.gsadmin-wide{grid-column:1/-1}
+.gsadmin-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.gsadmin-step{background:#fff;border:1px solid var(--ac-line);border-radius:14px;padding:17px;font-size:.84rem;line-height:1.55}
+.gsadmin-step span{display:block;font-weight:900;color:var(--ac-blue);margin-bottom:7px}
+.gsadmin-step p{margin:0;color:var(--ac-soft)}
+.gsadmin-footer-note{font-size:.78rem;color:var(--ac-soft);line-height:1.6;margin-top:25px}
+@media(max-width:950px){.gsadmin-columns{grid-template-columns:1fr}.gsadmin-nav{position:static;display:flex;gap:6px;flex-wrap:wrap;padding:10px}.gsadmin-nav strong{display:none}.gsadmin-nav a{padding:8px 10px}.gsadmin-hero{padding:27px}}
+@media(max-width:620px){.gsadmin-wrap{width:min(100% - 24px,1240px)}.gsadmin-shell{padding-top:20px}.gsadmin-top{align-items:start;flex-direction:column}.gsadmin-hero{padding:25px 20px}.gsadmin-grid,.gsadmin-steps{grid-template-columns:1fr}.gsadmin-area-head{align-items:start;flex-direction:column}.gsadmin-card{padding:18px}.gsadmin-nav{flex-wrap:nowrap;overflow-x:auto}.gsadmin-nav a{white-space:nowrap}}

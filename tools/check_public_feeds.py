@@ -100,8 +100,10 @@ for feed in ("news", "jobs", "materials"):
             direct_resource(entry.get("url"), ctx)
         else:
             valid_date(entry.get("date"), ctx)
-            if len(str(entry.get("summary") or "").strip()) < 55:
-                errors.append(f"{ctx}: add original, meaningful Gujarati summary (55+ characters)")
+            # Concise verified exam notices can be meaningful below 55 characters.
+            # Keep a substantive minimum without requiring editors to pad notices.
+            if len(str(entry.get("summary") or "").strip()) < 30:
+                errors.append(f"{ctx}: add original, meaningful Gujarati summary (30+ characters)")
             https_url(entry.get("source_url"), ctx)
             if entry.get("pdf_url"):
                 https_url(entry["pdf_url"], ctx)

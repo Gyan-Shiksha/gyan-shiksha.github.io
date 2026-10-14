@@ -2,7 +2,7 @@
   "use strict";
   const source = { news: "data/news.json", jobs: "data/jobs.json" };
   const safeUrl = value => {
-    try { const u = new URL(String(value || "")); return (u.protocol === "https:" || u.protocol === "http:") ? u.href : ""; }
+    try { const u = new URL(String(value || "")); return u.protocol === "https:" ? u.href : ""; }
     catch { return ""; }
   };
   const clean = value => String(value ?? "").trim();
@@ -18,7 +18,7 @@
     if(!resp.ok) throw new Error("feed unavailable");
     const data = await resp.json();
     if (!Array.isArray(data)) throw new Error("invalid data");
-    return data.filter(entry => entry && entry.status === "Approved" && clean(entry.title) && safeUrl(entry.source_url))
+    return data.filter(entry => entry && entry.status === "Approved" && clean(entry.title) && (type === "news" ? (safeUrl(entry.source_url) || safeUrl(entry.image_url) || safeUrl(entry.pdf_url)) : safeUrl(entry.source_url)))
       .filter(entry => type !== "jobs" || !entry.deadline || (/^\d{4}-\d{2}-\d{2}$/.test(clean(entry.deadline)) && clean(entry.deadline) >= new Date().toISOString().slice(0,10)))
       .sort((a,b) => clean(b.date).localeCompare(clean(a.date)))
       .slice(0,150);
@@ -30,9 +30,12 @@
     const date=dateText(entry.date); if(date) meta.append(make("span","",date));
     if(type === "jobs" && entry.deadline){ const due=dateText(entry.deadline);if(due) meta.append(make("span","",`અરજીની છેલ્લી તારીખ: ${due}`)); }
     article.append(meta);
-    const h2=make("h2");h2.append(link(clean(entry.title).slice(0,170),safeUrl(entry.source_url)));article.append(h2);
+    const primaryUrl=safeUrl(entry.source_url)||safeUrl(entry.image_url)||safeUrl(entry.pdf_url);
+    const h2=make("h2");h2.append(link(clean(entry.title).slice(0,170),primaryUrl));article.append(h2);
     if(entry.summary) article.append(make("p","",clean(entry.summary).slice(0,950)));
-    const actions=make("div","feed-actions");actions.append(link("મૂળ જાહેરાત જુઓ ↗",safeUrl(entry.source_url)));
+    const actions=make("div","feed-actions");
+    const sourceUrl=safeUrl(entry.source_url);if(sourceUrl)actions.append(link("મૂળ જાહેરાત જુઓ ↗",sourceUrl));
+    const photo=safeUrl(entry.image_url);if(photo)actions.append(link("📷 ફોટો જુઓ ↗",photo));
     const pdf=safeUrl(entry.pdf_url);if(pdf)actions.append(link("સત્તાવાર PDF ↗",pdf));article.append(actions);
     return article;
   }

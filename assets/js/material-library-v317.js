@@ -104,6 +104,10 @@
 
   const PAGE_SIZE = 6; // Maximum two rows on desktop; bounded on every device.
   let all = [], selectedKind = "", currentPage = 1;
+  // Admin links refer to exactly one public file URL, not to a page number.
+  // If an item is unpublished, an old deep link must NOT show another file.
+  const requestedMaterial = new URLSearchParams(window.location.search).get("material") || "";
+  let directFile = requestedMaterial.length <= 950 ? requestedMaterial : "";
   const norm = str => clean(str).toLocaleLowerCase("gu-IN");
 
   function fillSelect(select, values, firstLabel, preferred) {
@@ -151,6 +155,7 @@
   }
 
   function filteredItems() {
+    if (directFile) return all.filter(item => item.url === directFile);
     const term = norm(search.value);
     return all.filter(item =>
       (!selectedKind || selectedKind === item.category) &&
@@ -219,8 +224,10 @@
     const noMatch = all.length && !filtered.length;
     empty.hidden = !noMatch;
     if (noMatch) {
-      emptyTitle.textContent = "આ પસંદગીમાં સામગ્રી નથી";
-      emptyMessage.textContent = "બીજો વિષય અથવા ધોરણ પસંદ કરો, અથવા ‘બધું ફરી જુઓ’ દબાવો.";
+      emptyTitle.textContent = directFile ? "આ સામગ્રી હાલ વેબસાઇટ પર ઉપલબ્ધ નથી" : "આ પસંદગીમાં સામગ્રી નથી";
+      emptyMessage.textContent = directFile
+        ? "કદાચ સામગ્રી હટાવવામાં આવી છે. બીજી સામગ્રી માટે ‘બધું ફરી જુઓ’ પસંદ કરો."
+        : "બીજો વિષય અથવા ધોરણ પસંદ કરો, અથવા ‘બધું ફરી જુઓ’ દબાવો.";
     }
     const countText = filtered.length === all.length
       ? "કુલ " + all.length + " સામગ્રી"
@@ -234,6 +241,7 @@
 
   kindButtons.forEach(button => {
     button.addEventListener("click", () => {
+      directFile = "";
       selectedKind = button.dataset.materialKind || "";
       for (const b of kindButtons) {
         const active = b === button;
@@ -247,11 +255,13 @@
       update();
     });
   });
-  grade.addEventListener("change", () => {updateSubjectOptions();updateYearOptions();currentPage=1;update();});
-  subject.addEventListener("change", () => {updateYearOptions();currentPage=1;update();});
-  year.addEventListener("change", () => {currentPage=1;update();});
-  search.addEventListener("input", () => {currentPage=1;update();});
+  grade.addEventListener("change", () => {directFile="";updateSubjectOptions();updateYearOptions();currentPage=1;update();});
+  subject.addEventListener("change", () => {directFile="";updateYearOptions();currentPage=1;update();});
+  year.addEventListener("change", () => {directFile="";currentPage=1;update();});
+  search.addEventListener("input", () => {directFile="";currentPage=1;update();});
   reset.addEventListener("click", () => {
+    directFile = "";
+    if (requestedMaterial) window.history.replaceState(null, "", window.location.pathname);
     grade.value = ""; year.value = ""; search.value = ""; selectedKind = ""; currentPage=1;
     updateGradeOptions();
     updateSubjectOptions();subject.value="";
@@ -294,6 +304,10 @@
         button.hidden = !!button.dataset.materialKind && !present.has(button.dataset.materialKind);
       }
       update();
+      if (directFile && all.some(item => item.url === directFile)) {
+        // Bring the exact verified public material card into view.
+        results.scrollIntoView({block:"start",behavior:"auto"});
+      }
     })
     .catch(() => {
       results.setAttribute("aria-busy","false");

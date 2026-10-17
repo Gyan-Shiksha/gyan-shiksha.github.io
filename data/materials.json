@@ -2506,13 +2506,14 @@
     "rights_verified": true
   },
   {
-    "title": "ધોરણ 1 — પાઠ્યપુસ્તક (પુસ્તક 2)",
+    "title": "ધોરણ 1 — ગણિત પાઠ્યપુસ્તક",
     "standard": "1",
-    "subject": "વિષયની પુષ્ટિ બાકી",
+    "subject": "ગણિત",
     "category": "Textbook",
     "description": "ધોરણ 1 માટે આપવામાં આવેલ પાઠ્યપુસ્તક. મૂળ પુસ્તકનું ચોક્કસ નામ અને વિષય ફાઇલની પ્રથમ પાનાથી ચકાસાયા પછી અહીં સુધારવામાં આવશે.",
     "url": "https://mega.nz/file/qn4iBSBK#C5Cbt9aDpoHdF9EKQmR6ERf6jdkoAvT_d_rMDJe6pOs",
-    "updated_at": "2026-10-13",
+    "board": "GSEB",
+    "updated_at": "2026-10-17",
     "status": "Approved",
     "rights_verified": true
   },

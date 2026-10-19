@@ -69,7 +69,9 @@ async function main() {
   assert.equal(new Set(rows.map(x => x.url)).size, rows.length, "No duplicate file URLs");
 
   const script = fs.readFileSync(path.join(ROOT, "assets/js/material-library-v317.js"), "utf8");
-  vm.runInNewContext(script, { document, URL,
+  vm.runInNewContext(script, { document, URL, URLSearchParams,
+    // Keep the browser-free VM consistent with the public material page.
+    window: { location: { search: "", pathname: "/study-material.html" } },
     fetch: async () => ({ ok: true, json: async () => rows })
   });
   for (let i = 0; i < 16; i++) await Promise.resolve();
@@ -306,8 +308,8 @@ async function main() {
 
   categories.find(x => x.dataset.materialKind === "PDF").click();
   const pdfStandards = [...new Set(rows.filter(x => x.category === "PDF").map(x => x.standard))];
-  assert.deepEqual(Array.from(standard.children, x => x.value).slice(1), pdfStandards,
-    "Other PDF offers only its real study programme(s)");
+  assert.deepEqual(new Set(Array.from(standard.children, x => x.value).filter(Boolean)), new Set(pdfStandards),
+    "Other PDF offers only its real study programme(s), independent of display order");
   assert.equal(standard.value, "", "Switch to PDF clears unrelated grade");
   assert.ok(!standard.children.some(x => x.value === "12"));
 

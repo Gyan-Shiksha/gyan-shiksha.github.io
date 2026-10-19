@@ -69,7 +69,9 @@ async function main() {
   assert.equal(new Set(rows.map(x => x.url)).size, rows.length, "No duplicate file URLs");
 
   const script = fs.readFileSync(path.join(ROOT, "assets/js/material-library-v317.js"), "utf8");
-  vm.runInNewContext(script, { document, URL,
+  vm.runInNewContext(script, { document, URL, URLSearchParams,
+    // Keep the browser-free VM consistent with the public material page.
+    window: { location: { search: "", pathname: "/study-material.html" } },
     fetch: async () => ({ ok: true, json: async () => rows })
   });
   for (let i = 0; i < 16; i++) await Promise.resolve();

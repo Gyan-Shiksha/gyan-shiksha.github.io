@@ -71,7 +71,9 @@ async function test() {
   const script = fs.readFileSync(
     path.join(__dirname, "../assets/js/material-library-v317.js"), "utf8");
   vm.runInNewContext(script, {
-    document, URL,
+    document, URL, URLSearchParams,
+    // Provide the browser location used for optional ?material= deep links.
+    window: { location: { search: "", pathname: "/study-material.html" } },
     fetch: async () => ({ ok: true, json: async () => rows })
   });
   // Allow the async fetch and catalogue initialization to settle.

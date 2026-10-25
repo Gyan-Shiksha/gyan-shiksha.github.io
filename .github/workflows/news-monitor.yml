@@ -1,0 +1,81 @@
+name: Gyan Shiksha News Monitor
+
+on:
+  pull_request:
+    paths:
+      - tools/news_monitor/**
+      - .github/workflows/news-monitor.yml
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Preview only: no state changes and no email'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r tools/news_monitor/requirements.txt
+      - run: python -m unittest discover -s tools/news_monitor -p 'test_*.py' -v
+      - run: node --check < tools/news_monitor/mail_relay.gs
+      - run: node tools/news_monitor/test_relay.cjs
+
+  monitor:
+    if: github.event_name != 'pull_request' && (github.event_name == 'workflow_dispatch' || vars.GYAN_MONITOR_ENABLED == 'true')
+    needs: tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      contents: write
+    concurrency:
+      group: gyan-news-monitor-state
+      cancel-in-progress: false
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GYAN_RELAY_URL: ${{ secrets.GYAN_RELAY_URL }}
+      GYAN_RELAY_SECRET: ${{ secrets.GYAN_RELAY_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r tools/news_monitor/requirements.txt
+      - name: Read durable baseline and pending deliveries
+        run: python tools/news_monitor/github_state.py pull --state "$RUNNER_TEMP/gyan-monitor/state.json"
+      - name: Inspect the configured official sections
+        id: scan
+        shell: bash
+        run: |
+          args=()
+          if [[ '${{ github.event_name }}' == 'workflow_dispatch' && '${{ inputs.dry_run }}' == 'true' ]]; then
+            args+=(--dry-run)
+          fi
+          python tools/news_monitor/monitor.py scan --state "$RUNNER_TEMP/gyan-monitor/state.json" "${args[@]}"
+      - name: Persist before sending so a failed run cannot lose the outbox
+        if: always() && steps.scan.outcome != 'skipped' && (github.event_name != 'workflow_dispatch' || inputs.dry_run == false)
+        id: persist
+        run: python tools/news_monitor/github_state.py push --state "$RUNNER_TEMP/gyan-monitor/state.json"
+      - name: Send only to the Gyan recipient configured in the private relay
+        if: always() && steps.persist.outcome == 'success'
+        id: deliver
+        run: python tools/news_monitor/monitor.py deliver --state "$RUNNER_TEMP/gyan-monitor/state.json"
+      - name: Persist per-message acknowledgements even after a partial delivery
+        if: always() && steps.deliver.outcome != 'skipped'
+        run: python tools/news_monitor/github_state.py push --state "$RUNNER_TEMP/gyan-monitor/state.json"
+      - name: Write a short operations summary
+        if: always()
+        shell: bash
+        run: |
+          echo '### Gyan Shiksha monitor' >> "$GITHUB_STEP_SUMMARY"
+          echo 'See source counts and errors in the inspection step. No news feed, Google Sheet, or live page is written by this workflow.' >> "$GITHUB_STEP_SUMMARY"

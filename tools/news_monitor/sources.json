@@ -1,0 +1,58 @@
+[
+  {
+    "id": "gseb-news",
+    "enabled": true,
+    "brand": "gyan_shiksha",
+    "name": "ગુજરાત માધ્યમિક અને ઉચ્ચતર માધ્યમિક શિક્ષણ બોર્ડ",
+    "url": "https://www.gsebeservice.com/",
+    "section_selector": "#nav-one",
+    "link_selector": "a[href]",
+    "category": "Board Exam",
+    "allowed_hosts": ["www.gsebeservice.com", "gsebeservice.com", "www.gseb.org", "gseb.org"],
+    "exclude_pattern": "(?i)(\\bTET\\b|\\bTAT\\b|\\bCTET\\b|\\bGSET\\b|UGC[ -]?NET|શિક્ષક અભિરૂચિ કસોટી|શિક્ષક યોગ્યતા)",
+    "pdf_window": 12,
+    "pdf_checks_per_run": 2,
+    "verified": "HTML section inspected on 2026-10-25; 801 links at baseline."
+  },
+  {
+    "id": "seb-school-notices",
+    "enabled": true,
+    "brand": "gyan_shiksha",
+    "name": "રાજ્ય પરીક્ષા બોર્ડ, ગાંધીનગર",
+    "url": "https://www.sebexam.org/",
+    "section_selector": ".card",
+    "section_heading_selector": ".card-header",
+    "section_heading": "Notice Board",
+    "content_selector": ".card-body",
+    "link_selector": "a[href]",
+    "category": "Scholarship",
+    "allowed_hosts": ["www.sebexam.org", "sebexam.org"],
+    "include_pattern": "(?i)(NMMS|NMMSS|NTSE|\\bPSE\\b|\\bSSE\\b|શિષ્યવૃત્તિ|શિષ્યવૃતિ|સ્કોલરશીપ|સ્કોલરશિપ|જ્ઞાન સાધના|જ્ઞાનસાધના)",
+    "exclude_pattern": "(?i)(\\bTET\\b|\\bTAT\\b|\\bCTET\\b|\\bGSET\\b|UGC[ -]?NET|શિક્ષક અભિરૂચિ કસોટી|શિક્ષક યોગ્યતા)",
+    "pdf_window": 12,
+    "pdf_checks_per_run": 2,
+    "verified": "Notice Board inspected on 2026-10-25; school scholarship inclusion filter."
+  },
+  {
+    "id": "gcert-pending",
+    "enabled": false,
+    "brand": "gyan_shiksha",
+    "name": "GCERT",
+    "url": "https://gcert.gujarat.gov.in/",
+    "reason": "HTTP 503 during inspection; section extraction not verified."
+  },
+  {
+    "id": "samagra-pending",
+    "enabled": false,
+    "brand": "gyan_shiksha",
+    "name": "સમગ્ર શિક્ષા",
+    "reason": "Official notification section and selector still to be verified."
+  },
+  {
+    "id": "udise-pending",
+    "enabled": false,
+    "brand": "gyan_shiksha",
+    "name": "UDISE+",
+    "reason": "Official notification section and selector still to be verified."
+  }
+]

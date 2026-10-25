@@ -1,0 +1,17 @@
+{
+  "gyan_shiksha": {
+    "enabled": true,
+    "name": "જ્ઞાન શિક્ષા",
+    "website": "https://gyanshiksha.in",
+    "recipient_property": "GYAN_ALERT_TO",
+    "last_date": "",
+    "status": "Draft"
+  },
+  "adhyapak_saathi": {
+    "enabled": false,
+    "name": "અધ્યાપક સાથી",
+    "recipient_property": "ADHYAPAK_ALERT_TO",
+    "topics": ["TET", "TAT", "GSET", "CTET", "UGC NET"],
+    "reason": "Deferred by owner: no Sheet integration, sending, or publication."
+  }
+}

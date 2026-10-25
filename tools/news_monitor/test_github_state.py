@@ -66,10 +66,20 @@ class StateTests(unittest.TestCase):
             path=Path(folder)/'state.json'; path.write_text('{"schema":1}')
             path.with_suffix('.meta.json').write_text(json.dumps({'new_branch':True,'sha':None}))
             self.call('push',path,api)
-            self.assertEqual(calls[1][2]['tree'][0]['content'],'{"schema":1}')
+            self.assertEqual(json.loads(g.decode_state(calls[1][2]['tree'][0]['content'].encode())),{'schema':1})
             self.assertEqual(calls[3][0],'/git/refs')
             self.assertEqual(calls[3][2]['sha'],'new-state-commit')
             self.assertFalse(json.loads(path.with_suffix('.meta.json').read_text())['new_branch'])
+
+    def test_compressed_state_roundtrip_and_payload_deduplication(self):
+        value={'schema':1,'outbox':{'event':{'body':'સમાચાર','sequence':1,'fields':{'B':'duplicate'},'whatsapp':'duplicate'}}}
+        got=json.loads(g.decode_state(g.encode_state(json.dumps(value).encode())))
+        self.assertEqual(got['outbox']['event']['body'],'સમાચાર')
+        self.assertEqual(got['outbox']['event']['sequence'],1)
+        self.assertNotIn('fields',got['outbox']['event'])
+
+    def test_corrupt_compressed_state_fails(self):
+        with self.assertRaises(Exception): g.decode_state(b'{"encoding":"gzip+base64","data":"invalid"}')
 
 
 if __name__=='__main__': unittest.main()

@@ -103,7 +103,7 @@ def extract(source, html):
 
 
 def empty_state():
-    return {"schema": SCHEMA, "sources": {}, "outbox": {}, "delivered": {}, "health": {}}
+    return {"schema": SCHEMA, "sources": {}, "outbox": {}, "delivered": {}, "health": {}, "notification_sequence": 0}
 
 
 def load_state(path):
@@ -147,12 +147,14 @@ def render_news(item, source, kind, when):
 
 def enqueue(state, key, payload, now):
     if key not in state["outbox"] and key not in state["delivered"]:
-        payload.update({"id": key, "created_at": now})
+        state["notification_sequence"] = state.get("notification_sequence", 0) + 1
+        payload.update({"id": key, "created_at": now, "sequence": state["notification_sequence"]})
         state["outbox"][key] = payload
 
 
 def scan(config, profiles, state, fetcher=fetch, now=None, pdf=True):
     now = now or datetime.now(timezone.utc).isoformat(timespec="seconds")
+    state.setdefault("notification_sequence", max((e.get("sequence", 0) for e in state["outbox"].values()), default=0))
     results = []
     for source in config:
         if not source.get("enabled") or not profiles.get(source.get("brand"), {}).get("enabled"):
@@ -217,6 +219,10 @@ def scan(config, profiles, state, fetcher=fetch, now=None, pdf=True):
     # Keep delivered IDs for 180 days; pending deliveries are never pruned.
     cutoff = time.time() - 180 * 86400
     state["delivered"] = {key: stamp for key, stamp in state["delivered"].items() if stamp >= cutoff}
+    # The private Google mailer maintains a sequence cursor; retain a 90-day catch-up feed.
+    feed_cutoff = datetime.now(timezone.utc).timestamp() - 90 * 86400
+    state["outbox"] = {key: event for key, event in state["outbox"].items()
+                       if datetime.fromisoformat(event["created_at"]).timestamp() >= feed_cutoff}
     state["last_run"] = now
     return results
 

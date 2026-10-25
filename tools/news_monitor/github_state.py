@@ -2,6 +2,7 @@
 """Durable official-source state on a separate branch; optimistic writes only."""
 import argparse
 import base64
+import gzip
 import json
 import os
 from pathlib import Path
@@ -11,6 +12,25 @@ from urllib.request import Request, urlopen
 
 BRANCH = "news-monitor-state"
 FILE = "tools/news_monitor/runtime-state.json"
+
+
+def encode_state(data):
+    state = json.loads(data)
+    # fields/whatsapp duplicate the same content already present in the mail body.
+    for event in state.get("outbox", {}).values():
+        event.pop("fields", None)
+        event.pop("whatsapp", None)
+    packed = gzip.compress(json.dumps(state, ensure_ascii=False, separators=(",", ":")).encode(), mtime=0)
+    return json.dumps({"encoding": "gzip+base64", "data": base64.b64encode(packed).decode()}, separators=(",", ":")).encode()
+
+
+def decode_state(data):
+    value = json.loads(data)
+    if value.get("encoding") == "gzip+base64":
+        unpacked = gzip.decompress(base64.b64decode(value["data"]))
+        json.loads(unpacked)
+        return unpacked
+    return data
 
 
 def api(path, method="GET", data=None):
@@ -47,8 +67,7 @@ def main():
         result = api(endpoint + "?ref=" + BRANCH)
         if result is None or result.get("encoding") != "base64":
             raise RuntimeError("State branch exists but its state file is missing/unreadable")
-        data = base64.b64decode(result["content"])
-        json.loads(data)
+        data = decode_state(base64.b64decode(result["content"]))
         args.state.write_bytes(data)
         meta.write_text(json.dumps({"new_branch": False, "sha": result["sha"]}))
         return
@@ -59,7 +78,7 @@ def main():
         parent = os.environ["GITHUB_SHA"]
         commit = api("/git/commits/" + parent)
         tree = api("/git/trees", "POST", {"base_tree": commit["tree"]["sha"], "tree": [
-            {"path": FILE, "mode": "100644", "type": "blob", "content": args.state.read_text(encoding="utf-8")}
+            {"path": FILE, "mode": "100644", "type": "blob", "content": encode_state(args.state.read_bytes()).decode()}
         ]})
         new_commit = api("/git/commits", "POST", {"message": "chore(monitor): establish first durable baseline", "tree": tree["sha"], "parents": [parent]})
         created = api("/git/refs", "POST", {"ref": "refs/heads/" + BRANCH, "sha": new_commit["sha"]})
@@ -71,7 +90,7 @@ def main():
         meta.write_text(json.dumps({"new_branch": False, "sha": first["sha"]}))
         return
     body = {"message": "chore(monitor): persist baseline, health and pending deliveries", "branch": BRANCH,
-            "content": base64.b64encode(args.state.read_bytes()).decode()}
+            "content": base64.b64encode(encode_state(args.state.read_bytes())).decode()}
     if status["sha"]:
         body["sha"] = status["sha"]
     result = api(endpoint, "PUT", body)

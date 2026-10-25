@@ -1,6 +1,11 @@
 name: Gyan Shiksha News Monitor
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - tools/news_monitor/**
+      - .github/workflows/news-monitor.yml
   pull_request:
     paths:
       - tools/news_monitor/**

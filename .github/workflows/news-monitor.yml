@@ -30,9 +30,10 @@ jobs:
       - run: python -m unittest discover -s tools/news_monitor -p 'test_*.py' -v
       - run: node --check < tools/news_monitor/mail_relay.gs
       - run: node tools/news_monitor/test_relay.cjs
+      - run: node tools/news_monitor/test_pull_mailer.cjs
 
   monitor:
-    if: github.event_name != 'pull_request' && (github.event_name == 'workflow_dispatch' || vars.GYAN_MONITOR_ENABLED == 'true')
+    if: github.event_name != 'pull_request'
     needs: tests
     runs-on: ubuntu-latest
     timeout-minutes: 12
@@ -43,8 +44,6 @@ jobs:
       cancel-in-progress: false
     env:
       GH_TOKEN: ${{ github.token }}
-      GYAN_RELAY_URL: ${{ secrets.GYAN_RELAY_URL }}
-      GYAN_RELAY_SECRET: ${{ secrets.GYAN_RELAY_SECRET }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -62,16 +61,9 @@ jobs:
             args+=(--dry-run)
           fi
           python tools/news_monitor/monitor.py scan --state "$RUNNER_TEMP/gyan-monitor/state.json" "${args[@]}"
-      - name: Persist before sending so a failed run cannot lose the outbox
+      - name: Persist the official-source notification feed for the private Google mailer
         if: always() && steps.scan.outcome != 'skipped' && (github.event_name != 'workflow_dispatch' || inputs.dry_run == false)
         id: persist
-        run: python tools/news_monitor/github_state.py push --state "$RUNNER_TEMP/gyan-monitor/state.json"
-      - name: Send only to the Gyan recipient configured in the private relay
-        if: always() && steps.persist.outcome == 'success'
-        id: deliver
-        run: python tools/news_monitor/monitor.py deliver --state "$RUNNER_TEMP/gyan-monitor/state.json"
-      - name: Persist per-message acknowledgements even after a partial delivery
-        if: always() && steps.deliver.outcome != 'skipped'
         run: python tools/news_monitor/github_state.py push --state "$RUNNER_TEMP/gyan-monitor/state.json"
       - name: Write a short operations summary
         if: always()

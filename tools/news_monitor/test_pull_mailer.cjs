@@ -11,7 +11,7 @@ const context={console,
   LockService:{getScriptLock:()=>({tryLock:()=>!busy,releaseLock:()=>{}})},
   MailApp:{getRemainingDailyQuota:()=>quota,sendEmail:m=>{if(failSend)throw new Error('delivery failed');sent.push(m);}},
   UrlFetchApp:{fetch:()=>({getResponseCode:()=>200,getContentText:()=>JSON.stringify({encoding:'gzip+base64',data:zlib.gzipSync(JSON.stringify(state)).toString('base64')})})},
-  Utilities:{base64Decode:s=>Array.from(Buffer.from(s,'base64')),newBlob:b=>Buffer.from(b),ungzip:b=>({getDataAsString:()=>zlib.gunzipSync(b).toString('utf8')})},
+  Utilities:{base64Decode:s=>Array.from(Buffer.from(s,'base64')),newBlob:(b,type)=>{assert.equal(type,'application/x-gzip','Apps Script ungzip requires a gzip content type');return Buffer.from(b);},ungzip:b=>({getDataAsString:()=>zlib.gunzipSync(b).toString('utf8')})},
   ScriptApp:{getProjectTriggers:()=>[],newTrigger:handler=>({timeBased:()=>({everyMinutes:minutes=>({create:()=>triggers.push({handler,minutes})})})})}
 };
 vm.createContext(context); vm.runInContext(fs.readFileSync(path.join(__dirname,'pull_mailer.gs'),'utf8'),context);

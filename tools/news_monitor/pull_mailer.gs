@@ -24,7 +24,7 @@ function readGyanState_() {
   if (response.getResponseCode() !== 200) throw new Error('Monitor feed is not available: HTTP ' + response.getResponseCode());
   var state = JSON.parse(response.getContentText());
   if (state.encoding === 'gzip+base64') {
-    state = JSON.parse(Utilities.ungzip(Utilities.newBlob(Utilities.base64Decode(state.data))).getDataAsString('UTF-8'));
+    state = JSON.parse(Utilities.ungzip(Utilities.newBlob(Utilities.base64Decode(state.data), 'application/x-gzip')).getDataAsString('UTF-8'));
   }
   if (state.schema !== 1 || !state.outbox || typeof state.notification_sequence !== 'number') throw new Error('Invalid monitor feed.');
   return state;

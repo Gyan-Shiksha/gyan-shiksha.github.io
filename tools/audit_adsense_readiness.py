@@ -30,6 +30,14 @@ def audit(root: Path) -> tuple[dict, list]:
             bad_urls.append(idx)
         # A hosting link or an existing rights_verified flag does not identify
         # the original government publication or grant redistribution rights.
+        # Owner reported that textbooks were downloaded from government sources
+        # and rehosted. Other PDF/paper classes need separate provenance review.
+        kind = str(item.get('category', '')).strip()
+        priority = 'HIGH: TEXTBOOK REHOST PERMISSION' if kind == 'Textbook' else (
+            'MEDIUM: EXAM PAPER RIGHTS CHECK' if kind == 'Question Paper'
+            else 'MEDIUM: PDF PUBLISHER IDENTIFICATION')
+        owner_reported_delivery = ('OWNER-REHOSTED TEXTBOOK COPY (USER STATEMENT)'
+                                   if kind == 'Textbook' else 'DELIVERY METHOD TO VERIFY')
         source_url = str(item.get('original_official_source_url') or item.get('source_url') or '').strip()
         if not source_url:
             missing_original_sources += 1
@@ -43,6 +51,8 @@ def audit(root: Path) -> tuple[dict, list]:
             'category': item.get('category', ''),
             'file_url': url,
             'file_host': p.hostname or '',
+            'rights_review_priority': priority,
+            'owner_reported_delivery_method': owner_reported_delivery,
             'original_official_source_url': source_url,
             'publisher_board_or_department': item.get('publisher', ''),
             'official_copyright_policy_url': item.get('copyright_policy_url', ''),
@@ -64,6 +74,11 @@ def audit(root: Path) -> tuple[dict, list]:
             'materials_total': len(catalogue), 'material_categories': dict(counts),
             'rights_flags_true': sum(item.get('rights_verified') is True for item in catalogue),
             'hosting_domains_not_original_publishers': dict(delivery_hosts),
+            'review_priorities': {
+                'textbook_rehost_licence_check': counts.get('Textbook', 0),
+                'board_exam_paper_licence_check': counts.get('Question Paper', 0),
+                'other_publisher_identification': counts.get('PDF', 0),
+            },
             'entries_without_recorded_official_source_url': missing_original_sources,
             'independent_rights_reviews_still_required': len(needs_review),
             'catalogue_non_allowlisted_urls': len(bad_urls),
@@ -95,7 +110,8 @@ def main():
         with args.rights_csv.open('w', encoding='utf-8-sig', newline='') as f:
             out = csv.DictWriter(f, fieldnames=list(rows[0]) if rows else
                                  ['catalogue_row','title','standard','subject','year','category','file_url',
-                                  'file_host','original_official_source_url','publisher_board_or_department',
+                                  'file_host','rights_review_priority','owner_reported_delivery_method',
+                                  'original_official_source_url','publisher_board_or_department',
                                   'official_copyright_policy_url','right_to_link_or_redistribute',
                                   'external_link_or_uploaded_copy','third_party_copyright_exception_checked',
                                   'rights_verified_flag','independent_rights_evidence','source_owner_or_license',

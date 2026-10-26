@@ -32,7 +32,13 @@ jobs:
       - name: Informational AdSense preflight (copyright evidence is human-review only)
         run: |
           python3 -m py_compile tools/audit_adsense_readiness.py
-          python3 tools/audit_adsense_readiness.py
+          python3 tools/audit_adsense_readiness.py --rights-csv reports/material-rights-review.csv
+      - name: Downloadable material rights-review checklist
+        uses: actions/upload-artifact@v4
+        with:
+          name: material-rights-review
+          path: reports/material-rights-review.csv
+          retention-days: 30
       - name: Check approved public feeds and private-folder safety
         run: python3 tools/check_public_feeds.py
       - name: Build sitemap

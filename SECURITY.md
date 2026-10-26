@@ -5,9 +5,9 @@ Gyan Shiksha uses a static-first GitHub Pages architecture.
 ## Reporting a vulnerability
 Please do not publish sensitive security details in a public issue or comment.
 
-Report security concerns through: `https://adhyapak-saathi.github.io/Gyanshiksha/contact.html`
+Report security concerns through: `https://gyanshiksha.in/contact.html`
 
-Website policy: `https://adhyapak-saathi.github.io/Gyanshiksha/security.html`
+Website policy: `https://gyanshiksha.in/security.html`
 
 ## Rules
 - Never commit passwords, API keys, SMTP credentials, database credentials, payment keys or private tokens.

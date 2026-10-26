@@ -19,19 +19,43 @@ def audit(root: Path) -> tuple[dict, list]:
     bad_urls = []
     needs_review = []
     rows = []
+    delivery_hosts = Counter()
+    missing_original_sources = 0
     for idx, item in enumerate(catalogue, 1):
         url = str(item.get('url', '')).strip()
         title = str(item.get('title', '')).strip()
         p = urlsplit(url)
+        delivery_hosts[p.hostname or '(missing)'] += 1
         if p.scheme != 'https' or p.hostname not in {'drive.google.com','docs.google.com','mega.nz','mega.io'}:
             bad_urls.append(idx)
-        # A boolean rights flag is an assertion and NOT a licence document.
+        # A hosting link or an existing rights_verified flag does not identify
+        # the original government publication or grant redistribution rights.
+        source_url = str(item.get('original_official_source_url') or item.get('source_url') or '').strip()
+        if not source_url:
+            missing_original_sources += 1
         needs_review.append(idx)
-        rows.append({'catalogue_row': idx, 'title': title,
-                     'category': item.get('category', ''), 'file_url': url,
-                     'rights_verified_flag': item.get('rights_verified', False),
-                     'independent_rights_evidence': 'PENDING HUMAN REVIEW',
-                     'source_owner_or_license': '', 'review_date': '', 'reviewer': ''})
+        rows.append({
+            'catalogue_row': idx,
+            'title': title,
+            'standard': item.get('standard', ''),
+            'subject': item.get('subject', ''),
+            'year': item.get('year', ''),
+            'category': item.get('category', ''),
+            'file_url': url,
+            'file_host': p.hostname or '',
+            'original_official_source_url': source_url,
+            'publisher_board_or_department': item.get('publisher', ''),
+            'official_copyright_policy_url': item.get('copyright_policy_url', ''),
+            'right_to_link_or_redistribute': '',
+            'external_link_or_uploaded_copy': '',
+            'third_party_copyright_exception_checked': '',
+            'rights_verified_flag': item.get('rights_verified', False),
+            'independent_rights_evidence': 'PENDING HUMAN REVIEW',
+            'source_owner_or_license': '',
+            'review_decision': 'PENDING',
+            'review_date': '',
+            'reviewer': '',
+        })
     required = ['about.html','contact.html','privacy.html','terms.html',
                 'disclaimer.html','editorial-policy.html','robots.txt','sitemap.xml']
     missing = [name for name in required if not (root / name).is_file()]
@@ -39,6 +63,8 @@ def audit(root: Path) -> tuple[dict, list]:
     site = {'html_source_pages': len(html_pages), 'jekyll_articles': len(articles),
             'materials_total': len(catalogue), 'material_categories': dict(counts),
             'rights_flags_true': sum(item.get('rights_verified') is True for item in catalogue),
+            'hosting_domains_not_original_publishers': dict(delivery_hosts),
+            'entries_without_recorded_official_source_url': missing_original_sources,
             'independent_rights_reviews_still_required': len(needs_review),
             'catalogue_non_allowlisted_urls': len(bad_urls),
             'missing_required_pages': missing,
@@ -48,7 +74,7 @@ def audit(root: Path) -> tuple[dict, list]:
             'checks_not_possible_in_repo': [
                 'Google AdSense account eligibility or approval',
                 'actual GSC indexing / real search traffic',
-                'PDF redistribution permissions and legal ownership',
+                'PDF original official publishing page, copyright terms, and any third-party rights exceptions',
                 'third-party PDF/MEGA public access',
                 'production device performance and student privacy handling',
             ],
@@ -68,8 +94,12 @@ def main():
         args.rights_csv.parent.mkdir(parents=True, exist_ok=True)
         with args.rights_csv.open('w', encoding='utf-8-sig', newline='') as f:
             out = csv.DictWriter(f, fieldnames=list(rows[0]) if rows else
-                                 ['catalogue_row','title','category','file_url','rights_verified_flag',
-                                  'independent_rights_evidence','source_owner_or_license','review_date','reviewer'])
+                                 ['catalogue_row','title','standard','subject','year','category','file_url',
+                                  'file_host','original_official_source_url','publisher_board_or_department',
+                                  'official_copyright_policy_url','right_to_link_or_redistribute',
+                                  'external_link_or_uploaded_copy','third_party_copyright_exception_checked',
+                                  'rights_verified_flag','independent_rights_evidence','source_owner_or_license',
+                                  'review_decision','review_date','reviewer'])
             out.writeheader()
             out.writerows(rows)
         print(f'Owner review checklist generated: {args.rights_csv} ({len(rows)} rows)')

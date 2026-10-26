@@ -29,6 +29,10 @@ jobs:
           python3 tools/check_posts.py
       - name: Validate organic WhatsApp campaign and student content links
         run: python3 tools/test_organic_marketing.py
+      - name: Informational AdSense preflight (copyright evidence is human-review only)
+        run: |
+          python3 -m py_compile tools/audit_adsense_readiness.py
+          python3 tools/audit_adsense_readiness.py
       - name: Check approved public feeds and private-folder safety
         run: python3 tools/check_public_feeds.py
       - name: Build sitemap

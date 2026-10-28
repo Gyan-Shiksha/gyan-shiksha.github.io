@@ -28,14 +28,14 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com; style-src 'self'; script-src 'self' https://www.googletagmanager.com; font-src 'self'; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; upgrade-insecure-requests">
 <!-- Google Analytics 4: strict-CSP-compatible external scripts -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-858QBSF43P"></script>
-<script src="assets/js/analytics.js"></script>
+<script src="/assets/js/analytics.js"></script>
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon-180.png">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/logo.svg">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/icon-180.png">
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="stylesheet" href="assets/css/main.css">
-  <script defer src="assets/js/app.js"></script>
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script defer src="/assets/js/app.js"></script>
 <meta property="article:published_time" content="{{ page.date | date: '%Y-%m-%d' }}">
 </head>
 <body>
@@ -45,7 +45,7 @@
 <article class="article-wrap">
   <nav class="breadcrumbs" aria-label="Breadcrumb">
     <a href="/index.html">Home</a><span aria-hidden="true">›</span><a href="/blog.html">Blog</a>
-    <span aria-hidden="true">›</span><span>{{ page.category | default: "અભ્યાસ માર્ગદર્શન" | escape }}</span>
+    <span aria-hidden="true">›</span><span aria-current="page">{{ page.category | default: "અભ્યાસ માર્ગદર્શન" | escape }}</span>
   </nav>
   <header class="article-header">
     <span class="pill">{{ page.category | default: "અભ્યાસ માર્ગદર્શન" | escape }}</span>
@@ -56,13 +56,27 @@
       <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%d-%m-%Y" }}</time>
     </div>
   </header>
-  <figure class="article-figure"><img src="{{ page.image | default: '/assets/img/blog-study-plan.svg' | relative_url | escape }}" alt="{{ page.title | escape }}" width="900" height="560" loading="eager"><figcaption>Gyan Shiksha · અભ્યાસ માર્ગદર્શન</figcaption></figure>
+  <figure class="article-figure"><img src="{{ page.image | default: '/assets/img/blog-study-plan.svg' | relative_url | escape }}" alt="{{ page.image_alt | default: page.title | escape }}" width="900" height="560" loading="eager"><figcaption>Gyan Shiksha · અભ્યાસ માર્ગદર્શન</figcaption></figure>
 <div class="article-body">
     {{ content }}
   </div>
   <aside class="related-guides" aria-label="Related reading">
-    <h2>વધુ અભ્યાસ માર્ગદર્શન</h2>
-    <div class="related-links"><a href="/blog.html">બીજા શૈક્ષણિક લેખો વાંચો →</a></div>
+    <h2>સંબંધિત અભ્યાસ લેખો</h2>
+    <div class="related-links">
+      {% assign related_count = 0 %}
+      {% for related in site.posts %}
+        {% if related.url != page.url and related.category == page.category %}
+          <a href="{{ related.url | relative_url }}">{{ related.title | escape }} →</a>
+          {% assign related_count = related_count | plus: 1 %}
+        {% endif %}
+        {% if related_count >= 3 %}{% break %}{% endif %}
+      {% endfor %}
+      {% if related_count == 0 %}
+        <a href="/blog-smart-revision.html">સ્માર્ટ પુનરાવર્તનની રીતો →</a>
+        <a href="/blog-self-test.html">પોતાની કસોટી કેવી રીતે કરવી? →</a>
+      {% endif %}
+      <a href="/blog.html">બધા શૈક્ષણિક લેખો →</a>
+    </div>
   </aside>
 </article>
 </main>

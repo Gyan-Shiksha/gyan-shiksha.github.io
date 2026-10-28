@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" viewBox="0 0 900 560" role="img" aria-labelledby="title desc">
+<title id="title">Right triangle for Class 10 trigonometry</title>
+<desc id="desc">A labelled right triangle with perpendicular sides 3 and 4 and hypotenuse 5; opposite and adjacent sides depend on the chosen angle.</desc>
+<rect width="900" height="560" rx="24" fill="#ecf6ff"/>
+<rect x="40" y="36" width="820" height="488" rx="24" fill="#ffffff" stroke="#c7e1f7" stroke-width="3"/>
+<rect x="72" y="66" width="395" height="66" rx="14" fill="#0c4f8a"/>
+<text x="93" y="109" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#ffffff">TRIGONOMETRY</text>
+<path d="M 252 421 L 252 190 L 560 421 Z" fill="#c9e9ff" stroke="#0c4f8a" stroke-width="10" stroke-linejoin="round"/>
+<path d="M 252 389 L 285 389 L 285 421" fill="none" stroke="#0c4f8a" stroke-width="5"/>
+<path d="M 516 421 A 44 44 0 0 0 528 397" fill="none" stroke="#f59e0b" stroke-width="6"/>
+<g fill="#134e78" font-family="Arial, sans-serif" font-size="33" font-weight="700">
+<text x="214" y="315">3</text><text x="392" y="463">4</text><text x="428" y="281">5</text>
+<text x="215" y="178" font-size="25">A</text><text x="215" y="459" font-size="25">B</text><text x="570" y="451" font-size="25">C</text>
+</g>
+<text x="571" y="411" fill="#ca7b07" font-family="Arial, sans-serif" font-size="31" font-weight="700">θ</text>
+<rect x="599" y="191" width="208" height="168" rx="16" fill="#f3f9ff"/>
+<g fill="#134e78" font-family="Arial, sans-serif" font-size="23">
+<text x="618" y="230">sin θ = 3/5</text><text x="618" y="276">cos θ = 4/5</text><text x="618" y="322">tan θ = 3/4</text>
+</g>
+</svg>
